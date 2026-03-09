@@ -1,0 +1,161 @@
+// lab6 - Работа с двумерными массивами
+// Для обнаружения утечек памяти
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+#include <ctime>
+#ifdef _DEBUG
+#ifndef DBG_NEW
+#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+#define newDBG_NEW
+#endif
+#endif
+
+#include <cmath>
+#include "iostream"
+using namespace std;
+void input_array(int ** a, const size_t m, const size_t n);
+void input_array_rand(int ** a, const size_t m, const size_t n);
+void output_array(int ** a, const size_t m, const size_t n);
+double find_zero_row(int ** a, const size_t m, const size_t n);
+double find_repeat_column(int ** a, const size_t m, const size_t n);
+
+int main() 
+{
+	setlocale(LC_ALL, "Russian"); //возможность вывода в консоли русских букв
+	size_t n;
+	size_t m;
+	cout << "Введите размер массива m*n. m= ";
+    cin>>m;
+	while (m < 0 || m > 10 || cin.fail())
+	 { // проверка на ввод чисел
+		cin.clear();
+		cin.ignore(10000,'\n');
+		cout << "Введите повторно m: ";
+		cin >> m;
+	 }
+	cout << "Введите n= "; 
+	cin>>n;
+	while (n < 0 || n > 10 || cin.fail())
+	 { // проверка на ввод чисел
+		cin.clear();
+		cin.ignore(10000,'\n');
+		cout << "Введите повторно n: ";
+		cin >> n;
+	 }
+    int ** a = new int * [m];
+	input_array(a, m, n);
+	// выводим массив на экран в строку
+  	cout << "Исходный массив: " << endl;
+	output_array(a, m, n);
+	if (find_zero_row(a, m, n) == 0)
+	 {
+		cout << "Строки с нулевыми элементами отсутствуют! " << endl;
+	 }
+	else
+	 {
+	   cout << "Количество строк с нулевыми элементами: " << find_zero_row(a, m, n) << endl;
+	 }
+    if (find_repeat_column(a,m, n) == 0)
+	 {
+		cout << "Нет столбцов с повторяющимися элементами! " << endl;
+	 }
+	else
+	 {
+	   cout << "Номер столбца с наибольшим количеством одинаковых элементов: " << find_repeat_column(a, m, n) << endl;
+	 }
+	
+	// если убрать следующую строку, то в конечном итоге ПО выдаст ошибку об утечке памяти
+	for (size_t i=0; i<=m; i++)
+     {
+       delete [] a[i];
+     }
+    delete [] a;
+   // Для обнаружения утечек памяти
+   _CrtSetReportMode( _CRT_WARN, _CRTDBG_MODE_FILE );
+   _CrtSetReportFile( _CRT_WARN, _CRTDBG_FILE_STDOUT );
+   _CrtSetReportMode( _CRT_ERROR, _CRTDBG_MODE_FILE );
+   _CrtSetReportFile( _CRT_ERROR, _CRTDBG_FILE_STDOUT );
+   _CrtSetReportMode( _CRT_ASSERT, _CRTDBG_MODE_FILE );
+   _CrtSetReportFile( _CRT_ASSERT, _CRTDBG_FILE_STDOUT );
+   _CrtDumpMemoryLeaks(); 
+  return 0;
+}
+
+
+void input_array(int ** a, const size_t m, const size_t n)
+ {
+   for (size_t i=1; i<=m; i++)
+     {
+       //Память под элементы строки
+        a[i] = new int[n];
+        for(size_t j=1; j<=n; j++)
+ //           a[i][j] = i+j;
+		 {
+          cout << "Введите a[" << i << "," << j << "]=";
+          cin >> a[i][j];
+	     }
+     }
+ }
+
+void input_array_rand(int ** a, const size_t m, const size_t n)
+ {
+   srand((unsigned int)time(NULL));
+   // если убрать строчку выше, то будут генерироваться одни и те же числа
+   for (size_t i=1; i<=m; i++)
+     {
+       //Память под элементы строки
+        a[i] = new int[n];
+        for(size_t j=1; j<=n; j++)
+            a[i][j] = rand() % 20 - 10;
+	 }
+ }
+
+void output_array(int ** a, const size_t m, const size_t n)
+ {
+	for (size_t i=1; i<=m; i++)
+     {
+       for(size_t j=1; j<=n; j++)
+         cout<<a[i][j]<<"\t";           
+       cout << endl;           
+	 }
+ }
+
+double find_zero_row(int ** a, const size_t m, const size_t n)
+ {
+	double num = 0;
+	for (size_t i=1; i<=m; i++)
+     {
+       for(size_t j=1; j<=n; j++)
+         if (a[i][j] == 0)
+		  {		  
+			 num++;           
+			 break;
+		  }
+	 }
+    return num;
+ }
+double find_repeat_column(int ** a, const size_t m, const size_t n)
+ {
+   double num_rep = 0;
+   double num_rep_temp = 0;
+   double num_col = 0;
+   for(size_t j=1; j<=n; j++)
+     {
+       for (size_t i=1; i<=m; i++)
+	    {
+         num_rep_temp = 0;
+  		 for (size_t k=i+1; k<=m; k++)
+           if (a[i][j] == a[k][j])
+		    {		  
+			  num_rep_temp++;
+		    }
+	     if (num_rep_temp > num_rep)
+	       {
+			num_col = j;
+			num_rep = num_rep_temp;
+	       }
+	    }
+     }
+    return num_col;
+ }

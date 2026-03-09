@@ -1,0 +1,45 @@
+﻿  fas.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\ucrt\time.h(46,5): error C2011: timespec: переопределение типа "struct"
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\time.h(51,8): message : см. объявление "timespec"
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(49,8): error C3646: st_ino: неизвестный спецификатор переопределения
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(49,14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(50,9): error C3646: st_mode: неизвестный спецификатор переопределения
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(50,16): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(51,10): error C3646: st_nlink: неизвестный спецификатор переопределения
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(51,18): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(56,18): error C2079: "ostat::st_atimespec" использует не имеющую определения структуру struct "timespec"
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(57,18): error C2079: "ostat::st_mtimespec" использует не имеющую определения структуру struct "timespec"
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(58,18): error C2079: "ostat::st_ctimespec" использует не имеющую определения структуру struct "timespec"
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(67,8): error C3646: st_dev: неизвестный спецификатор переопределения
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(67,14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(68,8): error C3646: st_ino: неизвестный спецификатор переопределения
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(68,14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(69,9): error C3646: st_mode: неизвестный спецификатор переопределения
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(69,16): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(70,10): error C3646: st_nlink: неизвестный спецификатор переопределения
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(70,18): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(71,8): error C3646: st_uid: неизвестный спецификатор переопределения
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(71,14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(72,8): error C3646: st_gid: неизвестный спецификатор переопределения
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(72,14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(73,8): error C3646: st_rdev: неизвестный спецификатор переопределения
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(73,15): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(74,18): error C2079: "stat::st_atimespec" использует не имеющую определения структуру struct "timespec"
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(75,18): error C2079: "stat::st_mtimespec" использует не имеющую определения структуру struct "timespec"
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(76,18): error C2079: "stat::st_ctimespec" использует не имеющую определения структуру struct "timespec"
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(77,8): error C3646: st_size: неизвестный спецификатор переопределения
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(77,15): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(78,9): error C3646: st_blocks: неизвестный спецификатор переопределения
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(78,18): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(83,9): error C3646: st_qspare: неизвестный спецификатор переопределения
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(83,18): error C2143: синтаксическая ошибка: отсутствие "," перед "["
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(83,21): error C2238: непредвиденные лексемы перед ";"
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(179,11): error C2061: синтаксическая ошибка: идентификатор "mode_t"
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(181,11): error C2061: синтаксическая ошибка: идентификатор "mode_t"
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(182,12): error C2061: синтаксическая ошибка: идентификатор "mode_t"
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(184,14): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(184,8): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "umask"
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(186,13): error C2061: синтаксическая ошибка: идентификатор "u_long"
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(187,14): error C2061: синтаксическая ошибка: идентификатор "u_long"
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\stat.h(188,12): error C2061: синтаксическая ошибка: идентификатор "mode_t"
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\sys\types.h(45,10): fatal  error C1083: Не удается открыть файл включение: machine/endian.h: No such file or directory,

@@ -1,0 +1,34 @@
+name: CI for Project
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest  # Указываем, что рабочий процесс будет выполняться на Windows
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up C++ environment
+        run: |
+          choco install mingw --version=8.1.0  # Установка MinGW через Chocolatey
+          refreshenv  # Обновляем переменные окружения
+
+      - name: Build the server
+        run: |
+          g++ -std=c++11 -o server server.cpp  # Компиляция серверной части с указанием стандарта
+
+      - name: Build the tests
+        run: |
+          g++ -std=c++11 -o run_tests test.cpp  # Компиляция тестов с указанием стандарта
+
+      - name: Run tests
+        run: |
+          ./run_tests  # Запуск тестов

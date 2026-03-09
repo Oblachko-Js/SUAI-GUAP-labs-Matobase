@@ -1,0 +1,880 @@
+/*main.c*/
+#include "main.h"
+#include "timers.h"
+#include "keypad.h"
+#include "fsm_main.h"
+#include "fsm_tm.h"
+#include "messages.h"
+#include "i2cFram.h"
+#include "uart.h"
+
+void SystemClock_Config(void);
+void ProcesLedkey(void);
+
+int main(void)
+{
+	SystemClock_Config();
+	SystemCoreClockUpdate();
+	printf("\nSet clock=%d\n",SystemCoreClock);
+	InitMessages();	//инициализация механизма обработки сообщений
+	InitTimers();	//инициализация таймеров
+	InitKpd4();		//инициализация автомата Kpd4
+	InitUartDMA();	//инициализация UART
+	init_I2C_FRAM();//инициализация IIC для работы с FRAM
+	LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOE);
+	LL_GPIO_SetPinMode(GPIOE,LL_GPIO_PIN_13, LL_GPIO_MODE_OUTPUT);
+	LL_SYSTICK_EnableIT();
+	while (1)
+	{
+		if(GetTimer(LED_TIMER)>=70) //каждые 70 мс
+		{
+			ResetTimer(LED_TIMER);
+			LL_GPIO_TogglePin(GPIOE,LL_GPIO_PIN_13);
+		}
+		ProcesLedkey();     //итерация автомата кнопок и светодиодов
+		ProcessFsmMain();   //итерация автомата работы с интерфейсами 
+		ProcessFsmTm();     //итерация автомата машины тьюринга
+		ProcessKeyKpd4();   //итерация автомата Kpd4
+		ProcessMessages();  //обработка сообщений
+	}
+}
+
+void SystemClock_Config(void)
+{   // PLL (HSE) = SYSCLK = HCLK(Hz) = 72000000
+	LL_FLASH_SetLatency(LL_FLASH_LATENCY_2); /* Set FLASH latency */ 
+	LL_RCC_HSE_Enable(); /* Enable HSE and wait for activation*/
+	while(LL_RCC_HSE_IsReady() != 1) {}
+	LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE_DIV_1, LL_RCC_PLL_MUL_9);
+	LL_RCC_PLL_Enable();/* Main PLL configuration and activation */
+	while(LL_RCC_PLL_IsReady() != 1) {}
+	LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1); //AHB Prescaler=1
+	LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
+	while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL){}
+	LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_2); //APB1 Prescaler=2
+	LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1); //APB2 Prescaler=1
+	LL_Init1msTick(72000000);
+	LL_SetSystemCoreClock(72000000);
+}
+
+// ожидание нажатия кнопки
+#define FSMST_WAITKEY	0
+// передача строки о зажатых кнопок по UART
+#define FSMST_UARTKEY	1
+
+void ProcesLedkey(void)
+{
+	static char fsmstate=0;   // переменная состояния автомата
+	static char textbuf[17]="";
+	static int count=0;
+	void* ParamPtr=0;
+	switch (fsmstate)
+	{
+		case FSMST_WAITKEY:
+			if(GetMessage(MSG_KEYPRESSED,(void*)&ParamPtr))
+			{
+				uint16_t kypd4status=*(uint16_t*)ParamPtr; // сохранить код состояния кнопок
+				int i=0;
+				for(i=0;i<16;i++)
+				{
+					if(kypd4status & (1<<i))
+					{
+						textbuf[count+0] = 'K';
+						textbuf[count+1] = 0x30+((i+1)/10);
+						textbuf[count+2] = 0x30+((i+1)%10);
+						textbuf[count+3] = ' ';
+						count += 4;
+					}
+				}
+				if(count>0)
+				{
+					textbuf[count++]='\n';
+					fsmstate = FSMST_UARTKEY;
+				}
+			}
+		break;
+		case FSMST_UARTKEY:
+			if( uart_transmit((uint8_t*)textbuf,count) == 0 )
+			{
+				fsmstate = FSMST_WAITKEY;
+				count=0;
+			}
+		break;
+	}
+}
+
+/*fsm_main.c*/
+#include "timers.h"
+#include "messages.h"
+#include "fsm_main.h"
+#include "uart.h"
+#include "i2cFram.h"
+#include "main.h"
+
+/*
+		Ôîðìàò êîìàíä:
+		[command] "<" [address] ":" [len] ">"  [data]
+		[command] = "rd" | "wr" | "tm" 	// nhb êîìàíäû ÷òåíèå, çàïèñü, ìàøèíà òüþðèíãà
+		[address] = [hd][hd][hd] 	// àäðåñ ïàìÿòè â äèàïàçîíå îò 0 äî 7FF
+		[len] = [hd][hd]  // äëèííà öåïî÷êè áàéò ÷òåíèÿ îò 0 äî FE , çàïèñè äî F4 
+		[hd] = [øåñòíàäöàòèðè÷íîå ÷èñëî îò 0 äî F]
+		[data] = [äåñÿòè÷íîå ÷èñëî îò 0 äî 9] | [ëàòèíñêàÿ áóêâà îò A äî z]
+		Ïðèìåð êîìàíäû:
+		wr<100:03>ABC - çàïèñü ïî àäðåñó 0x100 òð¸õ áàéò ABC
+		rd<FF:04> - ÷òåíèå ïî àäðåñó 0xFF ÷åòûð¸õ áàéò
+		rd<0:1>	 - ÷òåíèå ïî àäðåñó 0x0 îäíîãî áàéòà
+		tm<1:7>010:01F - çàïóñê ðàáîòû ïåðâîé ìàøèíû òüþðèíãà ñ àäðåñà 0x102 íà 0x1F øàãîâ 
+		Îáùàÿ äëèííà ïàêåòà äàííûé ïî UART íå äîëæíà ïðåâûøàòü 254 çíàêà 
+*/
+
+/*ñîñòîÿíèÿ àâòîìàòà*/
+// îæèäàíèå ïàêåòà äàííûõ îò UART
+#define FSMST_UARTRX	0
+// ïåðåäà÷à ïàêåòà äàííûõ ïî UART
+#define FSMST_UARTTR	1
+// ÷òåíèÿ ïàêåòà äàííûõ èç FRAM
+#define FSMST_RDFRAM	2
+// çàïèñü ïàêåòà äàííûõ â FRAM
+#define FSMST_WRFRAM	3
+
+int lenfsm;
+static int addrfsm;
+static uint8_t aRecvbuf[255];
+		
+static char fsmstate = FSMST_UARTRX;   // ïåðåìåííàÿ ñîñòîÿíèÿ àâòîìàòà
+
+void ProcessFsmMain(void)
+{
+	int i;
+	uint8_t* pRxbuf=0;
+	switch (fsmstate)
+	{
+		case FSMST_UARTRX:
+			if(GetMessage(MSG_UART_RX,(void*)&pRxbuf))
+			{
+				if(lenuart>6)
+				{//ñèíòàêñè÷åñêèé àíàëèç êîìàíäû
+					addrfsm = -1;
+					lenfsm = -1;
+					sscanf((char*)&(pRxbuf[2]),"<%x:%x>",&addrfsm,&lenfsm);
+					if(addrfsm>=0 && addrfsm<=0x7FF && lenfsm>0 && lenfsm<=IICBUFSZ)
+					{
+						if(pRxbuf[0] == 'r' && pRxbuf[1] == 'd' )
+						{
+							fsmstate = FSMST_RDFRAM;
+							break;
+						}
+						else 
+						{
+							char* pbuf = NULL;
+							pbuf = strchr ( (char*)pRxbuf, '>');
+							uint8_t pos = pbuf-(char*)pRxbuf+1;
+							if (pbuf != NULL && lenfsm <= (lenuart-pos) )
+							{
+								pbuf++;
+								memcpy ( (void*)aRecvbuf, pbuf,lenfsm);
+								if(pRxbuf[0] == 'w' && pRxbuf[1] == 'r')
+								{
+									fsmstate =  FSMST_WRFRAM;
+									break;
+								}
+								if(pRxbuf[0] == 't' && pRxbuf[1] == 'm')
+								{
+									if(addrfsm == 1)
+									{
+										SendMessage(MSG_TM1STRT,(void*)&aRecvbuf);
+										break;
+									}
+								}
+							}
+						}
+					}
+				}
+				strcpy((char*)aRecvbuf,"Err> cmd error\n");
+				lenfsm = strlen((char*)aRecvbuf);
+				fsmstate = FSMST_UARTTR;
+			}
+		break;
+		case FSMST_RDFRAM: // ÷èòàåì èç ïàìÿòè
+			pRxbuf = (uint8_t*)i2cFRAM_rd(addrfsm,lenfsm);
+			if( (uint32_t)pRxbuf > 0)
+			{
+				// îêîí÷àíèå ÷òåíèÿ FRAM
+				lenfsm = leni2c;
+				aRecvbuf[lenfsm]='\n';
+				lenfsm++;
+				memcpy(aRecvbuf, pRxbuf, leni2c);
+				fsmstate = FSMST_UARTTR;
+			}
+		break;
+		case FSMST_WRFRAM: // ïèøåì â ïàìÿòü
+			if((uint32_t)i2cFRAM_wr(addrfsm,aRecvbuf,lenfsm) > 0)
+			{
+				// îêîí÷àíèå çàïèñè FRAM		
+				strcpy((char*)aRecvbuf,"wr> ok\n");
+				lenfsm = strlen((char*)aRecvbuf);
+				fsmstate = FSMST_UARTTR;
+			}
+		break;
+		case FSMST_UARTTR:
+			if( uart_transmit(aRecvbuf,lenfsm) == 0 )
+				fsmstate = FSMST_UARTRX;
+		break;
+	}
+}
+
+
+/* i2cFram.c */
+#include "i2cFram.h"
+#include "main.h"
+#include "messages.h"
+#define SLAVE_OWN_ADDRESS 0xA0 	// Адресс F-RAM согласно тех. описанию FM24CL16B
+
+typedef enum  {
+	idle_ST = 0,  // состояние бездействия
+	wr_ST = 1,    // состояние записи в FRAM
+	rd_ST = 2,    // состояние чтения FRAM
+	wait_ST = 3   // состояние ожидания чтения результата
+} FRAMstateI2C; 
+FRAMstateI2C iic_st; // переменная состояния
+
+typedef struct DATI2C {
+	uint8_t aBuf[IICBUFSZ+1];// Буффер приёма/передачи i2c
+	uint8_t index;	    // Счётчик принятых/переданных байт
+	uint8_t len;	    // Количество передаваемых байт
+} DATI2C;
+static struct DATI2C tDati2c;
+unsigned char leni2c = 0;
+// размер FRAM 2K = 2048b, max addr = 0x7FF
+static uint32_t addrdat_FRAM=0; // Начальный адрес обращения к памяти F-RAM
+	
+void init_I2C_FRAM(void);		// Инициализация интерфейса I2C связи с памятью F-RAM
+void* i2cFRAM_wr(uint32_t addrdat, uint8_t* pBuffer, uint32_t ubNumByteToWrite); //Запись пакета данных в память F-RAM по интерфейсу I2C
+void* i2cFRAM_rd(uint32_t addrdat, uint32_t ubNumByteToRead); //Чтение пакета данных из памяти F-RAM по интерфейсу I2C
+
+void init_I2C_FRAM(void) {
+	iic_st = idle_ST;
+	/**** I2C1 приём и передача ****/
+	LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
+	// GPIO PB6->I2C1_SCL ; PB7->I2C1_SDA
+	LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOB);
+	GPIO_InitStruct.Pin = LL_GPIO_PIN_6|LL_GPIO_PIN_7;
+	GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
+	GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
+	GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_OPENDRAIN;
+	GPIO_InitStruct.Pull = LL_GPIO_PULL_UP;
+	GPIO_InitStruct.Alternate = LL_GPIO_AF_4;
+	LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+	LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_I2C1); //разрешаем тактирование I2C1
+	LL_RCC_SetI2CClockSource(LL_RCC_I2C1_CLKSOURCE_SYSCLK);//источник тактирования SYSCLK
+
+	NVIC_SetPriority(I2C1_EV_IRQn, 0); 
+	NVIC_EnableIRQ(I2C1_EV_IRQn); // разрешаем прерывание событиям I2C
+
+	LL_I2C_SetTiming(I2C1, 0xE010DFFE); // 10KHz, Standard mode, sysclk=72MHz, RT=50ns, FT=3ns    
+	LL_I2C_Enable(I2C1); // включить модуль
+
+	LL_I2C_EnableIT_RX(I2C1); // разрешаем прерывание по приёму
+	LL_I2C_EnableIT_TX(I2C1); // разрешаем прерывание по передаче
+	LL_I2C_EnableIT_TC(I2C1); // разрешаем прерывание по окончанию передачи
+	LL_I2C_EnableIT_STOP(I2C1); // разрешаем прерывание по окончанию обмена
+	tDati2c.index = 0;
+	tDati2c.len = 0;
+	printf("\nIIC init\n");
+}
+
+void* i2cFRAM_wr(uint32_t addrdat, uint8_t* pBuffer, uint32_t ubNumByteToWrite) 
+{
+	if(iic_st == idle_ST)
+	{
+		if((ubNumByteToWrite <= IICBUFSZ) && (addrdat <= 0x7FF) && (ubNumByteToWrite > 0))
+		{
+			if(!LL_I2C_IsActiveFlag_BUSY(I2C1))
+			{
+				iic_st = wr_ST;
+				addrdat_FRAM = addrdat;
+				tDati2c.index = 0;	// обнуляем счётчик
+				tDati2c.len = ubNumByteToWrite + 1;  // количество передаваемых байт
+				tDati2c.aBuf[0] = (uint8_t)addrdat_FRAM ; // первый байт=адрес[7..0] в FRAM, далее записываемые данные 
+				memcpy((void*)&tDati2c.aBuf[1],(void*)pBuffer,ubNumByteToWrite); // копируем передаваемые данные в буффер передачи
+				// Начало обмена, передаём на шину адрес приёмника, далее передаём 1 байт адреса памяти и байты данных
+				LL_I2C_HandleTransfer(
+					I2C1, SLAVE_OWN_ADDRESS|(addrdat_FRAM>>7),// Адрес приёмника и старшие 3 бита адрес[10..8]  в FRAM
+					LL_I2C_ADDRSLAVE_7BIT, 	// Формат адреса приёмника 7 бит
+					tDati2c.len, 	//  NBYTES[7:0]=(1+ubNumByteToWrite), количество передаваемых байт 
+					LL_I2C_MODE_AUTOEND, // AUTOEND=1, по окончании передачи NBYTES сформировать признак STOP
+					LL_I2C_GENERATE_START_WRITE);//сгенерировать признак START и признак записи в приёмник(LSB=0)
+			}
+		}
+	}
+	else if(iic_st == wait_ST)
+	{
+		iic_st = idle_ST;
+		return (void*)&tDati2c.aBuf;
+	}
+	return (void*)0;
+}
+
+void* i2cFRAM_rd(uint32_t addrdat, uint32_t ubNumByteToRead)
+{
+	if(iic_st == idle_ST)
+	{
+		if((addrdat <= 0x7FF) && (ubNumByteToRead <= IICBUFSZ) && (ubNumByteToRead > 0))
+		{
+			if(!LL_I2C_IsActiveFlag_BUSY(I2C1))
+			{
+				iic_st = rd_ST;
+				addrdat_FRAM = addrdat;
+				tDati2c.len = ubNumByteToRead;  // количество принимаемых байт
+				I2C1->CR1 |= I2C_CR1_SWRST; // сбрасываем модуль
+				tDati2c.index = 0;	// обнуляем счётчик
+				tDati2c.aBuf[0] = (uint8_t)addrdat_FRAM ; // первый байт=адрес[7..0] в FRAM, далее записываемые данные 
+				// Начало обмена:передаём адрес приёмника, 1 байт (адрес в памяти),признак записи в приёмник(LSB=0),признак STOP не выставляем
+				LL_I2C_HandleTransfer(I2C1, SLAVE_OWN_ADDRESS,LL_I2C_ADDRSLAVE_7BIT,1,LL_I2C_MODE_SOFTEND,LL_I2C_GENERATE_START_WRITE); 
+			}
+		}
+	}
+	else if(iic_st == wait_ST)
+	{
+		iic_st = idle_ST;
+		return (void*)&tDati2c.aBuf;
+	}
+	return (void*)0;
+}
+
+void I2C1_EV_IRQHandler(void)
+{
+	if(LL_I2C_IsActiveFlag_TXIS(I2C1)) 
+	{ // если передача, то передаём следующий байт
+		LL_I2C_TransmitData8(I2C1,tDati2c.aBuf[tDati2c.index]);
+        tDati2c.index++;
+	}
+	else if(LL_I2C_IsActiveFlag_RXNE(I2C1))
+	{ // если приём то принимаем байт
+		tDati2c.aBuf[tDati2c.index] = LL_I2C_ReceiveData8(I2C1);
+        tDati2c.index++;
+	}
+	else if(LL_I2C_IsActiveFlag_TC(I2C1))
+	{ // Продолжение обмена при приёме: передаём адрес приёмника и старшие 3 бита адреса[10..8]   
+		tDati2c.index=0;
+		LL_I2C_HandleTransfer(I2C1, SLAVE_OWN_ADDRESS|(addrdat_FRAM>>7&0xE),LL_I2C_ADDRSLAVE_7BIT,
+			tDati2c.len, //  количество принимаемых байт 
+			LL_I2C_MODE_AUTOEND, // AUTOEND=1, по окончании передачи сформировать признак STOP
+			LL_I2C_GENERATE_START_READ);// сгенерировать признак START и признак чтения из приёмника(LSB=1)
+			__NOP(); __NOP(); __NOP(); __NOP(); // задержка
+			__NOP(); __NOP(); __NOP(); __NOP();
+	}
+	else if(LL_I2C_IsActiveFlag_STOP(I2C1))
+	{ // если конец приёма/передачи проверяем что счётчик совпадает с размером 
+		LL_I2C_ClearFlag_STOP(I2C1);
+		if(tDati2c.index != tDati2c.len)
+		{ // переданные/принятые данные не совпали с заданным размером
+			printf("IIC dat len Err\n");
+			return;
+		}
+		if(iic_st == rd_ST)
+			leni2c = tDati2c.len;
+		iic_st = wait_ST;
+	}
+}
+
+/*keypad.c*/
+#include "timers.h"
+#include "messages.h"
+#include "keypad.h"
+#include "main.h"
+
+/*состояния автомата*/
+// ожидание нажатия
+#define FSMST_IDLE			0
+
+// ожидание истечении времени дребезга (DEBOUNCE)
+#define FSMST_DEBOUNCE		1
+
+// контроль состояния кнопки после истечения времени дребезга
+// формируется сообщение MSG_KEY_PRESSED, если кнопка нажата
+// возврат в состояние FSMST_IDLE, если кнопка отпущена
+#define FSMST_KEYDOWN		2
+
+// контроль состояния кнопки при первом удержании (FIRST_DELAY), по истечению,
+// формируется повторное сообщение MSG_KEY_PRESSED, если кнопка нажата,
+// возврат в состояние FSMST_IDLE, если кнопка отпущена
+#define FSMST_KEYDOWNHOLD	3
+
+// контроль состояния кнопки при дальнейшем удержании (AUTO_REPEAT), по истечению,
+// формируется сообщение MSG_KEY_PRESSED, если кнопка нажата,
+// возврат в состояние FSMST_IDLE, если кнопка отпущена
+#define FSMST_HOLDAUTO		4
+
+
+static char fsmstate = FSMST_IDLE;   // переменная состояния автомата
+uint16_t scankeypad(void);
+
+void ProcessKeyKpd4(void)
+{
+	static uint16_t keycode; // переменная состояния кнопок
+	if(GetTimer(KPD4_TIMER)>=5) //каждые 5 мс
+	{
+		ResetTimer(KPD4_TIMER);
+		uint16_t key_code_tmp=0;
+		key_code_tmp = scankeypad();
+		switch (fsmstate)
+		{
+			case FSMST_IDLE: //ни одна кнопка не нажата
+				if (key_code_tmp > 0)
+				{
+					keycode = key_code_tmp;
+					ResetTimer(KEYB_TIMER);
+					fsmstate = FSMST_DEBOUNCE;
+				}
+			break;
+			case FSMST_DEBOUNCE: //кнопка нажата ждём окончания переходного процесса
+				if (GetTimer(KEYB_TIMER) > DEBOUNCE)
+					fsmstate = FSMST_KEYDOWN;
+			break;
+			case FSMST_KEYDOWN: //если кнопка нажата, посылаем сообщение
+				if ( key_code_tmp == keycode )
+				{
+					ResetTimer(KEYB_TIMER);
+					SendMessage(MSG_KEYPRESSED, (void*)&keycode);
+					fsmstate = FSMST_KEYDOWNHOLD;
+				}
+				else
+					fsmstate = FSMST_IDLE;
+			break;
+			case FSMST_KEYDOWNHOLD: //если кнопка удерживается, посылаем сообщение
+				if ( key_code_tmp == keycode )
+				{
+					if (GetTimer(KEYB_TIMER) >= FIRST_DELAY)
+					{
+						ResetTimer(KEYB_TIMER);
+						SendMessage(MSG_KEYPRESSED, (void*)&keycode);
+						fsmstate = FSMST_HOLDAUTO;
+					}
+				}
+				else
+					fsmstate = FSMST_IDLE;
+			break;
+
+			case FSMST_HOLDAUTO: //если кнопка удерживается, посылаем сообщение чаще
+				if (key_code_tmp == keycode)
+				{
+					if (GetTimer(KEYB_TIMER) >= AUTO_REPEAT)
+					{
+
+						ResetTimer(KEYB_TIMER);
+						SendMessage(MSG_KEYPRESSED, (void*)&keycode);
+					}
+				}
+				else
+					fsmstate = FSMST_IDLE;
+			break;
+		}
+	}
+}
+
+uint16_t scankeypad(void)
+{
+	uint16_t key_code=0;
+	uint8_t tmpbuf=0;
+	int i;
+	for(i=0; i<4; i++) 
+	{
+		LL_GPIO_ResetOutputPin(GPIOC,1<<(4+i));
+		__NOP(); __NOP(); __NOP(); __NOP();
+		tmpbuf= (uint8_t)LL_GPIO_ReadInputPort(GPIOC);
+		tmpbuf= ~tmpbuf & 0x0F;
+		key_code |=tmpbuf<<(4*i);
+		LL_GPIO_SetOutputPin(GPIOC,1<<(4+i));
+	}
+	return key_code;
+}
+
+void InitKpd4(void) 
+{
+	fsmstate=FSMST_IDLE;
+	LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOC);//GPIOC
+	//PC0,PC1,PC2,PC3 In
+	LL_GPIO_InitTypeDef gpio_initstruct;
+	gpio_initstruct.Pin  = LL_GPIO_PIN_0|LL_GPIO_PIN_1|LL_GPIO_PIN_2|LL_GPIO_PIN_3;
+	gpio_initstruct.Mode = LL_GPIO_MODE_INPUT;
+	gpio_initstruct.Pull = LL_GPIO_PULL_UP;
+	if (LL_GPIO_Init(GPIOC, &gpio_initstruct) != SUCCESS)
+		while (1){} 		/* Initialization Error */
+	
+	//PC4,PC5,PC6,PC7 Out
+	gpio_initstruct.Pin  = LL_GPIO_PIN_4|LL_GPIO_PIN_5|LL_GPIO_PIN_6|LL_GPIO_PIN_7;
+	gpio_initstruct.Mode = LL_GPIO_MODE_OUTPUT;
+	gpio_initstruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+	gpio_initstruct.Pull = LL_GPIO_PULL_UP;
+	if (LL_GPIO_Init(GPIOC, &gpio_initstruct) != SUCCESS)
+		while (1){} 		/* Initialization Error */
+	LL_GPIO_SetOutputPin (GPIOC, LL_GPIO_PIN_4|LL_GPIO_PIN_5|LL_GPIO_PIN_6|LL_GPIO_PIN_7);
+	printf("\nKeypad init\n");
+}
+
+/*messages.c*/
+#include "messages.h"
+
+// флаги состояния сообщения
+#define F_OFF  0  // неактивно
+#define F_PEND 1  // установлено, но неактивно
+#define F_SET  2  // активно
+
+static struct MSG_DATA
+{
+	int Msg;
+	void *ParamPtr;
+} Messages[MAX_MESSAGES];
+
+void InitMessages(void)
+{
+	int i;
+	for(i = 0; i < MAX_MESSAGES; i++)
+		Messages[i].Msg = F_OFF;
+}
+
+// переводит в состояние, «установлено, но неактивно»
+void SendMessage(int Msg, void *ParamPtr)
+{
+	Messages[Msg].Msg = F_PEND;
+	Messages[Msg].ParamPtr = ParamPtr;
+}
+
+// в конце цикла сообщения переводим в состояние «активно» 
+// и находимся в этом состоянии в следующем цикле программы 
+// до его сброса принявшим его автоматом или в конце цикла
+void ProcessMessages(void)
+{
+	int i;
+	for(i = 0; i < MAX_MESSAGES; i++)
+	{
+		if(Messages[i].Msg == F_SET) 
+			Messages[i].Msg = F_OFF;
+		if(Messages[i].Msg == F_PEND) 
+			Messages[i].Msg = F_SET;
+	}
+}
+
+char GetMessage(int Msg, void *ParamPtr)
+{
+	if(Messages[Msg].Msg == F_SET)
+	{
+		*(void**)ParamPtr = Messages[Msg].ParamPtr;
+		Messages[Msg].Msg = F_OFF;
+		return 1;
+	}
+	return 0;
+}
+
+/*timers.c*/
+#include "timers.h"
+
+static unsigned int v_timers[MAX_TIMERS]; //переменные «виртуальных» таймеров
+
+void ProcessTimers(void) //обработчик прерывания таймера/счетчика
+{ /*увеличиваем значение всех переменных-таймеров на 1*/
+	int i;
+	for(i = 0; i < MAX_TIMERS; i++)
+		v_timers[i]++;
+}
+
+void InitTimers(void)
+{
+	int i;
+	for(i = 0; i < MAX_TIMERS; i++)
+		v_timers[i] = 0;
+}
+
+unsigned int GetTimer(char Timer)
+{
+	return v_timers[Timer];
+}
+
+void ResetTimer(char Timer)
+{
+	v_timers[Timer] = 0;
+}
+
+/* Обработчик прерываний системного таймер */
+void SysTick_Handler(void)
+{
+	ProcessTimers();
+}
+
+/* uart.c */
+#include "main.h"
+#include "uart.h"
+#include "messages.h"
+
+struct DATUART {
+	uint8_t aTxDMABuf[UARTBUFSZ]; // Áóôôåð ïåðåäà÷è UART DMA
+	uint8_t aRxDMABuf[UARTBUFSZ]; // Êîëüöåâîé áóôôåð ïðè¸ìà UART DMA
+	uint8_t aRxBuf[UARTBUFSZ];    // Áóôôåð êóäà êîïèðóåì ïðèíÿòûé ïàêåò ïî UART
+	uint8_t ubRxsz;		 	      // Êîëè÷åñòâî ïðèíÿòûõ áàéò â ïàêåòå
+	uint8_t ubTxsz;			      // Êîëè÷åñòâî îòïðàâëÿåìûõ áàéò â ïàêåòå
+};
+
+uint8_t lenuart = 0;
+static struct DATUART tDatuart;
+//Ïåðåäà÷à ïàêåòà áàéò äëèííû ublenBuff ïî UART
+uint8_t uart_transmit(uint8_t* pBuffer, uint8_t ublenBuff) {
+	if(LL_DMA_IsEnabledChannel(DMA1, LL_DMA_CHANNEL_7)!= SET) {// êàíàë ñâîáîäåí?
+		tDatuart.ubTxsz = ublenBuff;
+		memcpy(tDatuart.aTxDMABuf, pBuffer, tDatuart.ubTxsz);
+		LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_7, tDatuart.ubTxsz); //Êîëè÷åñòâî ïåðåäàâàåìûõ áàéò
+		LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_7); //Âêëþ÷àåì êàíàë
+		return 0;
+	}
+	return 1;
+}
+
+void InitUartDMA(void)  {
+	/**** USART2 ïðè¸ì è ïåðåäà÷à ñ èñïîëüçîâàíèå DMA1 ****/
+	// Âêëþ÷àåì òàêòèðîâàíèå ÏÂÂ À, USART2, DMA1
+	LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOA);
+	LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_USART2);
+	LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_DMA1);
+	// Íàñòðàèâàåì PA2 - USART2_TX
+	LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_2, LL_GPIO_MODE_ALTERNATE);
+	LL_GPIO_SetAFPin_0_7(GPIOA, LL_GPIO_PIN_2, LL_GPIO_AF_7);
+	LL_GPIO_SetPinSpeed(GPIOA, LL_GPIO_PIN_2, LL_GPIO_SPEED_FREQ_HIGH);
+	LL_GPIO_SetPinPull(GPIOA, LL_GPIO_PIN_2, LL_GPIO_PULL_DOWN);
+	// Íàñòðàèâàåì PA3 - USART2_RX
+	LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_3, LL_GPIO_MODE_ALTERNATE);
+	LL_GPIO_SetAFPin_0_7(GPIOA, LL_GPIO_PIN_3, LL_GPIO_AF_7);
+	LL_GPIO_SetPinSpeed(GPIOA, LL_GPIO_PIN_3, LL_GPIO_SPEED_FREQ_HIGH);
+	LL_GPIO_SetPinPull(GPIOA, LL_GPIO_PIN_3, LL_GPIO_PULL_UP);
+	// Íàñòðîéêà êàíàëà¹7 DMA íà ïåðåäà÷ó
+	LL_DMA_ConfigTransfer(DMA1, LL_DMA_CHANNEL_7, 
+		LL_DMA_DIRECTION_MEMORY_TO_PERIPH | //Íàïðàâëåíèå ïåðåäà÷è èç ÎÇÓ ê ÏÓ
+		LL_DMA_PRIORITY_HIGH              | //Ïðèîðèòåò êàíàë¹7 âûñîêèé
+		LL_DMA_MODE_NORMAL                | //Ðåæèì ñ÷¸ò÷èêà àäðåñà - ëèíåéíûé ñî ñáðîñîì ê íà÷àëüíîìó àäðåñó
+		LL_DMA_PERIPH_NOINCREMENT         | //Óêàçàòåëü àäðåñà â ÏÓ íåèçìåíåí
+		LL_DMA_MEMORY_INCREMENT           | //Óêàçàòåëü àäðåñà â ÎÇÓ óâåëè÷èâàåòñÿ ïîñëå êàæäîé ïåðåäà÷è áàéòà äàííûõ
+		LL_DMA_PDATAALIGN_BYTE            | //Ðàçìåð äàííûõ â ÏÓ - áàéò
+		LL_DMA_MDATAALIGN_BYTE);			//Ðàçìåð äàííûõ â ÎÇÓ - áàéò
+	LL_DMA_ConfigAddresses(DMA1, LL_DMA_CHANNEL_7, 	//Óêàçàíèå àäðåñîâ äëÿ ïåðåìåùåíèÿ äàííûõ
+		(uint32_t)tDatuart.aTxDMABuf, 		//Íà÷àëüíûé àäðåñ â ïàìÿòè áóôôåðà ïåðåäà÷è
+		LL_USART_DMA_GetRegAddr(USART2, LL_USART_DMA_REG_DATA_TRANSMIT),//Àäðåñ ðåãèñòðà USART_TDR  
+		LL_DMA_GetDataTransferDirection(DMA1, LL_DMA_CHANNEL_7));
+	LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_7, 0); //Êîëè÷åñòâî ïåðåäàâàåìûõ áàéò
+	// Íàñòðîéêà êàíàëà¹6 DMA íà ïðè¸ì
+	LL_DMA_ConfigTransfer(DMA1, LL_DMA_CHANNEL_6, 
+		LL_DMA_DIRECTION_PERIPH_TO_MEMORY | //Íàïðàâëåíèå ïåðåäà÷è îò ÏÓ â ÎÇÓ
+		LL_DMA_PRIORITY_LOW               | //Ïðèîðèòåò êàíàë¹6 íèçêèé
+		LL_DMA_MODE_CIRCULAR              | //Ðåæèì ñ÷¸ò÷èêà àäðåñà - êîëüöåâîé
+		LL_DMA_PERIPH_NOINCREMENT         | //Óêàçàòåëü àäðåñà â ÏÓ íåèçìåíåí
+		LL_DMA_MEMORY_INCREMENT           | //Óêàçàòåëü àäðåñà â ÎÇÓ óâåëè÷èâàåòñÿ ïîñëå êàæäîãî ïðè¸ìà áàéòà äàííûõ
+		LL_DMA_PDATAALIGN_BYTE            | //Ðàçìåð äàííûõ â ÏÓ - áàéò
+		LL_DMA_MDATAALIGN_BYTE);            //Ðàçìåð äàííûõ â ÎÇÓ - áàéò
+	LL_DMA_ConfigAddresses(DMA1, LL_DMA_CHANNEL_6,   	//Óêàçàíèå àäðåñîâ äëÿ ïåðåìåùåíèÿ äàííûõ
+				LL_USART_DMA_GetRegAddr(USART2, LL_USART_DMA_REG_DATA_RECEIVE),//Àäðåñ ðåãèñòðà USART_RDR 
+				(uint32_t)tDatuart.aRxDMABuf,			//Íà÷àëüíûé àäðåñ â ïàìÿòè áóôôåðà ïðè¸ìà
+				LL_DMA_GetDataTransferDirection(DMA1, LL_DMA_CHANNEL_6));
+	LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_6, UARTBUFSZ);//Ðàçìåð êîëüöåâîãî áóôåðà
+ 	LL_DMA_EnableIT_TC(DMA1, LL_DMA_CHANNEL_7); // Ðàçðåøåíèå ïðåðûâàíèÿ êàíàëó ¹7 ïî çàâåðøåíèþ ïåðåäà÷è
+	LL_DMA_EnableIT_TE(DMA1, LL_DMA_CHANNEL_7); // Ðàçðåøåíèå ïðåðûâàíèÿ ïðè îøèáêå îáìåíà
+	LL_DMA_EnableIT_TE(DMA1, LL_DMA_CHANNEL_6); // Ðàçðåøåíèå ïðåðûâàíèÿ ïðè îøèáêå îáìåíà
+	/**** Íàñòðîéêà ïàðàìåòðîâ USART2(ðåæèì UART) ****/
+	// Äóïëåêñíûé ðåæèì  ÷òåíèÿ/çàïèñè TX/RX
+	LL_USART_SetTransferDirection(USART2, LL_USART_DIRECTION_TX_RX);
+	// Ôîðìàò êàäðà äàííûõ 10áèò = 1 ñòàðò áèò, 8 áèò äàííûõ, 1 ñòîï áèò, áèò ÷¸òíîñòè - îòêëþ÷åí
+	LL_USART_ConfigCharacter(USART2, LL_USART_DATAWIDTH_8B, LL_USART_PARITY_NONE, LL_USART_STOPBITS_1);
+	// Ïåðåäà÷à/ïðè¸ì êàäðà äàííûõ ìëàäøèìè áèòàìè âïåð¸ä 
+	LL_USART_SetTransferBitOrder(USART2, LL_USART_BITORDER_LSBFIRST);
+	// Ñêîðîñòü ïðè¸ìà/ïåðåäà÷è 115200, ÷àñòîòà øèíû APB1 36ÌÃö
+    LL_USART_SetBaudRate(USART2, LL_RCC_GetUSARTClockFreq(LL_RCC_USART2_CLKSOURCE), LL_USART_OVERSAMPLING_16, 9600); 
+    LL_USART_EnableIT_IDLE(USART2); // Ðàçðåøàåì ïðåðûâàíèå ïîñëå ïðåêðàùåíèÿ êàäðîâ äàííûõ
+	LL_USART_EnableIT_ERROR(USART2);// Ðàçðåøàåì ïðåðûâàíèå ïðè îøèáêàõ USART2 ERROR Interrupt */
+	// Ðàçðåøàåì ïðåðûâàíèÿ 
+	NVIC_SetPriority(USART2_IRQn, 1);
+	NVIC_EnableIRQ(USART2_IRQn);
+	NVIC_EnableIRQ(DMA1_Channel7_IRQn);
+	// Ðàçðåøàåì ïðåðûâàíèå ïî ïðè¸ìó/ïåðåäà÷å USART2 RX/TX â DMA
+    LL_USART_EnableDMAReq_RX(USART2);
+	LL_USART_EnableDMAReq_TX(USART2);
+	// Âêëþ÷àåì â ðàáîòó, íà ïðè¸ì USART2, êàíàë DMA  
+	LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_6);
+	LL_USART_Enable(USART2);
+	tDatuart.ubTxsz = 0;
+	tDatuart.ubRxsz = 0;
+	printf("\nUART init\n");
+	uart_transmit((uint8_t*)"\nSTM32F3D connect\n",18);
+}
+
+void USART2_IRQHandler(void) {
+    static uint8_t old_pos=0;
+    uint8_t pos;
+    if (LL_USART_IsEnabledIT_IDLE(USART2) && LL_USART_IsActiveFlag_IDLE(USART2)) 
+	{ // Ïðåðûâàíèå ïðîñòîÿ ïðè ïðè¸ìå
+        LL_USART_ClearFlag_IDLE(USART2);
+		// Âû÷èñëÿåì ïîçèöèþ â áóôôåðå
+		pos = UARTBUFSZ - LL_DMA_GetDataLength(DMA1, LL_DMA_CHANNEL_6);
+		if(pos!=old_pos) {
+			if (pos > old_pos) { //Íîâàÿ ïîçèöèÿ âûøå ñòàðîé
+				tDatuart.ubRxsz=pos-old_pos;//êîïèðóåì â áóôôåð
+				memcpy(tDatuart.aRxBuf,&tDatuart.aRxDMABuf[old_pos],tDatuart.ubRxsz);
+			} 
+			else { //Íîâàÿ ïîçèöèÿ íèæå ñòàðîé
+				tDatuart.ubRxsz=UARTBUFSZ - old_pos + pos; //êîïèðóåì â áóôôåð 
+				memcpy(tDatuart.aRxBuf,&tDatuart.aRxDMABuf[old_pos],UARTBUFSZ - old_pos);
+				if(pos!=0)
+					memcpy(&tDatuart.aRxBuf[UARTBUFSZ - old_pos],tDatuart.aRxDMABuf,pos);
+			}
+			old_pos = pos;//çàïîìèíàåì òåêóþùóþ ïîçèöèþ
+			lenuart = tDatuart.ubRxsz;
+			SendMessage(MSG_UART_RX,(void*)&tDatuart.aRxBuf); // Ñîîáùàåì î ïðèíÿòîì ïàêåòå
+		}
+    }
+	else { // Îøèáêà ïðè¸ìà/ïåðåäà÷è
+		printf("Uart Error\n"); // Îøèáêà ïðè¸ìà/ïåðåäà÷è
+		LL_USART_ClearFlag_FE(USART2);
+		LL_USART_ClearFlag_PE(USART2);
+		LL_USART_ClearFlag_ORE(USART2);
+	}
+}
+
+void DMA1_Channel7_IRQHandler(void) {
+	if(LL_DMA_IsEnabledIT_TC(DMA1, LL_DMA_CHANNEL_7) && LL_DMA_IsActiveFlag_TC7(DMA1))
+	{// Ïðåðûâàíèå ïî îïóñòîøåíèþ áóôôåðà
+		LL_DMA_ClearFlag_GI7(DMA1); // Ïåðåäàëè ïàêåò
+		LL_DMA_DisableChannel(DMA1, LL_DMA_CHANNEL_7);// Îòêëþ÷èëè êàíàë
+	}
+}
+
+/* fsm_tm.c */
+#include "fsm_tm.h"
+#include "fsm_main.h"
+#include "timers.h"
+#include "messages.h"
+#include "i2cFram.h"
+#include "uart.h"
+#include "main.h"
+
+/* ????????? ???????? ?????????? */
+#define MTCTRL_RXCMD    0  // ???????? ??????? ???????
+#define MTCTRL_PROC     1  // ?????? ??
+#define MTCTRL_RDFRAM   2  // ?????? FRAM
+#define MTCTRL_WRFRAM   3  // ?????? FRAM
+#define MTCTRL_UARTTR   4  // ???????? UART
+
+/* ????????? ???????? ???????? */
+#define FSMST_Q0        0  // ????????? ?????????
+#define FSMST_Q1        1  // ???????? ?????? ?? ????? ??????
+#define FSMST_Q2        2  // ???????? ????? ? ???????? ???? 'a'
+#define FSMST_Q3        3  // ?????????? ??????
+
+static uint32_t curraddrtm = 0;  // ??????? ????????? ???????
+static uint32_t nextaddrtm = 0;  // ????????? ????????? ???????
+
+// ?????????? ????????? ???????? ???????? ??
+static char mtstatectrl = MTCTRL_RXCMD;   
+// ?????????? ????????? ???????? ??
+static char fsmstate = FSMST_Q0;
+
+int ProcTm(uint8_t rsymb, uint8_t* wrsymb) {
+    static int stepcnt = 0;
+    static int a_count = 0;  // ??????? ????????? 'a'
+    *wrsymb = rsymb;
+    
+    switch(fsmstate) {
+        case FSMST_Q0:  // ?????????????
+            stepcnt = 1;
+            nextaddrtm = 0;  // ???????? ? ?????? ?????
+            a_count = 0;     // ?????????? ???????
+            fsmstate = FSMST_Q1;
+            break;
+            
+        case FSMST_Q1:  // ????? ????? ??????
+            if(rsymb == 0 || rsymb == 0xFF) {  // ?????? ?????? - ????? ??????
+                nextaddrtm = curraddrtm - 1;   // ???????? ???????? ?????
+                fsmstate = FSMST_Q2;
+            } else {
+                nextaddrtm = curraddrtm + 1;   // ?????????? ???????? ??????
+            }
+            break;
+            
+        case FSMST_Q2:  // ????? ? ???????? ???? ????????? 'a'
+            if(rsymb == 'a' && a_count < 2) {
+                *wrsymb = '_';  // ??????? 'a'
+                a_count++;
+                if(a_count >= 2) {
+                    fsmstate = FSMST_Q3;  // ????? ??? 'a' - ?????????
+                }
+            }
+            nextaddrtm = curraddrtm - 1;  // ?????????? ???????? ?????
+            break;
+            
+        case FSMST_Q3:  // ?????????? ??????
+            stepcnt = -1;  // ?????? ?????????
+            break;
+    }
+    
+    if(stepcnt != -1) {
+        stepcnt++;
+    }
+    return stepcnt;
+}
+
+void ProcessFsmTm(void) {
+    static int steptm; 
+    static uint8_t rdsymbol;
+    static uint8_t wrsymbol;
+    static uint8_t aTrbuf[32];
+    uint8_t* pRxbuf = 0;
+    
+    switch (mtstatectrl) {
+        case MTCTRL_RXCMD: // ???????? ??????? ???????
+            if(GetMessage(MSG_TM1STRT, (void*)&pRxbuf)) {
+                nextaddrtm = 0;  // ???????? ? ?????? ?????
+                steptm = 1000;   // ???????????? ????? ????? (?? ?????? ??????)
+                mtstatectrl = MTCTRL_RDFRAM;
+                fsmstate = FSMST_Q0;  // ????????? ?????????
+                ResetTimer(TM1_TIMER);
+            }
+            break;
+            
+        case MTCTRL_PROC: // ?????????? ???? ??
+            if(GetTimer(TM1_TIMER) >= 1000) {  // ???? 1 ???????
+                ResetTimer(TM1_TIMER);
+                int curstep = ProcTm(rdsymbol, &wrsymbol);
+                
+                if(curstep == -1) {  // ?????????? ??????
+                    sprintf((char*)aTrbuf, "Done. Removed 2 last 'a'\n");
+                    steptm = -1;
+                    mtstatectrl = MTCTRL_UARTTR;
+                } 
+                else if(wrsymbol == rdsymbol) {
+                    mtstatectrl = MTCTRL_RDFRAM;  // ?????????? ??????
+                } 
+                else {
+                    mtstatectrl = MTCTRL_WRFRAM;  // ????? ???????? ?????????
+                }
+            }
+            break;
+            
+        case MTCTRL_RDFRAM:  // ?????? ?? FRAM
+            pRxbuf = (uint8_t*)i2cFRAM_rd(nextaddrtm, 1);
+            if((uint32_t)pRxbuf > 0) {
+                rdsymbol = pRxbuf[0];
+                curraddrtm = nextaddrtm;
+                mtstatectrl = MTCTRL_PROC;
+            }
+            break;
+            
+        case MTCTRL_WRFRAM:  // ?????? ? FRAM
+            if((uint32_t)i2cFRAM_wr(curraddrtm, &wrsymbol, 1) > 0) {
+                mtstatectrl = MTCTRL_RDFRAM;  // ?????????? ??????
+            }
+            break;
+            
+        case MTCTRL_UARTTR:  // ???????? ??????????
+            if(uart_transmit(aTrbuf, strlen((char*)aTrbuf)) == 0) {
+                if(steptm == -1) {
+                    mtstatectrl = MTCTRL_RXCMD;  // ?????? ? ????? ???????
+                }
+            }
+            break;
+    }
+}

@@ -1,0 +1,10 @@
+-I
+/Users/andrejpancenko/Documents/7 сем ух Ë/blender/lab9/lab9sheka/build/Qt_6_7_2_for_macOS-Debug
+-I
+/Users/andrejpancenko/Qt/6.7.2/macos/./qml
+--resource
+/Users/andrejpancenko/Documents/7 сем ух Ë/blender/lab9/lab9sheka/build/Qt_6_7_2_for_macOS-Debug/.qt/rcc/qmake_lab9sheka.qrc
+--resource
+/Users/andrejpancenko/Documents/7 сем ух Ë/blender/lab9/lab9sheka/build/Qt_6_7_2_for_macOS-Debug/.qt/rcc/applab9sheka_raw_qml_0.qrc
+--module
+lab9sheka

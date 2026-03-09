@@ -1,0 +1,44 @@
+
+@startuml
+class ParkingFactory {
+  -QStringList parkingData
+  +ParkingFactory(QObject *parent = nullptr)
+  +~ParkingFactory()
+  +void addParking(QString id, QString gps, QString size, QString type, QString cost)
+  +void loadParkingsToTable(QTableWidget *table)
+}
+
+class Visitors {
+  -QList<QStringList> visitorData
+  +Visitors(QObject *parent = nullptr)
+  +void addVisitor(QString number, QString name, QString address, QString phone)
+  +void saveVisitorsToFile()
+  +void loadVisitorsFromFile(QTableWidget *table)
+}
+
+class TicketManager {
+  -int currentTicketId
+  +TicketManager(QObject *parent = nullptr)
+  +QString generateTicketId()
+  +void addTicket(QString parkingId, QString visitorNumber, QString date, QTableWidget *table)
+}
+
+class Vehicle {
+  -QString vehicleId
+  -QString brand
+  -QString model
+  +Vehicle()
+}
+
+class Personnel {
+  -QString personnelId
+  -QString name
+  -QString position
+  +Personnel()
+}
+
+ParkingFactory --> TicketManager : provides parking data
+Visitors --> TicketManager : provides visitor data
+TicketManager --> Vehicle : assigns to vehicles
+TicketManager --> Personnel : assigns personnel
+@enduml

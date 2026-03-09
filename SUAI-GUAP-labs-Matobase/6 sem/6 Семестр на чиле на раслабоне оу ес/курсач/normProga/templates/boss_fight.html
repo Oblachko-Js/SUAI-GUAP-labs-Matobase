@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Сражения с боссами</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .boss-list {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <h1>Сражения с боссами</h1>
+
+    <!-- Список боссов -->
+    <div class="boss-list">
+        <h2>Боссы</h2>
+        <ul id="bosses"></ul>
+    </div>
+
+    <!-- Кнопка для возврата в личный кабинет -->
+    <button onclick="window.location.href='/dashboard'">Вернуться в личный кабинет</button>
+
+    <script>
+        // Загрузка боссов
+        async function loadBosses() {
+            const response = await fetch('/bosses');
+            const bosses = await response.json();
+            const bossList = document.getElementById('bosses');
+            bossList.innerHTML = bosses.map(boss => `<li>${boss.name} (Здоровье: ${boss.health}, Уровень: ${boss.level})</li>`).join('');
+        }
+
+        // Инициализация
+        loadBosses();
+    </script>
+</body>
+</html>

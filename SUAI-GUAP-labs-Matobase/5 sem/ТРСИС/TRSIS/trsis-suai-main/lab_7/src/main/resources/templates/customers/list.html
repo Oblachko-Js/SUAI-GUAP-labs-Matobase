@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<head th:replace="fragments/general.html :: head"></head>
+<body>
+    <header th:insert="fragments/general.html :: header"></header>
+    <h1 class="title">Cars</h1>
+    <div>
+        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/customers/new}" class="btn btn-primary">Add a customer</a>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">BirthDate</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr th:each="customer : ${customers}">
+            <td th:text="${customer.id}"></td>
+            <td th:text="${customer.name}"></td>
+            <td th:text="${customer.birthDate}"></td>
+            <td>
+                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/customers/{id}/delete(id=${customer.id})}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+   </table>
+</body>
+</html>

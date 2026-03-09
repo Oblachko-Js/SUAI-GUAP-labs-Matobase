@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сражения с боссами</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bosses-page">
+
+    <!-- Левый баннер -->
+   <div class="banner left-banner">
+        <div class="banner-content">
+            <img src="images/banner2.jpg" alt="Баннер 2">
+            <img src="images/banner5.jpg" alt="Баннер 5">
+            <img src="images/banner3.jpg" alt="Баннер 3">
+            <img src="images/banner4.jpg" alt="Баннер 4">
+            <img src="images/banner1.jpg" alt="Баннер 1">
+        </div>
+    </div>
+
+    <div class="main-wrapper">
+        <div class="container">
+            <h1>Сражения с боссами</h1>
+            <p>Здесь вы можете сражаться с боссами!</p>
+            <a href="user.html" class="back-btn">Вернуться в личный кабинет</a> 
+
+            <div class="content-wrapper">
+                <div id="bossesList" class="bosses-list">
+                    <!-- Боссы будут загружены сюда через JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Блок для восстановления маны -->
+        <div class="mana-restore-block">
+            <h2>Восстановление маны</h2>
+            <img src="images/mana-icon.png" alt="Иконка маны" class="mana-icon">
+            <p>Текущая мана: <span id="currentMana">0</span></p>
+            <p>Мана за клик: <span id="manaPerClick">1</span></p>
+            <p>Для аттаки босса нужно 100 манны</p>
+            <button id="restoreManaBtn">Восстановить ману</button>
+        </div>
+    </div>
+
+   <!-- Правый баннер -->
+   <div class="banner right-banner">
+        <div class="banner-content">
+            <img src="images/banner7.jpg" alt="Баннер 7">
+            <img src="images/banner10.jpg" alt="Баннер 10">
+            <img src="images/banner8.jpg" alt="Баннер 8">
+            <img src="images/banner9.jpg" alt="Баннер 9">
+            <img src="images/banner6.jpg" alt="Баннер 6">
+        </div>
+    </div>
+
+    <script src="bosses.js"></script>
+    <script src="bannerScroll.js"></script>
+</body>
+</html>

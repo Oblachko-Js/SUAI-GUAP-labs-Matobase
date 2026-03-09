@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Трекер привычек - RPG</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Левый баннер -->
+    <div class="banner left-banner">
+        <div class="banner-content">
+            <img src="images/banner1.jpg" alt="Баннер 1">
+            <img src="images/banner2.jpg" alt="Баннер 2">
+            <img src="images/banner3.jpg" alt="Баннер 3">
+            <img src="images/banner4.jpg" alt="Баннер 4">
+            <img src="images/banner5.jpg" alt="Баннер 5">
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Трекер привычек - RPG</h1>
+        <div id="auth-forms">
+            <!-- Форма регистрации -->
+            <form id="registerForm">
+                <h2>Регистрация</h2>
+                <label for="registerLogin">Логин:</label>
+                <input type="text" id="registerLogin" required>
+                <label for="registerEmail">Email:</label>
+                <input type="email" id="registerEmail" required>
+                <label for="registerPassword">Пароль:</label>
+                <input type="password" id="registerPassword" required>
+                <button type="submit">Зарегистрироваться</button>
+            </form>
+
+            <!-- Форма входа -->
+            <form id="loginForm">
+                <h2>Вход</h2>
+                <label for="loginEmail">Email:</label>
+                <input type="text" id="loginEmail" required>
+                <label for="loginPassword">Пароль:</label>
+                <input type="password" id="loginPassword" required>
+                <button type="submit">Войти</button>
+            </form>
+        </div>
+        <div id="message"></div>
+    </div>
+
+    <!-- Правый баннер -->
+    <div class="banner right-banner">
+        <div class="banner-content">
+            <img src="images/banner6.jpg" alt="Баннер 6">
+            <img src="images/banner7.jpg" alt="Баннер 7">
+            <img src="images/banner8.jpg" alt="Баннер 8">
+            <img src="images/banner9.jpg" alt="Баннер 9">
+            <img src="images/banner10.jpg" alt="Баннер 10">
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="bannerScroll.js"></script>
+
+</body>
+</html>

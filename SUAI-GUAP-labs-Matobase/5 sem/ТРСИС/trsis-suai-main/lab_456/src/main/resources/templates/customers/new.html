@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/general.html :: head"></head>
+<body>
+    <header th:insert="fragments/general.html :: header"></header>
+    <h2 class="title">Add new customer</h2>
+    <div class="col-md-8">
+        <form action="#" th:action="@{/customers/new}" method="post" th:object="${customer}">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" th:field="*{name}" th:errorClass="errorInput">
+                <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:errorClass="text-danger"></small>
+            </div>
+            <div class="form-group">
+                <label for="birthDate">BirthDate</label>
+                <input type="text" class="form-control" id="birthDate" name="birthDate">
+                <small th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}" th:errorClass="text-danger"></small>
+            </div>
+            <br>
+            <input type="submit" class="btn btn-primary" value="Add">
+        </form>
+    </div>
+<script src="/webjars/bootstrap/4.6.0/js/bootstrap.min.js"></script>
+</body>
+</html>

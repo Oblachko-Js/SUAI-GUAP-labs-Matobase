@@ -1,0 +1,135 @@
+/* fsm_tm.c */
+#include "fsm_tm.h"
+#include "fsm_main.h"
+#include "timers.h"
+#include "messages.h"
+#include "i2cFram.h"
+#include "uart.h"
+#include "main.h"
+
+/* Состояния автомата управления */
+#define MTCTRL_RXCMD    0  // ожидание команды запуска
+#define MTCTRL_PROC     1  // работа МТ
+#define MTCTRL_RDFRAM   2  // чтение FRAM
+#define MTCTRL_WRFRAM   3  // запись FRAM
+#define MTCTRL_UARTTR   4  // передача UART
+
+/* Состояния автомата Тьюринга */
+#define FSMST_Q0        0  // начальное состояние
+#define FSMST_Q1        1  // движение вправо до конца строки
+#define FSMST_Q2        2  // движение влево и удаление двух 'a'
+#define FSMST_Q3        3  // завершение работы
+
+static uint32_t curraddrtm = 0;  // текущее положение каретки
+static uint32_t nextaddrtm = 0;  // следующее положение каретки
+
+// Переменная состояния автомата контроля МТ
+static char mtstatectrl = MTCTRL_RXCMD;   
+// Переменная состояния автомата МТ
+static char fsmstate = FSMST_Q0;
+
+int ProcTm(uint8_t rsymb, uint8_t* wrsymb) {
+    static int stepcnt = 0;
+    static int a_count = 0;  // счетчик найденных 'a'
+    *wrsymb = rsymb;
+    
+    switch(fsmstate) {
+        case FSMST_Q0:  // инициализация
+            stepcnt = 1;
+            nextaddrtm = 0;  // начинаем с начала ленты
+            a_count = 0;     // сбрасываем счетчик
+            fsmstate = FSMST_Q1;
+            break;
+            
+        case FSMST_Q1:  // поиск конца строки
+            if(rsymb == 0 || rsymb == 0xFF) {  // пустая ячейка - конец данных
+                nextaddrtm = curraddrtm - 1;   // начинаем движение назад
+                fsmstate = FSMST_Q2;
+            } else {
+                nextaddrtm = curraddrtm + 1;   // продолжаем движение вправо
+            }
+            break;
+            
+        case FSMST_Q2:  // поиск и удаление двух последних 'a'
+            if(rsymb == 'a' && a_count < 2) {
+                *wrsymb = '_';  // стираем 'a'
+                a_count++;
+                if(a_count >= 2) {
+                    fsmstate = FSMST_Q3;  // нашли две 'a' - завершаем
+                }
+            }
+            nextaddrtm = curraddrtm - 1;  // продолжаем движение влево
+            break;
+            
+        case FSMST_Q3:  // завершение работы
+            stepcnt = -1;  // сигнал остановки
+            break;
+    }
+    
+    if(stepcnt != -1) {
+        stepcnt++;
+    }
+    return stepcnt;
+}
+
+void ProcessFsmTm(void) {
+    static int steptm; 
+    static uint8_t rdsymbol;
+    static uint8_t wrsymbol;
+    static uint8_t aTrbuf[32];
+    uint8_t* pRxbuf = 0;
+    
+    switch (mtstatectrl) {
+        case MTCTRL_RXCMD: // ожидание команды запуска
+            if(GetMessage(MSG_TM1STRT, (void*)&pRxbuf)) {
+                nextaddrtm = 0;  // начинаем с начала ленты
+                steptm = 1000;   // максимальное число шагов (на всякий случай)
+                mtstatectrl = MTCTRL_RDFRAM;
+                fsmstate = FSMST_Q0;  // начальное состояние
+                ResetTimer(TM1_TIMER);
+            }
+            break;
+            
+        case MTCTRL_PROC: // выполнение шага МТ
+            if(GetTimer(TM1_TIMER) >= 1000) {  // ждем 1 секунду
+                ResetTimer(TM1_TIMER);
+                int curstep = ProcTm(rdsymbol, &wrsymbol);
+                
+                if(curstep == -1) {  // завершение работы
+                    sprintf((char*)aTrbuf, "Done. Removed 2 last 'a'\n");
+                    steptm = -1;
+                    mtstatectrl = MTCTRL_UARTTR;
+                } 
+                else if(wrsymbol == rdsymbol) {
+                    mtstatectrl = MTCTRL_RDFRAM;  // продолжаем чтение
+                } 
+                else {
+                    mtstatectrl = MTCTRL_WRFRAM;  // нужно записать изменения
+                }
+            }
+            break;
+            
+        case MTCTRL_RDFRAM:  // чтение из FRAM
+            pRxbuf = (uint8_t*)i2cFRAM_rd(nextaddrtm, 1);
+            if((uint32_t)pRxbuf > 0) {
+                rdsymbol = pRxbuf[0];
+                curraddrtm = nextaddrtm;
+                mtstatectrl = MTCTRL_PROC;
+            }
+            break;
+            
+        case MTCTRL_WRFRAM:  // запись в FRAM
+            if((uint32_t)i2cFRAM_wr(curraddrtm, &wrsymbol, 1) > 0) {
+                mtstatectrl = MTCTRL_RDFRAM;  // продолжаем чтение
+            }
+            break;
+            
+        case MTCTRL_UARTTR:  // передача результата
+            if(uart_transmit(aTrbuf, strlen((char*)aTrbuf)) == 0) {
+                if(steptm == -1) {
+                    mtstatectrl = MTCTRL_RXCMD;  // готовы к новой команде
+                }
+            }
+            break;
+    }
+}

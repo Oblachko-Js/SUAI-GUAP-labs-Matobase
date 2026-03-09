@@ -1,0 +1,78 @@
+clc;
+clear;
+[x,y,xx] = vvvvooooodddd();
+raznosti(x,y)
+yy = interpola(xx,y,x);
+stroit(x,y,xx,yy)
+
+function [x,y,xx] = vvvvooooodddd()
+% Ввод значений массива x
+x_str = strrep(input("Введите значения массива x, разделяя их пробелами: ",'s'), ',', '.');
+while true
+    x_cell = strsplit(x_str, ' ');
+    x = str2double(x_cell);
+    if any(isnan(x)) || length(x) < 2
+        disp("Массив x должен содержать не менее двух чисел, разделенных пробелами.");
+        x_str = strrep(input("Введите значения массива x: ", 's'), ',', '.');
+        continue
+    end
+    break
+end
+% Ввод значений массива y
+y_str = strrep(input("Введите значения массива y, разделяя их пробелами: ",'s'), ',', '.');
+while true
+    y_cell = strsplit(y_str, ' ');
+    y = str2double(y_cell);
+    if any(isnan(y)) || length(y) ~= length(x)
+        disp("Массив y должен содержать столько же чисел, сколько и массив x, разделенных пробелами.");
+        y_str = strrep(input("Введите значения массива y: ", 's'), ',', '.');
+        continue
+    end
+    break
+end
+% Ввод значения xx
+xx_str = strrep(input("Введите значение xx, используя точку для разделения дробной части: ", 's'), ',', '.');
+while true
+    xx = str2double(xx_str);
+    if isnan(xx)
+        disp("xx должно быть числом, в числе должен быть один разделитель.");
+        xx_str = strrep(input("Введите значение xx: ", 's'), ',', '.');
+        continue
+    end
+    break
+end
+end
+
+function [i,y,x] = raznosti(x,y)
+n = length(x); % определение переменной n
+% Вычисление разделенных разностей
+for i = 2:n
+    for j = n:-1:i
+        kaka = x(j) - x(j-i+1);
+        if kaka == 0
+            disp('Нельзя делить на ноль');
+            return
+        end
+        y(j) = (y(j) - y(j-1))/kaka;
+    end
+end
+end
+
+function [yy,xx,y] = interpola(xx, y, x)
+n = length(x); % определение переменной n
+% Вычисление интерполяционного полинома методом Ньютона
+yy = y(n);
+for i = n-1:-1:1
+yy = y(i) + (xx - x(i))*yy;
+end
+end
+
+function stroit(x,y,xx,yy)
+clc;
+% Вывод результата
+ylim([0, inf]);
+plot(x,y,'o',xx,yy);
+hold on;
+plot(x,y,'k');
+fprintf ("Ответ: %.6f\n", yy);
+end

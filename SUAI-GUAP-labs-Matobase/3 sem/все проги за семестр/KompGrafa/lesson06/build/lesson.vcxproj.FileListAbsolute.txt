@@ -1,0 +1,2 @@
+C:\Users\Galdec\Desktop\lesson06\build\lesson.exe
+C:\MyProjectsVS\KompGrafa\lesson06\build\lesson.exe

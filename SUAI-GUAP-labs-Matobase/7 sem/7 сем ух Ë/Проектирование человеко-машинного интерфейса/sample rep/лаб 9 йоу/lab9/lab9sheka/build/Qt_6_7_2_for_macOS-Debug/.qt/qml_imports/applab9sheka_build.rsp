@@ -1,0 +1,14 @@
+-rootPath
+/Users/andrejpancenko/Documents/7 сем ух Ë/blender/lab9/lab9sheka
+-cmake-output
+-output-file
+/Users/andrejpancenko/Documents/7 сем ух Ë/blender/lab9/lab9sheka/build/Qt_6_7_2_for_macOS-Debug/.qt/qml_imports/applab9sheka_build.cmake
+-importPath
+/Users/andrejpancenko/Documents/7 сем ух Ë/blender/lab9/lab9sheka/build/Qt_6_7_2_for_macOS-Debug/lab9sheka
+-importPath
+/Users/andrejpancenko/Documents/7 сем ух Ë/blender/lab9/lab9sheka/build/Qt_6_7_2_for_macOS-Debug
+-importPath
+/Users/andrejpancenko/Qt/6.7.2/macos/./qml
+-qrcFiles
+/Users/andrejpancenko/Documents/7 сем ух Ë/blender/lab9/lab9sheka/build/Qt_6_7_2_for_macOS-Debug/.qt/rcc/qmake_lab9sheka.qrc
+/Users/andrejpancenko/Documents/7 сем ух Ë/blender/lab9/lab9sheka/build/Qt_6_7_2_for_macOS-Debug/.qt/rcc/applab9sheka_raw_qml_0.qrc

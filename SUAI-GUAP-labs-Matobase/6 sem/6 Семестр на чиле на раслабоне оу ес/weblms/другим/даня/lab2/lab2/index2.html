@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Пример с fetchData</title>
+</head>
+<body>
+  <h2>Результаты запроса данных</h2>
+  <div id="data-output"></div>
+  <div id="error-output"></div>
+
+  <script>
+    // Асинхронная функция для получения данных с URL
+    function fetchData(url) {
+      return new Promise((resolve, reject) => {
+        fetch(url)
+          .then(response => {
+            if (response.status === 200) {
+              return response.text(); // Если статус 200, парсим данные как текст
+            } else {
+              reject('Ошибка запроса: ' + response.statusText); // Если ошибка, отклоняем промис
+            }
+          })
+          .then(data => resolve(data)) // Разрешаем промис с полученными данными
+          .catch(error => reject('Ошибка сети: ' + error)); // Обрабатываем ошибки сети
+      });
+    }
+
+    // Пример использования
+    fetchData('https://jsonplaceholder.typicode.com/posts')
+      .then(data => {
+        // Выводим данные на страницу
+        document.getElementById('data-output').innerHTML = `<pre>${data}</pre>`;
+      })
+      .catch(error => {
+        // Выводим ошибку на страницу
+        document.getElementById('error-output').innerText = `Ошибка: ${error}`;
+      });
+  </script>
+</body>
+</html>

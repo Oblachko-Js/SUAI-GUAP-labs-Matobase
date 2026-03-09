@@ -1,0 +1,138 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.29.0.0
+Copyright (C) 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: stud user, SUAI, LIC=----
+ 
+Tool Versions:
+Toolchain:       MDK-Lite  Version: 5.29.0.0
+Toolchain Path:  C:\Program Files\Keil\MDK-ARM-v5\ARM\ARMCLANG\Bin
+C Compiler:      ArmClang.exe V6.13.1
+Assembler:       Armasm.exe V6.13.1
+Linker/Locator:  ArmLink.exe V6.13.1
+Library Manager: ArmAr.exe V6.13.1
+Hex Converter:   FromElf.exe V6.13.1
+CPU DLL:         SARMCM3.DLL V5.29.0.0
+Dialog DLL:      DCM.DLL V1.17.3.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.7.0
+Dialog DLL:      TCM.DLL V1.36.5.0
+ 
+<h2>Project:</h2>
+C:\Users\stud\Documents\4236\PANCHENKO\finalLab5\Lab5\lab5.uvprojx
+Project File Date:  05/13/2025
+
+<h2>Output:</h2>
+*** Using Compiler 'V6.13.1', folder: 'C:\Program Files\Keil\MDK-ARM-v5\ARM\ARMCLANG\Bin'
+Rebuild target 'lab5'
+compiling fsm_main.c...
+compiling main.c...
+compiling keypad.c...
+compiling i2cFram.c...
+compiling timers.c...
+compiling messages.c...
+compiling fsm_tm.c...
+compiling uart.c...
+compiling fsm_tm1.c...
+compiling fsm_tm2.c...
+compiling fsm_inter_tm1.c...
+compiling fsm_inter_tm2.c...
+compiling fsm_inter_tm3.c...
+compiling fsm_tm3.c...
+compiling retarget_io.c...
+compiling stm32f3xx_ll_dma.c...
+compiling stm32f3xx_ll_gpio.c...
+compiling stm32f3xx_ll_i2c.c...
+compiling stm32f3xx_ll_pwr.c...
+compiling stm32f3xx_ll_rcc.c...
+compiling stm32f3xx_ll_usart.c...
+compiling stm32f3xx_ll.c...
+assembling startup_stm32f303xc.s...
+compiling stm32f3xx_ll_utils.c...
+compiling system_stm32f3xx.c...
+linking...
+Program Size: Code=16414 RO-data=810 RW-data=32 ZI-data=3592  
+".\Objects\lab5.axf" - 0 Error(s), 0 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.6.0.pack
+                ARM.CMSIS.5.6.0
+                CMSIS (Cortex Microcontroller Software Interface Standard)
+   * Component: CORE Version: 5.3.0
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.ARM_Compiler.1.6.2.pack
+                Keil.ARM_Compiler.1.6.2
+                Keil ARM Compiler extensions for ARM Compiler 5 and ARM Compiler 6
+   * Component: STDOUT Variant: ITM Version: 1.2.0
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.STM32F3xx_DFP.2.1.0.pack
+                Keil.STM32F3xx_DFP.2.1.0
+                STMicroelectronics STM32F3 Series Device Support and Examples
+   * Component: COMMON Version: 1.9.0
+   * Component: DMA Version: 1.9.0
+   * Component: GPIO Version: 1.9.0
+   * Component: I2C Version: 1.9.0
+   * Component: PWR Version: 1.9.0
+   * Component: RCC Version: 1.9.0
+   * Component: USART Version: 1.9.0
+   * Component: UTILS Version: 1.9.0
+   * Component: Startup Version: 1.0.0
+
+<h2>Collection of Component include folders:</h2>
+  .\RTE\_lab5
+  C:\Program Files\Keil\MDK-ARM-v5-Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include
+  C:\Program Files\Keil\MDK-ARM-v5-Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include
+  C:\Program Files\Keil\MDK-ARM-v5-Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\STM32F3xx_HAL_Driver\Inc
+  C:\Program Files\Keil\MDK-ARM-v5-Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\STM32F3xx_HAL_Driver\Inc\Legacy
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:5.3.0
+
+   * Component: Keil.ARM Compiler::Compiler:I/O:STDOUT:ITM:1.2.0
+      Source file:   Source\retarget_io.c
+
+   * Component: Keil.Standalone::Device:STM32Cube LL:COMMON:1.9.0
+      Source file:   MDK\Driver\stm32f3xx_ll.c
+      Include file:  MDK\Templates_LL\Inc\main.h
+      Source file:   MDK\Templates_LL\Src\main.c
+      Include file:  MDK\Templates_LL\Inc\stm32f3xx_it.h
+      Source file:   MDK\Templates_LL\Src\stm32f3xx_it.c
+      Include file:  MDK\Templates_LL\Inc\stm32_assert.h
+
+   * Component: Keil.Standalone::Device:STM32Cube LL:DMA:1.9.0
+      Source file:   Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_ll_dma.c
+
+   * Component: Keil.Standalone::Device:STM32Cube LL:GPIO:1.9.0
+      Source file:   Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_ll_gpio.c
+
+   * Component: Keil.Standalone::Device:STM32Cube LL:I2C:1.9.0
+      Source file:   Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_ll_i2c.c
+
+   * Component: Keil.Standalone::Device:STM32Cube LL:PWR:1.9.0
+      Source file:   Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_ll_pwr.c
+
+   * Component: Keil.Standalone::Device:STM32Cube LL:RCC:1.9.0
+      Source file:   Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_ll_rcc.c
+
+   * Component: Keil.Standalone::Device:STM32Cube LL:USART:1.9.0
+      Source file:   Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_ll_usart.c
+
+   * Component: Keil.Standalone::Device:STM32Cube LL:UTILS:1.9.0
+      Source file:   Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_ll_utils.c
+
+   * Component: Keil.Standalone::Device:Startup:1.0.0
+      Source file:   MDK\Device\Source\ARM\STM32F3xx_OPT.s
+      Include file:  Drivers\CMSIS\Device\ST\STM32F3xx\Include\stm32f3xx.h
+      Source file:   Drivers\CMSIS\Device\ST\STM32F3xx\Source\Templates\system_stm32f3xx.c
+      Source file:   Drivers\CMSIS\Device\ST\STM32F3xx\Source\Templates\arm\startup_stm32f303xc.s
+Build Time Elapsed:  00:00:03
+</pre>
+</body>
+</html>

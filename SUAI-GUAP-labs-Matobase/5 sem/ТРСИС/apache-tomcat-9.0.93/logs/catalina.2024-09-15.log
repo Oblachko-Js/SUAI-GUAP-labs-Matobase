@@ -1,0 +1,169 @@
+15-Sep-2024 10:56:09.740 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Имя версии сервера:    Apache Tomcat/9.0.93
+15-Sep-2024 10:56:09.742 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Сервер собран:         Aug 2 2024 21:24:59 UTC
+15-Sep-2024 10:56:09.743 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Номер версии сервера:  9.0.93.0
+15-Sep-2024 10:56:09.743 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Mac OS X
+15-Sep-2024 10:56:09.743 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Версия ОС:             14.5
+15-Sep-2024 10:56:09.743 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Архитектура:           aarch64
+15-Sep-2024 10:56:09.743 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             /Library/Java/JavaVirtualMachines/jdk-22.jdk/Contents/Home
+15-Sep-2024 10:56:09.743 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Версия JVM:            22.0.2+9-70
+15-Sep-2024 10:56:09.743 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Производитель JVM:     Oracle Corporation
+15-Sep-2024 10:56:09.743 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         /Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93
+15-Sep-2024 10:56:09.743 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         /Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93
+15-Sep-2024 10:56:09.783 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+15-Sep-2024 10:56:09.783 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+15-Sep-2024 10:56:09.783 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util=ALL-UNNAMED
+15-Sep-2024 10:56:09.783 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+15-Sep-2024 10:56:09.783 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+15-Sep-2024 10:56:09.783 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/conf/logging.properties
+15-Sep-2024 10:56:09.783 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+15-Sep-2024 10:56:09.783 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+15-Sep-2024 10:56:09.783 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+15-Sep-2024 10:56:09.783 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dorg.apache.catalina.security.SecurityListener.UMASK=0027
+15-Sep-2024 10:56:09.783 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
+15-Sep-2024 10:56:09.783 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93
+15-Sep-2024 10:56:09.783 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93
+15-Sep-2024 10:56:09.783 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/temp
+15-Sep-2024 10:56:09.790 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent The Apache Tomcat Native library which allows using OpenSSL was not found on the java.library.path: [/Users/andrejpancenko/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.]
+15-Sep-2024 10:56:10.003 INFO [main] org.apache.coyote.AbstractProtocol.init Инициализация ProtocolHandler ["http-nio-8080"]
+15-Sep-2024 10:56:10.040 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [442] milliseconds
+15-Sep-2024 10:56:10.064 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+15-Sep-2024 10:56:10.064 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.93]
+15-Sep-2024 10:56:10.073 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deploying web application archive [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/lab2-0.0.1-SNAPSHOT.war]
+15-Sep-2024 10:56:11.107 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+15-Sep-2024 10:56:11.188 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/lab2-0.0.1-SNAPSHOT.war] has finished in [1 114] ms
+15-Sep-2024 10:56:11.188 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Установка веб приложения в папку [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/docs]
+15-Sep-2024 10:56:11.211 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+15-Sep-2024 10:56:11.212 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/docs] has finished in [24] ms
+15-Sep-2024 10:56:11.212 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Установка веб приложения в папку [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/manager]
+15-Sep-2024 10:56:11.237 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+15-Sep-2024 10:56:11.241 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/manager] has finished in [28] ms
+15-Sep-2024 10:56:11.241 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Установка веб приложения в папку [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/examples]
+15-Sep-2024 10:56:11.341 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+15-Sep-2024 10:56:11.354 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/examples] has finished in [113] ms
+15-Sep-2024 10:56:11.355 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Установка веб приложения в папку [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/ROOT]
+15-Sep-2024 10:56:11.371 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+15-Sep-2024 10:56:11.372 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/ROOT] has finished in [17] ms
+15-Sep-2024 10:56:11.373 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Установка веб приложения в папку [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/host-manager]
+15-Sep-2024 10:56:11.391 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+15-Sep-2024 10:56:11.392 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/host-manager] has finished in [19] ms
+15-Sep-2024 10:56:11.394 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+15-Sep-2024 10:56:11.403 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [1361] milliseconds
+15-Sep-2024 10:56:31.410 INFO [Catalina-utility-1] org.apache.catalina.startup.HostConfig.undeploy Undeploying context [/lab2-0.0.1-SNAPSHOT]
+15-Sep-2024 10:58:27.560 INFO [main] org.apache.catalina.core.StandardServer.await A valid shutdown command was received via the shutdown port. Stopping the Server instance.
+15-Sep-2024 10:58:27.560 INFO [main] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8080"]
+15-Sep-2024 10:58:27.563 INFO [main] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+15-Sep-2024 10:58:27.571 INFO [main] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8080"]
+15-Sep-2024 10:58:27.573 INFO [main] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8080"]
+15-Sep-2024 10:59:31.364 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Имя версии сервера:    Apache Tomcat/9.0.93
+15-Sep-2024 10:59:31.367 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Сервер собран:         Aug 2 2024 21:24:59 UTC
+15-Sep-2024 10:59:31.367 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Номер версии сервера:  9.0.93.0
+15-Sep-2024 10:59:31.367 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Mac OS X
+15-Sep-2024 10:59:31.367 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Версия ОС:             14.5
+15-Sep-2024 10:59:31.367 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Архитектура:           aarch64
+15-Sep-2024 10:59:31.367 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             /Library/Java/JavaVirtualMachines/jdk-22.jdk/Contents/Home
+15-Sep-2024 10:59:31.367 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Версия JVM:            22.0.2+9-70
+15-Sep-2024 10:59:31.367 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Производитель JVM:     Oracle Corporation
+15-Sep-2024 10:59:31.367 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         /Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93
+15-Sep-2024 10:59:31.367 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         /Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93
+15-Sep-2024 10:59:31.375 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+15-Sep-2024 10:59:31.375 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+15-Sep-2024 10:59:31.376 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util=ALL-UNNAMED
+15-Sep-2024 10:59:31.376 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+15-Sep-2024 10:59:31.376 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+15-Sep-2024 10:59:31.376 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/conf/logging.properties
+15-Sep-2024 10:59:31.376 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+15-Sep-2024 10:59:31.376 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+15-Sep-2024 10:59:31.376 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+15-Sep-2024 10:59:31.376 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dorg.apache.catalina.security.SecurityListener.UMASK=0027
+15-Sep-2024 10:59:31.376 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
+15-Sep-2024 10:59:31.376 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93
+15-Sep-2024 10:59:31.376 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93
+15-Sep-2024 10:59:31.376 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/temp
+15-Sep-2024 10:59:31.382 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent The Apache Tomcat Native library which allows using OpenSSL was not found on the java.library.path: [/Users/andrejpancenko/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.]
+15-Sep-2024 10:59:31.593 INFO [main] org.apache.coyote.AbstractProtocol.init Инициализация ProtocolHandler ["http-nio-8080"]
+15-Sep-2024 10:59:31.615 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [392] milliseconds
+15-Sep-2024 10:59:31.637 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+15-Sep-2024 10:59:31.637 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.93]
+15-Sep-2024 10:59:31.646 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deploying web application archive [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/lab3restajax.war]
+15-Sep-2024 10:59:32.029 WARNING [main] org.apache.tomcat.util.descriptor.web.WebXml.setVersion Unknown version string [5.0]. Default version will be used.
+15-Sep-2024 10:59:32.031 WARNING [main] org.apache.tomcat.util.descriptor.web.WebXml.setVersion Unknown version string [6.0]. Default version will be used.
+15-Sep-2024 10:59:32.036 WARNING [main] org.apache.tomcat.util.descriptor.web.WebXml.setVersion Unknown version string [6.0]. Default version will be used.
+15-Sep-2024 10:59:33.746 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+15-Sep-2024 10:59:33.767 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/lab3restajax.war] has finished in [2 118] ms
+15-Sep-2024 10:59:33.767 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Установка веб приложения в папку [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/docs]
+15-Sep-2024 10:59:33.789 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+15-Sep-2024 10:59:33.790 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/docs] has finished in [23] ms
+15-Sep-2024 10:59:33.790 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Установка веб приложения в папку [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/manager]
+15-Sep-2024 10:59:33.814 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+15-Sep-2024 10:59:33.817 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/manager] has finished in [27] ms
+15-Sep-2024 10:59:33.817 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Установка веб приложения в папку [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/examples]
+15-Sep-2024 10:59:33.918 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+15-Sep-2024 10:59:33.926 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/examples] has finished in [109] ms
+15-Sep-2024 10:59:33.926 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Установка веб приложения в папку [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/ROOT]
+15-Sep-2024 10:59:33.943 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+15-Sep-2024 10:59:33.943 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/ROOT] has finished in [17] ms
+15-Sep-2024 10:59:33.944 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Установка веб приложения в папку [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/host-manager]
+15-Sep-2024 10:59:33.962 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+15-Sep-2024 10:59:33.963 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/host-manager] has finished in [19] ms
+15-Sep-2024 10:59:33.965 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+15-Sep-2024 10:59:33.971 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [2355] milliseconds
+15-Sep-2024 11:06:44.748 INFO [main] org.apache.catalina.core.StandardServer.await A valid shutdown command was received via the shutdown port. Stopping the Server instance.
+15-Sep-2024 11:06:44.749 INFO [main] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8080"]
+15-Sep-2024 11:06:44.753 INFO [main] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+15-Sep-2024 11:06:44.773 INFO [main] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8080"]
+15-Sep-2024 11:06:44.778 INFO [main] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8080"]
+15-Sep-2024 20:35:09.552 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Имя версии сервера:    Apache Tomcat/9.0.93
+15-Sep-2024 20:35:09.555 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Сервер собран:         Aug 2 2024 21:24:59 UTC
+15-Sep-2024 20:35:09.555 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Номер версии сервера:  9.0.93.0
+15-Sep-2024 20:35:09.555 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Mac OS X
+15-Sep-2024 20:35:09.555 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Версия ОС:             14.5
+15-Sep-2024 20:35:09.555 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Архитектура:           aarch64
+15-Sep-2024 20:35:09.555 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             /Library/Java/JavaVirtualMachines/jdk-22.jdk/Contents/Home
+15-Sep-2024 20:35:09.555 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Версия JVM:            22.0.2+9-70
+15-Sep-2024 20:35:09.555 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Производитель JVM:     Oracle Corporation
+15-Sep-2024 20:35:09.555 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         /Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93
+15-Sep-2024 20:35:09.555 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         /Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93
+15-Sep-2024 20:35:09.598 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+15-Sep-2024 20:35:09.598 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+15-Sep-2024 20:35:09.598 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util=ALL-UNNAMED
+15-Sep-2024 20:35:09.598 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+15-Sep-2024 20:35:09.598 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+15-Sep-2024 20:35:09.598 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/conf/logging.properties
+15-Sep-2024 20:35:09.598 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+15-Sep-2024 20:35:09.598 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+15-Sep-2024 20:35:09.598 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+15-Sep-2024 20:35:09.598 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dorg.apache.catalina.security.SecurityListener.UMASK=0027
+15-Sep-2024 20:35:09.599 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
+15-Sep-2024 20:35:09.599 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93
+15-Sep-2024 20:35:09.599 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93
+15-Sep-2024 20:35:09.599 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/temp
+15-Sep-2024 20:35:09.606 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent The Apache Tomcat Native library which allows using OpenSSL was not found on the java.library.path: [/Users/andrejpancenko/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.]
+15-Sep-2024 20:35:09.842 INFO [main] org.apache.coyote.AbstractProtocol.init Инициализация ProtocolHandler ["http-nio-8080"]
+15-Sep-2024 20:35:09.880 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [474] milliseconds
+15-Sep-2024 20:35:09.903 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+15-Sep-2024 20:35:09.903 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.93]
+15-Sep-2024 20:35:09.912 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deploying web application archive [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/lab2-0.0.1-SNAPSHOT.war]
+15-Sep-2024 20:35:11.065 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+15-Sep-2024 20:35:11.143 INFO [main] org.apache.catalina.startup.HostConfig.deployWAR Deployment of web application archive [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/lab2-0.0.1-SNAPSHOT.war] has finished in [1 231] ms
+15-Sep-2024 20:35:11.144 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Установка веб приложения в папку [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/docs]
+15-Sep-2024 20:35:11.167 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+15-Sep-2024 20:35:11.168 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/docs] has finished in [24] ms
+15-Sep-2024 20:35:11.169 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Установка веб приложения в папку [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/manager]
+15-Sep-2024 20:35:11.195 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+15-Sep-2024 20:35:11.200 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/manager] has finished in [30] ms
+15-Sep-2024 20:35:11.200 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Установка веб приложения в папку [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/examples]
+15-Sep-2024 20:35:11.304 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+15-Sep-2024 20:35:11.311 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/examples] has finished in [111] ms
+15-Sep-2024 20:35:11.311 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Установка веб приложения в папку [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/ROOT]
+15-Sep-2024 20:35:11.329 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+15-Sep-2024 20:35:11.330 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/ROOT] has finished in [19] ms
+15-Sep-2024 20:35:11.330 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Установка веб приложения в папку [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/host-manager]
+15-Sep-2024 20:35:11.351 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+15-Sep-2024 20:35:11.352 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/webapps/host-manager] has finished in [22] ms
+15-Sep-2024 20:35:11.354 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+15-Sep-2024 20:35:11.361 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [1479] milliseconds
+15-Sep-2024 20:37:54.422 INFO [main] org.apache.catalina.core.StandardServer.await A valid shutdown command was received via the shutdown port. Stopping the Server instance.
+15-Sep-2024 20:37:54.423 INFO [main] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8080"]
+15-Sep-2024 20:37:54.427 INFO [main] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+15-Sep-2024 20:37:54.456 INFO [main] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8080"]
+15-Sep-2024 20:37:54.463 INFO [main] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8080"]

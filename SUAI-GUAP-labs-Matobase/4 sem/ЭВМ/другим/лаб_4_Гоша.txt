@@ -1,0 +1,46 @@
+.Data SEGMENT
+    A DW 7
+    B DW 12
+    C DW -15
+    D DW 2
+    numerator DW ?
+    denominator DW ?
+    result DW ?
+Data ENDS
+Ourstack SEGMENT Stack
+    DB 100h DUP(?)
+Ourstack ENDS
+
+ASSUME CS:Code, DS:Data, SS:Ourstack
+
+Code SEGMENT
+Start: 
+    mov ax, Data
+    mov ds, ax
+    ; Calculate numerator: (7^2 + 12^2)
+    mov ax, A
+    mul ax         ; ax = 7^2
+    mov cx, ax
+    mov ax, 0 
+    mov ax, B 
+    mul ax         ; ax = 12^2
+    add ax, cx         ; ax = 7^2 + 12^2
+    mov numerator, ax  ;numericator = 00AH C1AL h
+
+    ; Calculate denominator: (2 - (-15))
+    mov ax, D
+    mov bx, C
+    sub ax, bx          ; ax = (2 - (-15))
+    mov denominator, ax ;00AH 11AL h
+
+    ; Perform division: numerator / denominator
+    mov ax, numerator                
+    mov bx, denominator
+    div bx    ; AX = numerator / denominator
+    mov result, ax      ;000B h
+    
+    ; Exit the program
+    mov ax, 4C00h         ; DOS terminate program function
+    int 21h 
+Code ENDS
+END Start

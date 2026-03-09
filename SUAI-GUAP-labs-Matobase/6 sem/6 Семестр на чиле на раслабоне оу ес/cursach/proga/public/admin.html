@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Страница Админа</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="admin-page">
+  <div class="container">
+    <h1>Страница Админа</h1>
+    <p>Добро пожаловать, администратор!</p>
+    <a href="/">Выйти</a>
+
+    <h2>Пользователи</h2>
+    <table id="usersTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Логин</th>
+          <th>Email</th>
+          <th>Статус</th>
+          <th>Удалить</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <h2>Задачи</h2>
+    <table id="tasksTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Название</th>
+          <th>Статус</th>
+          <th>Удалить</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <h2>Привычки</h2>
+    <table id="habitsTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Название</th>
+          <th>Статус</th>
+          <th>Удалить</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <h2>Персонажи RPG</h2>
+    <table id="charactersTable">
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Имя</th>
+          <th>Уровень</th>
+          <th>Здоровье</th>
+          <th>Мана</th>
+          <th>Опыт</th>
+          <th>Золото</th>
+          <th>Удалить</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+  </table>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

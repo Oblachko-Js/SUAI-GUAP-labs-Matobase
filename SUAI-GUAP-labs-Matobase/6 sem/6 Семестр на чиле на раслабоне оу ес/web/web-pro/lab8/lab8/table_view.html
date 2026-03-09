@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Табличное представление данных</title>
+    <script>
+        function loadXML() {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("GET", "robots.xml", false);
+            xmlhttp.send();
+            var xmlDoc = xmlhttp.responseXML;
+
+            var xslhttp = new XMLHttpRequest();
+            xslhttp.open("GET", "table_view.xsl", false);
+            xslhttp.send();
+            var xslDoc = xslhttp.responseXML;
+
+            // Code for IE
+            if (window.ActiveXObject || xmlhttp.responseType == "msxml-document") {
+                var ex = xmlDoc.transformNode(xslDoc);
+                document.getElementById("display").innerHTML = ex;
+            }
+            // Code for Chrome, Firefox, Opera, etc.
+            else if (document.implementation && document.implementation.createDocument) {
+                var xsltProcessor = new XSLTProcessor();
+                xsltProcessor.importStylesheet(xslDoc);
+                var resultDocument = xsltProcessor.transformToFragment(xmlDoc, document);
+                document.getElementById("display").appendChild(resultDocument);
+            }
+        }
+    </script>
+</head>
+<body onload="loadXML()">
+    <h1>Каталог роботов-игрушек (табличное представление)</h1>
+    <div id="display"></div>
+    <p><a href="list_view.html">Перейти к построчному представлению</a></p>
+    <p><a href="index.html">Вернуться на главную</a></p>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Роботы из базы данных</title>
+  <script>
+    function loadXML() {
+      fetch('robots_db.xml')
+        .then(response => response.text())
+        .then(xmlText => {
+          const parser = new DOMParser();
+          const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+          fetch('robots_db.xsl')
+            .then(response => response.text())
+            .then(xslText => {
+              const xslDoc = parser.parseFromString(xslText, "text/xml");
+              const xsltProcessor = new XSLTProcessor();
+              xsltProcessor.importStylesheet(xslDoc);
+              const result = xsltProcessor.transformToFragment(xmlDoc, document);
+              document.getElementById("display").appendChild(result);
+            });
+        });
+    }
+  </script>
+</head>
+<body onload="loadXML()">
+  <div id="display"></div>
+</body>
+</html>

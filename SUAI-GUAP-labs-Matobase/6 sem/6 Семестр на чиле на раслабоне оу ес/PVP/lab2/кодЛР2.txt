@@ -1,0 +1,82 @@
+#include "RTE_Components.h"
+#include CMSIS_device_header  // CMSIS_device_header для STM32F303
+
+void SystemClock_Config(void);
+void GPIO_Config(void);
+
+int main(void) {
+    SystemClock_Config();  // Настройка системной частоты
+    GPIO_Config();         // Настройка GPIO
+    
+    // Параметры для 2370 Гц (период ~422 мкс, полупериод ~211 мкс)
+    const uint32_t half_period_2370 = 166;  // Примерное значение для 8 МГц
+    
+    // Параметры для 7110 Гц (период ~140 мкс, полупериод ~70 мкс)
+    const uint32_t half_period_7110 = 55;   // Примерное значение для 8 МГц
+    
+    uint32_t counter_2370 = 0;  // Счетчик для PB5
+    uint32_t counter_7110 = 0;  // Счетчик для PB6
+    uint8_t state_2370 = 0;     // Состояние PB5
+    uint8_t state_7110 = 0;     // Состояние PB6
+    
+    while (1) {
+        // Обработка PB5 (2370 Гц)
+        if (counter_2370 >= half_period_2370) {
+            if (state_2370) {
+                GPIOB->BSRR = GPIO_BSRR_BR_5;  // Низкий уровень PB5
+                state_2370 = 0;
+            } else {
+                GPIOB->BSRR = GPIO_BSRR_BS_5;  // Высокий уровень PB5
+                state_2370 = 1;
+            }
+            counter_2370 = 0;
+        }
+        
+        // Обработка PB6 (7110 Гц)
+        if (counter_7110 >= half_period_7110) {
+            if (state_7110) {
+                GPIOB->BSRR = GPIO_BSRR_BR_6;  // Низкий уровень PB6
+                state_7110 = 0;
+            } else {
+                GPIOB->BSRR = GPIO_BSRR_BS_6;  // Высокий уровень PB6
+                state_7110 = 1;
+            }
+            counter_7110 = 0;
+        }
+        
+        // Увеличение счетчиков
+        counter_2370++;
+        counter_7110++;
+        
+        // Небольшая задержка для управления частотой
+        //for(volatile uint32_t i = 0; i < 1; i++);  // Минимальная задержка
+    }
+}
+
+void GPIO_Config(void) {
+    // Включаем тактирование порта B
+    RCC->AHBENR |= RCC_AHBENR_GPIOBEN;
+    
+    // Настраиваем PB5 как выход
+    GPIOB->MODER &= ~GPIO_MODER_MODER5;
+    GPIOB->MODER |= GPIO_MODER_MODER5_0;
+    GPIOB->OTYPER &= ~GPIO_OTYPER_OT_5;
+    GPIOB->OSPEEDR |= GPIO_OSPEEDER_OSPEEDR5_0;
+    
+    // Настраиваем PB6 как выход
+    GPIOB->MODER &= ~GPIO_MODER_MODER6;
+    GPIOB->MODER |= GPIO_MODER_MODER6_0;
+    GPIOB->OTYPER &= ~GPIO_OTYPER_OT_6;
+    GPIOB->OSPEEDR |= GPIO_OSPEEDER_OSPEEDR6_0;
+}
+
+void SystemClock_Config(void) {
+    // Базовая настройка на HSI 8 МГц
+    RCC->CR |= RCC_CR_HSION;
+    while(!(RCC->CR & RCC_CR_HSIRDY));
+    
+    RCC->CFGR &= ~RCC_CFGR_SW;
+    RCC->CFGR |= RCC_CFGR_SW_HSI;
+    
+    while((RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_HSI);
+}

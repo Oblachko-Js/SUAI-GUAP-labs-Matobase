@@ -1,0 +1,16 @@
+/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/labs/trsis-suai-main/lab_1/src/main/java/ru/example/lab1/dao/WatersDao.java
+/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/labs/trsis-suai-main/lab_1/src/main/java/ru/example/lab1/servlets/waters/CreateWaterServlet.java
+/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/labs/trsis-suai-main/lab_1/src/main/java/ru/example/lab1/servlets/electricitys/CreateElectricityServlet.java
+/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/labs/trsis-suai-main/lab_1/src/main/java/ru/example/lab1/servlets/electricitys/DeleteElectricityServlet.java
+/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/labs/trsis-suai-main/lab_1/src/main/java/ru/example/lab1/dao/PaymantsDao.java
+/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/labs/trsis-suai-main/lab_1/src/main/java/ru/example/lab1/servlets/paymants/CreatePaymantServlet.java
+/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/labs/trsis-suai-main/lab_1/src/main/java/ru/example/lab1/dao/ElectricitysDao.java
+/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/labs/trsis-suai-main/lab_1/src/main/java/ru/example/lab1/servlets/electricitys/ElectricitysServlet.java
+/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/labs/trsis-suai-main/lab_1/src/main/java/ru/example/lab1/servlets/paymants/DeletePaymantServlet.java
+/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/labs/trsis-suai-main/lab_1/src/main/java/ru/example/lab1/domain/Water.java
+/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/labs/trsis-suai-main/lab_1/src/main/java/ru/example/lab1/servlets/paymants/PaymantsServlet.java
+/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/labs/trsis-suai-main/lab_1/src/main/java/ru/example/lab1/domain/Paymant.java
+/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/labs/trsis-suai-main/lab_1/src/main/java/ru/example/lab1/util/IdParser.java
+/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/labs/trsis-suai-main/lab_1/src/main/java/ru/example/lab1/servlets/waters/WatersServlet.java
+/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/labs/trsis-suai-main/lab_1/src/main/java/ru/example/lab1/servlets/waters/DeleteWaterServlet.java
+/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/labs/trsis-suai-main/lab_1/src/main/java/ru/example/lab1/domain/Electricity.java

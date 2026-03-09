@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/general.html :: head"></head>
+<body>
+    <header th:insert="fragments/general.html :: header"></header>
+    <div style="display: flex; justify-content: space-around">
+        <span><a th:href="@{/cars}" class="btn btn-info">Cars</a></span>
+        <span><a th:href="@{/customers}" class="btn btn-info">Customers</a></span>
+        <span><a th:href="@{/purchases}" class="btn btn-info">Purchases</a></span>
+    </div>
+</body>
+</html>

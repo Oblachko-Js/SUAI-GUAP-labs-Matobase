@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34024.191
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sheider_ulala", "sheider_ulala\sheider_ulala.vcxproj", "{F7E76AAE-05EA-4F38-9AA0-E283FE232930}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F7E76AAE-05EA-4F38-9AA0-E283FE232930}.Debug|x64.ActiveCfg = Debug|x64
+		{F7E76AAE-05EA-4F38-9AA0-E283FE232930}.Debug|x64.Build.0 = Debug|x64
+		{F7E76AAE-05EA-4F38-9AA0-E283FE232930}.Debug|x86.ActiveCfg = Debug|Win32
+		{F7E76AAE-05EA-4F38-9AA0-E283FE232930}.Debug|x86.Build.0 = Debug|Win32
+		{F7E76AAE-05EA-4F38-9AA0-E283FE232930}.Release|x64.ActiveCfg = Release|x64
+		{F7E76AAE-05EA-4F38-9AA0-E283FE232930}.Release|x64.Build.0 = Release|x64
+		{F7E76AAE-05EA-4F38-9AA0-E283FE232930}.Release|x86.ActiveCfg = Release|Win32
+		{F7E76AAE-05EA-4F38-9AA0-E283FE232930}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4837CA9D-9A99-43A8-AF3C-CD5512586E34}
+	EndGlobalSection
+EndGlobal

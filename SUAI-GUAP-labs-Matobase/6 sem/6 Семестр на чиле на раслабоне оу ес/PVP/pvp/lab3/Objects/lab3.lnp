@@ -1,0 +1,10 @@
+--cpu=Cortex-M4.fp.sp
+".\objects\main.o"
+".\objects\retarget_io.o"
+".\objects\stdout_itm.o"
+".\objects\startup_stm32f303xc.o"
+".\objects\system_stm32f3xx.o"
+--strict --scatter ".\Objects\lab3.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\lab3.map" -o .\Objects\lab3.axf

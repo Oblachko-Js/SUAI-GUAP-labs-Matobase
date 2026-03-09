@@ -1,0 +1,161 @@
+clc;
+clear;
+% Ввод значений
+[f,A,B,tol] = vvod();
+% Вычисление интеграла методом Симпсона с заданной точностью
+[s_new_pos, s_new_neg] = sympson_kavo(f,A,B,tol);
+% Вычисление с помощью встроенных функции matlab
+[ss_pos, ss_neg] = vstroina(f,A,B);
+% Вывод результатов
+vivod(ss_pos, s_new_pos, s_new_neg, ss_neg);
+grafik_hi(A, B, f);
+pramii(A, B, f);
+
+function [f,A,B,tol] = vvod()
+% Ввод функции пользователем
+while true
+    f_str = input('Введите функцию: ','s');
+    f_str = strcat('@(x)', f_str);
+    if isempty(f_str)
+        disp("Функция не может быть пустой.");
+        continue
+    end
+    % Проверка введенной функции на корректность
+    if contains(f_str, ';') || contains(f_str, 'eval') || contains(f_str, 'feval') || contains(f_str, 'for') || contains(f_str, 'while')
+        disp("Запрещенные символы или функции в строке функции.");
+        continue
+    end
+    if contains(f_str, '^') && ~contains(f_str, '.^')
+        disp("Используйте оператор '.^' для возведения в степень с плавающей точкой.");
+        continue
+    end
+    if contains(f_str, '*') && ~contains(f_str, '.*')
+        disp("Используйте оператор '.*' для умножения.");
+        continue
+    end
+    if contains(f_str, '/') && ~contains(f_str, './')
+        disp("Используйте оператор './' для деления.");
+        continue
+    end
+    try
+        % Проверка, что функция начинается с '@(x)'
+        if ~startsWith(f_str, '@(x)')
+            error('Функция должна начинаться с "@(x)".');
+        end
+        % Выполнение функции для проверки, что она корректно определена
+        f = str2func(f_str);
+        x_test = f(0);
+        break % прерываем цикл, если функция корректно определена
+    catch ME
+        disp(ME.message);
+        continue % повторяем цикл, если функция некорректно определена
+    end
+end
+% Ввод параметров
+A_str = strrep(input("Введите нижнюю часть интеграла: ", 's'), ',', '.');
+while true
+    A = str2double(A_str);
+    if isnan(A)
+        disp("Должно быть числом, в числе должен быть один разделитель.");
+        A_str = strrep(input("Введите нижнюю часть интеграла: ", 's'), ',', '.');
+        continue
+    end
+    break
+end
+B_str = strrep(input("Введите верхнюю часть интеграла: ", 's'), ',', '.');
+while true
+    B = str2double(B_str);
+    if isnan(B)
+        disp("Должно быть числом, в числе должен быть один разделитель.");
+        B_str = strrep(input("Введите верхнюю часть интеграла: ", 's'), ',', '.');
+        continue
+    end
+    break
+end
+tol_str = strrep(input("Введите точность: ", 's'), ',', '.');
+while true
+    tol = str2double(tol_str);
+    if isnan(tol)
+        disp("Должно быть числом, в числе должен быть один разделитель.");
+        tol_str = strrep(input("Введите точность: ", 's'), ',', '.');
+        continue
+    end
+    break
+end
+end
+
+function [s_new_pos, s_new_neg] = sympson_kavo(f,A,B,tol)
+% Вычисление интеграла методом Симпсона с заданной точностью
+n = 2;
+s_old = 0;
+s_new_pos = (B-A)*(f(A) + 4*f((A+B)/2) + f(B))/6;
+s_new_neg = (B-A)*(-f(A) - 4*f((A+B)/2) - f(B))/6;
+while abs((s_new_pos - s_old)/s_new_pos) > tol && n <= 1000000
+    s_old = s_new_pos;
+    n = n + 2;
+    dx = (B-A)/n;
+    s_new_pos = 0;
+    s_new_neg = 0;
+    for i = 0:2:n-2
+        x1 = A + dx*i;
+        x2 = A + dx*(i+2);
+        s_new_pos = s_new_pos + (dx/3)*(f(x1)+4*f(x1+dx)+f(x2));
+        s_new_neg = s_new_neg + (dx/3)*(-f(x1)-4*f(x1+dx)-f(x2));
+    end
+end
+end
+
+function [ss_pos, ss_neg] = vstroina(f,A,B)
+% Вычисление интеграла встроенной функцией integral для проверки
+ss_pos = integral(f,A,B);
+ss_neg = integral(@(x)(-f(x)),A,B);
+end
+
+function vivod(ss_pos, s_new_pos, s_new_neg, ss_neg)
+clc;
+fprintf('Интеграл пользовательским методом = %.3f\n', s_new_pos);
+fprintf('Интеграл встроенной функцией integral = %.3f\n', ss_pos);
+cerror = ss_pos - s_new_pos;
+k = -floor(log10(abs(cerror)));
+cerror = floor(cerror*(10^k))/10^k;
+fprintf('Погрешность интеграла положительного = %.3f\n', cerror);
+fprintf('Интеграл (-f) пользовательским методом = %.3f\n', s_new_neg);
+fprintf('Интеграл (-f) встроенной функцией integral = %.3f\n', ss_neg);
+cerror = ss_neg + s_new_neg;
+k = -floor(log10(abs(cerror)));
+cerror = floor(cerror*(10^k))/10^k;
+fprintf('Погрешность интеграла отрицательного = %.3f\n', cerror);
+end
+
+function grafik_hi(A, B, f)
+% Вывод графика функции и прямых
+figure;
+xx = linspace(A,B,1000)';
+yy = f(xx);
+plot(xx,yy,'b');
+hold on;
+end
+
+function pramii(A, B, f)
+% Вспомогательный массив для вычисления шага
+t = linspace(0, 1, 500);
+% Вычисление коэффициентов для прямых
+xx1 = A + t*(B-A)/2; % Теперь массив xx1 имеет одинаковое количество элементов с массивом xx2
+yy1 = [f(A)+diff(f([A (A+B)/2]))/((A+B)/2-A)*(xx1-A);f((A+B)/2)+diff(f([(A+B)/2 B]))/(B-(A+B)/2)*(xx1-(A+B)/2)];
+xx2 = (B-A)/2 + t*(B-A)/2;
+yy2 = [f((A+B)/2)+diff(f([A (A+B)/2]))/((A+B)/2-A)*(xx2-(A+B)/2);f(B)+diff(f([(A+B)/2 B]))/(B-(A+B)/2)*(xx2-B)];
+% Объединение массивов xx1, yy1, xx2, yy2 в один массив, чтобы избежать разного количества элементов
+xx = [xx1, xx2];
+yy = [yy1, yy2];
+plot(xx,yy,'r');
+plot(A,f(A),'yx',(A+B)/2,f((A+B)/2),'yx',B,f(B),'yx')
+hold on;
+legend('f(x)','f_{pos}(x)','f_{neg}(x)');
+xlabel('x');
+ylabel('y');
+% Добавление прямых осей x и y
+ax = gca;
+ax.XAxisLocation = 'origin';
+ax.YAxisLocation = 'origin';
+ax.Box = 'off';
+end

@@ -1,0 +1,10 @@
+1>------ Build started: Project: lab1, Configuration: Debug Win32 ------
+1>Compiling...
+1>lab1.cpp
+1>d:\игорь\универ\c+\lab1\lab1\lab1.cpp(15) : warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+1>d:\игорь\универ\c+\lab1\lab1\lab1.cpp(16) : warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+1>Linking...
+1>Embedding manifest...
+1>Build log was saved at "file://d:\Игорь\универ\C+\lab1\lab1\Debug\BuildLog.htm"
+1>lab1 - 0 error(s), 2 warning(s)
+========== Build: 1 succeeded, 0 failed, 0 up-to-date, 0 skipped ==========

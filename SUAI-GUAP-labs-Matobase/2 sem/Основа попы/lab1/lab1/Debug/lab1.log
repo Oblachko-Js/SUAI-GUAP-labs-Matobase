@@ -1,0 +1,2 @@
+﻿lab1.obj : warning LNK4075: не учитывается "/EDITANDCONTINUE" из-за спецификации "/SAFESEH"
+LINK : fatal error LNK1207: несовместимый формат PDB в "C:\Users\user\Desktop\lab1\Debug\lab1.pdb"; удалите и перестройте

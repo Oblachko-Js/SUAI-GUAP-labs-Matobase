@@ -1,0 +1,204 @@
+/* Основные стили для колонок */
+.columns {
+    overflow: hidden; /* Чтобы контейнер захватывал все блоки внутри */
+    margin-top: 20px; /* Отступ сверху */
+}
+
+/* Стили для каждой колонки */
+.column {
+    display: block; /* Делает каждый элемент блочным */
+    width: 30%; /* Каждая колонка будет занимать 30% ширины контейнера */
+    margin-right: 3%; /* Отступ между колонками */
+    float: left; /* Выстраиваем колонки слева */
+    box-sizing: border-box; /* Учитываем padding и border в общей ширине */
+    padding: 10px; /* Внутренний отступ */
+    background-color: #f9f9f9; /* Легкий фон для колонок */
+    border: 1px solid #ddd; /* Легкая рамка для колонок */
+    border-radius: 8px; /* Закругленные углы */
+}
+
+/* Убираем последний отступ для последней колонки */
+.column:last-child {
+    margin-right: 0;
+}
+
+/* Заголовки внутри колонок */
+.column h3 {
+    font-size: 1.25em;
+    color: #333;
+    margin-bottom: 10px; /* Отступ снизу для заголовков */
+}
+
+/* Стили для списка внутри колонок */
+.column ul {
+    list-style-type: none; /* Убираем стандартные маркеры списка */
+    padding-left: 0; /* Убираем отступ слева */
+}
+
+.column ul li {
+    margin-bottom: 8px; /* Отступы между пунктами списка */
+}
+
+.column ul li strong {
+    font-weight: bold; /* Выделяем текст жирным */
+}
+
+/* Стили для мобильных устройств - Колонки становятся вертикальными на маленьких экранах */
+@media screen and (max-width: 768px) {
+    .column {
+        width: 100%; /* Колонки занимают всю ширину */
+        margin-right: 0; /* Убираем отступ между колонками */
+        margin-bottom: 20px; /* Добавляем отступ снизу между колонками */
+    }
+}
+
+/* Стили для таблицы */
+table {
+    width: 100%; /* Ширина таблицы */
+    border-collapse: collapse; /* Убираем промежутки между ячейками */
+}
+
+th, td {
+    border: 1px solid #ddd; /* Границы ячеек */
+    padding: 10px; /* Внутренний отступ */
+    text-align: left; /* Выравнивание текста */
+}
+
+/* Выравнивание картинки в ячейке */
+td img {
+    width: 100px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Стили для ссылок */
+a:link {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #663399;
+}
+
+a:hover {
+    color: #ff6600;
+}
+
+/* Стиль для таблицы с картинкой в ячейке */
+.table-with-image {
+    background-color: #f9f9f9;
+}
+
+/* Псевдоклассы для таблицы */
+th:hover {
+    background-color: peachpuff;
+}
+
+td:hover {
+    background-color: #e6f7ff;
+}
+
+.custom-list {
+    list-style-type: none; /* Убираем стандартные маркеры списка */
+    padding-left: 0; /* Убираем отступ слева */
+}
+
+.custom-list li {
+    padding-left: 30px; /* Отступ для текста, чтобы он не накладывался на изображение */
+    margin-bottom: 8px; /* Отступы между пунктами списка */
+    position: relative; /* Позиционируем относительно родителя */
+}
+
+.custom-list li::before {
+    content: ""; /* Добавляем псевдоэлемент для изображения */
+    display: inline-block;
+    width: 20px; /* Ширина изображения */
+    height: 20px; /* Высота изображения */
+    background-size: cover; /* Масштабируем изображение */
+    position: absolute; /* Абсолютное позиционирование */
+    left: 0; /* Позиционируем слева */
+    top: 50%; /* Центрируем по вертикали */
+    transform: translateY(-50%); /* Сдвигаем вверх на половину высоты */
+}
+
+.custom-list li:nth-child(1)::before {
+    background-image: url('src/robot1.jpg'); /* Изображение для первого пункта */
+}
+
+.custom-list li:nth-child(2)::before {
+    background-image: url('src/robot2.jpg'); /* Изображение для второго пункта */
+}
+
+.custom-list li:nth-child(3)::before {
+    background-image: url('src/robot3.jpg'); /* Изображение для третьего пункта */
+}
+
+.custom-robot-list {
+    list-style-type: none; /* Убираем стандартные маркеры списка */
+    padding-left: 0; /* Убираем отступ слева */
+}
+
+.custom-robot-list > li {
+    padding-left: 40px; 
+    margin-bottom: 20px; 
+    position: relative; 
+}
+
+.custom-robot-list > li::before {
+    content: ""; 
+    display: inline-block;
+    width: 30px; 
+    height: 30px; 
+    background-size: cover;
+    position: absolute;
+    left: 0; 
+    top: 0; 
+}
+
+.custom-robot-list > li:nth-child(1)::before {
+    background-image: url('src/robot4.jpg'); 
+}
+
+.custom-robot-list > li:nth-child(2)::before {
+    background-image: url('src/robot5.jpg'); 
+}
+
+.custom-robot-list > li:nth-child(3)::before {
+    background-image: url('src/robot6.jpg');
+}
+
+/* Стили для вложенных списков */
+.custom-robot-list ul {
+    list-style-type: none; 
+    padding-left: 40px; 
+    margin-top: 10px; 
+}
+
+.custom-robot-list ul li {
+    padding-left: 30px; 
+    margin-bottom: 8px; 
+    position: relative; 
+}
+
+.custom-robot-list ul li::before {
+    content: ""; 
+    display: inline-block;
+    width: 20px; 
+    height: 20px; 
+    background-size: cover; 
+    position: absolute; 
+    left: 0; 
+    top: 50%; 
+    transform: translateY(-50%); 
+}
+
+/* Изображения для вложенных списков */
+.custom-robot-list ul li:nth-child(1)::before {
+    background-image: url('src/robot7.jpg'); 
+}
+
+.custom-robot-list ul li:nth-child(2)::before {
+    background-image: url('src/robot8.jpg'); 
+}

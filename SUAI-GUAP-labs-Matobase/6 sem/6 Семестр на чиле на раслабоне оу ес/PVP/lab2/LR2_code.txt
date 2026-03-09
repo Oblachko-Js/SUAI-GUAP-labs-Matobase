@@ -1,0 +1,82 @@
+#include "RTE_Components.h"
+#include CMSIS_device_header  // CMSIS_device_header для STM32F303
+
+void SystemClock_Config(void);
+void GPIO_Config(void);
+
+int main(void) {
+    SystemClock_Config();  // Настройка системной частоты
+    GPIO_Config();         // Настройка GPIO
+
+    // Параметры для 2520 Гц (период ≈397 мкс, полупериод ≈198 мкс)
+    const uint32_t half_period_2520 = 156;  // Примерное значение для 8 МГц
+
+    // Параметры для 840 Гц (период ≈1191 мкс, полупериод ≈595 мкс)
+    const uint32_t half_period_840 = 468;   // Примерное значение для 8 МГц
+
+    uint32_t counter_2520 = 0;  // Счётчик для PB8 (2520 Гц)
+    uint32_t counter_840 = 0;   // Счётчик для PB7 (840 Гц)
+    uint8_t state_2520 = 0;     // Состояние PB8
+    uint8_t state_840 = 0;      // Состояние PB7
+
+    while (1) {
+        // Обработка PB8 (2520 Гц)
+        if (counter_2520 >= half_period_2520) {
+            if (state_2520) {
+                GPIOB->BSRR = GPIO_BSRR_BR_8;  // Сброс на низкий уровень PB8
+                state_2520 = 0;
+            } else {
+                GPIOB->BSRR = GPIO_BSRR_BS_8;  // Установка высокого уровня PB8
+                state_2520 = 1;
+            }
+            counter_2520 = 0;
+        }
+
+        // Обработка PB7 (840 Гц)
+        if (counter_840 >= half_period_840) {
+            if (state_840) {
+                GPIOB->BSRR = GPIO_BSRR_BR_7;  // Сброс на низкий уровень PB7
+                state_840 = 0;
+            } else {
+                GPIOB->BSRR = GPIO_BSRR_BS_7;  // Установка высокого уровня PB7
+                state_840 = 1;
+            }
+            counter_840 = 0;
+        }
+
+        // Увеличение счётчиков
+        counter_2520++;
+        counter_840++;
+
+        // Небольшая задержка (если требуется для точной настройки частоты)
+        // for(volatile uint32_t i = 0; i < 1; i++);
+    }
+}
+
+void GPIO_Config(void) {
+    // Включаем тактирование порта B
+    RCC->AHBENR |= RCC_AHBENR_GPIOBEN;
+
+    // Настраиваем PB8 как выход (для 2520 Гц)
+    GPIOB->MODER &= ~GPIO_MODER_MODER8;
+    GPIOB->MODER |= GPIO_MODER_MODER8_0;
+    GPIOB->OTYPER &= ~GPIO_OTYPER_OT_8;
+    GPIOB->OSPEEDR |= GPIO_OSPEEDER_OSPEEDR8_0;
+
+    // Настраиваем PB7 как выход (для 840 Гц)
+    GPIOB->MODER &= ~GPIO_MODER_MODER7;
+    GPIOB->MODER |= GPIO_MODER_MODER7_0;
+    GPIOB->OTYPER &= ~GPIO_OTYPER_OT_7;
+    GPIOB->OSPEEDR |= GPIO_OSPEEDER_OSPEEDR7_0;
+}
+
+void SystemClock_Config(void) {
+    // Базовая настройка на HSI 8 МГц
+    RCC->CR |= RCC_CR_HSION;
+    while (!(RCC->CR & RCC_CR_HSIRDY));
+
+    RCC->CFGR &= ~RCC_CFGR_SW;
+    RCC->CFGR |= RCC_CFGR_SW_HSI;
+
+    while ((RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_HSI);
+}

@@ -1,0 +1,830 @@
+#include <iostream>
+#include <sqlite3.h>
+#include <string>
+#include <regex>
+#include <ctime>
+#include <windows.h>
+#include <cctype>
+#include <locale> 
+#include <iomanip>
+
+struct Book {
+    int id;
+    std::string title;
+    std::string author;
+    std::string year;
+    std::string genre;
+};
+
+sqlite3* db = nullptr;
+
+int executeSQL(const std::string& query, int (*callback)(void*, int, char**, char**), void* data = nullptr, char** errMsg = nullptr) {
+    return sqlite3_exec(db, query.c_str(), callback, data, errMsg);
+}
+
+void toUpper(std::string& text) {
+    if (text.empty()) {
+        return;
+    }
+
+    char& firstChar = text[0];
+    if ((firstChar >= 'a' && firstChar <= 'z') || (firstChar >= 'а' && firstChar <= 'я')) {
+        // Преобразование латинской буквы 'a'-'z' или кириллической буквы 'а'-'я' в верхний регистр
+        if (firstChar >= 'a' && firstChar <= 'z') {
+            firstChar -= 'a' - 'A'; // Для латиницы
+        }
+        else {
+            firstChar -= 'а' - 'А'; // Для кириллицы
+        }
+    }
+}
+
+bool isFirstLetterCapitalAndLatin(const std::string& input) {
+    if (!input.empty()) {
+        char firstChar = input[0];
+        // Добавим проверку на цифры (0-9) и пропустим, если первый символ цифра.
+        if (firstChar >= '0' && firstChar <= '9') {
+            return true;
+        }
+        if ((firstChar >= 'A' && firstChar <= 'Z') || (firstChar >= 'А' && firstChar <= 'Я')) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool isValidYear(const std::string& year) {
+    std::regex yearPattern(R"(^\d{2}\.\d{2}\.\d{4}$)");
+    if (!std::regex_match(year, yearPattern)) {
+        return false;
+    }
+
+    SYSTEMTIME sysTime;
+    GetLocalTime(&sysTime);
+
+    int currentYear = sysTime.wYear;
+
+    int bookYear = std::stoi(year.substr(6, 4));
+    int bookMonth = std::stoi(year.substr(3, 2));
+    int bookDay = std::stoi(year.substr(0, 2));
+
+    if (bookMonth < 1 || bookMonth > 12 || bookDay < 1) {
+        return false;
+    }
+
+    if (bookMonth == 2) {
+        bool isLeapYear = (bookYear % 4 == 0 && bookYear % 100 != 0) || (bookYear % 400 == 0);
+        if (isLeapYear) {
+            if (bookDay > 29) {
+                return false;
+            }
+        }
+        else {
+            if (bookDay > 28) {
+                return false;
+            }
+        }
+    }
+    else if ((bookMonth == 4 || bookMonth == 6 || bookMonth == 9 || bookMonth == 11) && bookDay > 30) {
+        return false;
+    }
+    else if (bookDay > 31) {
+        return false;
+    }
+
+    if (bookYear > currentYear) {
+        return false;
+    }
+
+    return true;
+}
+
+void addBook() {
+    Book book;
+    std::cin.ignore();
+
+    do {
+        while (true) {
+            std::cout << "Введите название книги: ";
+            std::getline(std::cin, book.title);
+            if (isFirstLetterCapitalAndLatin(book.title)) {
+                break;
+            }
+            else {
+                std::cout << "Название книги должно начинаться с заглавной буквы либо с цифры." << std::endl;
+            }
+        }
+
+        // Для проверки наличия книги с таким названием
+        std::string checkBookSQL = "SELECT COUNT(*) FROM books WHERE title = '" + book.title + "';";
+        char* errMsg = nullptr;
+        sqlite3_stmt* stmt;
+
+        int rc = sqlite3_prepare_v2(db, checkBookSQL.c_str(), -1, &stmt, nullptr);
+        if (rc != SQLITE_OK) {
+            std::cerr << "Ошибка подготовки SQL-запроса: " << sqlite3_errmsg(db) << std::endl;
+            return;
+        }
+
+        rc = sqlite3_step(stmt);
+        if (rc == SQLITE_ROW) {
+            int count = sqlite3_column_int(stmt, 0);
+            if (count > 0) {
+                std::cout << "Книга с таким названием уже существует. Пожалуйста, введите название книги заново.\n";
+            }
+            else {
+                break;
+            }
+        }
+
+        sqlite3_finalize(stmt);
+    } while (true);
+
+    while (true) {
+        std::cout << "Введите автора книги: ";
+        std::getline(std::cin, book.author);
+        if (isFirstLetterCapitalAndLatin(book.author)) {
+            break;
+        }
+        else {
+            std::cout << "Автор должен начинаться с заглавной буквы либо с цифры." << std::endl;
+        }
+    }
+
+    do {
+        std::cout << "Введите год выпуска (в формате xx.xx.xxxx): ";
+        std::getline(std::cin, book.year);
+        if (!isValidYear(book.year)) {
+            std::cout << "Неверный формат года. Пожалуйста, введите год в формате xx.xx.xxxx.\n";
+        }
+    } while (!isValidYear(book.year));
+
+    while (true) {
+        std::cout << "Введите жанр книги: ";
+        std::getline(std::cin, book.genre);
+        if (isFirstLetterCapitalAndLatin(book.genre)) {
+            break;
+        }
+        else {
+            std::cout << "Жанр должен начинаться с заглавной буквы либо с цифры." << std::endl;
+        }
+    }
+
+    std::string addBookSQL = "INSERT INTO books (title, author, year, genre) VALUES ('" +
+        book.title + "', '" + book.author + "', '" + book.year + "', '" + book.genre + "');";
+    char* errMsg = nullptr;
+    int rc = executeSQL(addBookSQL, 0, 0, &errMsg);
+
+    if (rc != SQLITE_OK) {
+        std::cerr << "Ошибка добавления книги: " << errMsg << std::endl;
+        sqlite3_free(errMsg);
+    }
+    else {
+        std::cout << "Книга успешно добавлена!\n";
+    }
+}
+
+void deleteBook() {
+    std::cin.ignore();
+    std::cout << "Введите название книги для удаления: ";
+    std::string bookTitle;
+    std::getline(std::cin, bookTitle);
+
+    toUpper(bookTitle);
+
+    std::string deleteBookSQL = "DELETE FROM books WHERE title = '" + bookTitle + "';";
+    char* errMsg = nullptr;
+    int rc = executeSQL(deleteBookSQL, 0, 0, &errMsg);
+
+    if (rc != SQLITE_OK) {
+        std::cerr << "Ошибка удаления книги: " << errMsg << std::endl;
+        sqlite3_free(errMsg);
+    }
+    else {
+        if (sqlite3_changes(db) == 0) {
+            std::cout << "Книги с таким названием не найдены.\n";
+        }
+        else {
+            std::cout << "Книга успешно удалена!\n";
+        }
+    }
+}
+
+void editBook() {
+    std::cin.ignore();
+    std::cout << "Введите название книги для редактирования: ";
+    std::string bookTitle;
+    std::getline(std::cin, bookTitle);
+
+    toUpper(bookTitle);
+
+    std::string selectBookSQL = "SELECT * FROM books WHERE title = '" + bookTitle + "';";
+    char* errMsg = nullptr;
+    sqlite3_stmt* stmt;
+
+    int rc = sqlite3_prepare_v2(db, selectBookSQL.c_str(), -1, &stmt, nullptr);
+
+    if (rc != SQLITE_OK) {
+        std::cerr << "Ошибка подготовки SQL-запроса: " << sqlite3_errmsg(db) << std::endl;
+        sqlite3_finalize(stmt);
+        return;
+    }
+
+    rc = sqlite3_step(stmt);
+
+    if (rc != SQLITE_ROW) {
+        std::cout << "Книга с названием '" << bookTitle << "' не найдена в базе данных." << std::endl;
+        sqlite3_finalize(stmt);
+        return;
+    }
+    else {
+        int editChoice;
+        do {
+            std::cout << "Выберите, что вы хотите отредактировать:\n"
+                << "1. Полное редактирование книги\n"
+                << "2. Редактировать только название книги\n"
+                << "3. Редактировать только автора книги\n"
+                << "4. Редактировать только жанр книги\n"
+                << "5. Редактировать только год выпуска книги\n"
+                << "0. Отменить редактирование и вернуться в главное меню\n"
+                << "Введите число: ";
+
+            std::cin >> editChoice;
+            while (std::cin.fail())
+            {
+                std::cin.clear();
+                std::cin.ignore(10000, '\n');
+                std::cout << "\n";
+                std::cout << "Такого числа в пункте меню нет.\n";
+                std::cout << "Введите повторно: ";
+                std::cin >> editChoice;
+            }
+
+            // Очистить буфер после ввода числа
+            std::cin.ignore(10000, '\n');
+
+            switch (editChoice) {
+            case 1:
+            {
+                Book book;
+                bool isUnique = false;
+
+                while (!isUnique) {
+                    while (true) {
+                        std::cout << "Введите название книги: ";
+                        std::getline(std::cin, book.title);
+                        if (isFirstLetterCapitalAndLatin(book.title)) {
+                            break;
+                        }
+                        else {
+                            std::cout << "Название книги должно начинаться с заглавной буквы либо с цифры." << std::endl;
+                        }
+                    }
+
+                    // Проверка на то, что такая книга уже есть
+                    std::string checkBookSQL = "SELECT * FROM books WHERE title = '" + book.title + "';";
+                    char* errMsg = nullptr;
+                    sqlite3_stmt* checkStmt;
+
+                    int checkRC = sqlite3_prepare_v2(db, checkBookSQL.c_str(), -1, &checkStmt, nullptr);
+
+                    if (checkRC != SQLITE_OK) {
+                        std::cerr << "Ошибка при подготовке SQL-запроса на проверку: " << sqlite3_errmsg(db) << std::endl;
+                        sqlite3_finalize(checkStmt);
+                        return;
+                    }
+
+                    checkRC = sqlite3_step(checkStmt);
+
+                    if (checkRC == SQLITE_ROW) {
+                        std::cout << "Книга '" << book.title << "' уже существует в базе данных. Пожалуйста, введите другое название.\n";
+                        sqlite3_finalize(checkStmt);
+                    }
+                    else {
+                        isUnique = true;
+                    }
+                }
+                while (true) {
+                    std::cout << "Введите нового автора книги: ";
+                    std::getline(std::cin, book.author);
+                    if (isFirstLetterCapitalAndLatin(book.author)) {
+                        break;
+                    }
+                    else {
+                        std::cout << "Автор должен начинаться с заглавной буквы либо с цифры." << std::endl;
+                    }
+                }
+
+                do {
+                    std::cout << "Введите новый год выпуска (в формате xx.xx.xxxx): ";
+                    std::getline(std::cin, book.year);
+                    if (!isValidYear(book.year)) {
+                        std::cout << "Неверный формат года. Пожалуйста, введите год в формате xx.xx.xxxx.\n";
+                    }
+                } while (!isValidYear(book.year));
+
+                while (true) {
+                    std::cout << "Введите новый жанр книги: ";
+                    std::getline(std::cin, book.genre);
+                    if (isFirstLetterCapitalAndLatin(book.genre)) {
+                        break;
+                    }
+                    else {
+                        std::cout << "Жанр должен начинаться с заглавной буквы либо с цифры." << std::endl;
+                    }
+                }
+
+                std::string updateBookSQL = "UPDATE books SET title = '" + book.title + "', author = '" +
+                    book.author + "', year = '" + book.year + "', genre = '" + book.genre + "' WHERE title = '" + bookTitle + "';";
+                char* errMsg = nullptr;
+                int rc = executeSQL(updateBookSQL, 0, 0, &errMsg);
+
+                if (rc != SQLITE_OK) {
+                    std::cerr << "Ошибка редактирования книги: " << errMsg << std::endl;
+                    sqlite3_free(errMsg);
+                }
+                else {
+                    std::cout << "Книга успешно отредактирована!\n";
+                }
+                return;
+            }
+            break;
+            case 2:
+            {
+                std::string newBookTitle;
+                bool isUnique = false;
+
+                while (!isUnique) {
+                    while (true) {
+                        std::cout << "Введите название книги: ";
+                        std::getline(std::cin, newBookTitle);
+                        if (isFirstLetterCapitalAndLatin(newBookTitle)) {
+                            break;
+                        }
+                        else {
+                            std::cout << "Название книги должно начинаться с заглавной буквы либо с цифры." << std::endl;
+                        }
+                    }
+
+                    // Проверка на то, что такая книга уже есть
+                    std::string checkBookSQL = "SELECT * FROM books WHERE title = '" + newBookTitle + "';";
+                    char* errMsg = nullptr;
+                    sqlite3_stmt* checkStmt;
+
+                    int checkRC = sqlite3_prepare_v2(db, checkBookSQL.c_str(), -1, &checkStmt, nullptr);
+
+                    if (checkRC != SQLITE_OK) {
+                        std::cerr << "Ошибка при подготовке SQL-запроса на проверку: " << sqlite3_errmsg(db) << std::endl;
+                        sqlite3_finalize(checkStmt);
+                        return;
+                    }
+
+                    checkRC = sqlite3_step(checkStmt);
+
+                    if (checkRC == SQLITE_ROW) {
+                        std::cout << "Книга '" << newBookTitle << "' уже существует в базе данных. Пожалуйста, введите другое название.\n";
+                        sqlite3_finalize(checkStmt);
+                    }
+                    else {
+                        isUnique = true;
+                    }
+                }
+
+                // Обновляем название книги, выполняя соответствующий SQL-запрос
+                std::string updateTitleSQL = "UPDATE books SET title = '" + newBookTitle + "' WHERE title = '" + bookTitle + "';";
+                char* updateErrMsg = nullptr;
+                int rc = executeSQL(updateTitleSQL, 0, 0, &updateErrMsg);
+
+                if (rc != SQLITE_OK) {
+                    std::cerr << "Ошибка при выполнении обновления: " << updateErrMsg << std::endl;
+                    sqlite3_free(updateErrMsg);
+                }
+                else {
+                    std::cout << "Название книги успешно обновлено!\n";
+                }
+                return;
+            }
+            break;
+            case 3:
+            {
+                Book book;
+                while (true) {
+                    std::cout << "Введите нового автора книги: ";
+                    std::getline(std::cin, book.author);
+                    if (isFirstLetterCapitalAndLatin(book.author)) {
+                        break;
+                    }
+                    else {
+                        std::cout << "Автор должен начинаться с заглавной буквы либо с цифры." << std::endl;
+                    }
+                }
+
+                std::string updateAuthorSQL = "UPDATE books SET author = '" + book.author + "' WHERE title = '" + bookTitle + "';";
+                char* errMsg = nullptr;
+                int rc = executeSQL(updateAuthorSQL, 0, 0, &errMsg);
+
+                if (rc != SQLITE_OK) {
+                    std::cerr << "Ошибка редактирования автора книги: " << errMsg << std::endl;
+                    sqlite3_free(errMsg);
+                }
+                else {
+                    std::cout << "Автор книги успешно отредактирован!\n";
+                }
+            }
+            break;
+            case 4:
+            {
+                Book book;
+                while (true) {
+                    std::cout << "Введите новый жанр книги: ";
+                    std::getline(std::cin, book.genre);
+                    if (isFirstLetterCapitalAndLatin(book.genre)) {
+                        break;
+                    }
+                    else {
+                        std::cout << "Жанр должен начинаться с заглавной буквы либо с цифры." << std::endl;
+                    }
+                }
+
+                std::string updateGenreSQL = "UPDATE books SET genre = '" + book.genre + "' WHERE title = '" + bookTitle + "';";
+                char* errMsg = nullptr;
+                int rc = executeSQL(updateGenreSQL, 0, 0, &errMsg);
+
+                if (rc != SQLITE_OK) {
+                    std::cerr << "Ошибка редактирования жанра книги: " << errMsg << std::endl;
+                    sqlite3_free(errMsg);
+                }
+                else {
+                    std::cout << "Жанр книги успешно отредактирован!\n";
+                }
+            }
+            break;
+            case 5:
+            {
+                Book book;
+                do {
+                    std::cout << "Введите новый год выпуска (в формате xx.xx.xxxx): ";
+                    std::getline(std::cin, book.year);
+                    if (!isValidYear(book.year)) {
+                        std::cout << "Неверный формат года. Пожалуйста, введите год в формате xx.xx.xxxx.\n";
+                    }
+                } while (!isValidYear(book.year));
+
+                std::string updateYearSQL = "UPDATE books SET year = '" + book.year + "' WHERE title = '" + bookTitle + "';";
+                char* errMsg = nullptr;
+                int rc = executeSQL(updateYearSQL, 0, 0, &errMsg);
+
+                if (rc != SQLITE_OK) {
+                    std::cerr << "Ошибка редактирования года выпуска книги: " << errMsg << std::endl;
+                    sqlite3_free(errMsg);
+                }
+                else {
+                    std::cout << "Год выпуска книги успешно отредактирован!\n";
+                }
+            }
+            break;
+            case 0:
+                return;
+            default:
+                std::cout << "Такого числа в пункте меню нет.\n";
+                break;
+            }
+        } while (true);
+    }
+}
+
+void searchBooksByTitle() {
+    std::cin.ignore();
+    std::cout << "Введите название книги для поиска: ";
+    std::string bookTitle;
+    std::getline(std::cin, bookTitle);
+
+    toUpper(bookTitle);
+
+    std::string searchTitleSQL = "SELECT title, author, year, genre FROM books WHERE title = '" + bookTitle + "';";
+    char* errMsg = nullptr;
+    sqlite3_stmt* stmt;
+
+    int rc = sqlite3_prepare_v2(db, searchTitleSQL.c_str(), -1, &stmt, nullptr);
+
+    if (rc != SQLITE_OK) {
+        std::cerr << "Ошибка подготовки SQL-запроса: " << sqlite3_errmsg(db) << std::endl;
+        return;
+    }
+
+    bool resultsFound = false;
+
+    int bookNumber = 1;
+
+    rc = sqlite3_step(stmt);
+
+    while (rc == SQLITE_ROW) {
+        if (bookNumber == 1) {
+            std::cout << std::setw(20) << std::left << "Номер"
+                << std::setw(23) << std::left << "Название"
+                << std::setw(23) << std::left << "Автор"
+                << std::setw(23) << std::left << "Год"
+                << std::setw(23) << std::left << "Жанр"
+                << std::endl;
+            std::cout << "------------------------------------------------------------------------------------------------------\n";
+        }
+
+        std::cout << std::setw(20) << std::left << bookNumber
+            << std::setw(23) << std::left << sqlite3_column_text(stmt, 0)
+            << std::setw(23) << std::left << sqlite3_column_text(stmt, 1)
+            << std::setw(23) << std::left << sqlite3_column_text(stmt, 2)
+            << std::setw(23) << std::left << sqlite3_column_text(stmt, 3)
+            << std::endl;
+
+        rc = sqlite3_step(stmt);
+        bookNumber++;
+        resultsFound = true;
+    }
+
+    if (!resultsFound) {
+        std::cout << "Книги с таким названием не найдены." << std::endl;
+    }
+
+    if (rc != SQLITE_DONE) {
+        std::cerr << "Ошибка выполнения SQL-запроса: " << sqlite3_errmsg(db) << std::endl;
+    }
+
+    sqlite3_finalize(stmt);
+}
+
+void searchBooksByAuthor() {
+    std::cin.ignore();
+    std::cout << "Введите имя автора для поиска книг: ";
+    std::string authorName;
+    std::getline(std::cin, authorName);
+    toUpper(authorName);
+    std::string searchAuthorSQL = "SELECT title, author, year, genre FROM books WHERE author = '" + authorName + "';";
+    char* errMsg = nullptr;
+    sqlite3_stmt* stmt;
+
+    int rc = sqlite3_prepare_v2(db, searchAuthorSQL.c_str(), -1, &stmt, nullptr);
+
+    if (rc != SQLITE_OK) {
+        std::cerr << "Ошибка подготовки SQL-запроса: " << sqlite3_errmsg(db) << std::endl;
+        return;
+    }
+
+    bool resultsFound = false;
+
+    int bookNumber = 1;
+
+    rc = sqlite3_step(stmt);
+
+    while (rc == SQLITE_ROW) {
+        if (bookNumber == 1) {
+            std::cout << std::setw(20) << std::left << "Номер"
+                << std::setw(23) << std::left << "Название"
+                << std::setw(23) << std::left << "Автор"
+                << std::setw(23) << std::left << "Год"
+                << std::setw(23) << std::left << "Жанр"
+                << std::endl;
+            std::cout << "------------------------------------------------------------------------------------------------------\n";
+        }
+
+        std::cout << std::setw(20) << std::left << bookNumber
+            << std::setw(23) << std::left << sqlite3_column_text(stmt, 0)
+            << std::setw(23) << std::left << sqlite3_column_text(stmt, 1)
+            << std::setw(23) << std::left << sqlite3_column_text(stmt, 2)
+            << std::setw(23) << std::left << sqlite3_column_text(stmt, 3)
+            << std::endl;
+
+        rc = sqlite3_step(stmt);
+        bookNumber++;
+        resultsFound = true;
+    }
+
+    if (!resultsFound) {
+        std::cout << "Книги этого автора не найдены." << std::endl;
+    }
+
+    if (rc != SQLITE_DONE) {
+        std::cerr << "Ошибка выполнения SQL-запроса: " << sqlite3_errmsg(db) << std::endl;
+    }
+
+    sqlite3_finalize(stmt);
+}
+
+void searchBooksByGenre() {
+    std::cin.ignore();
+    std::cout << "Введите жанр книги для поиска: ";
+    std::string bookGenre;
+    std::getline(std::cin, bookGenre);
+    toUpper(bookGenre);
+    std::string searchGenreSQL = "SELECT title, author, year, genre FROM books WHERE genre = '" + bookGenre + "';";
+    char* errMsg = nullptr;
+    sqlite3_stmt* stmt;
+
+    int rc = sqlite3_prepare_v2(db, searchGenreSQL.c_str(), -1, &stmt, nullptr);
+
+    if (rc != SQLITE_OK) {
+        std::cerr << "Ошибка подготовки SQL-запроса: " << sqlite3_errmsg(db) << std::endl;
+        return;
+    }
+
+    bool resultsFound = false;
+
+    int bookNumber = 1;
+
+    rc = sqlite3_step(stmt);
+
+    while (rc == SQLITE_ROW) {
+        if (bookNumber == 1) {
+            std::cout << std::setw(20) << std::left << "Номер"
+                << std::setw(23) << std::left << "Название"
+                << std::setw(23) << std::left << "Автор"
+                << std::setw(23) << std::left << "Год"
+                << std::setw(23) << std::left << "Жанр"
+                << std::endl;
+            std::cout << "------------------------------------------------------------------------------------------------------\n";
+        }
+
+        std::cout << std::setw(20) << std::left << bookNumber
+            << std::setw(23) << std::left << sqlite3_column_text(stmt, 0)
+            << std::setw(23) << std::left << sqlite3_column_text(stmt, 1)
+            << std::setw(23) << std::left << sqlite3_column_text(stmt, 2)
+            << std::setw(23) << std::left << sqlite3_column_text(stmt, 3)
+            << std::endl;
+
+        rc = sqlite3_step(stmt);
+        bookNumber++;
+        resultsFound = true;
+    }
+
+    if (!resultsFound) {
+        std::cout << "Книги с таким жанром не найдены." << std::endl;
+    }
+
+    if (rc != SQLITE_DONE) {
+        std::cerr << "Ошибка выполнения SQL-запроса: " << sqlite3_errmsg(db) << std::endl;
+    }
+
+    sqlite3_finalize(stmt);
+}
+
+void printAllBooks() {
+    std::string selectAllBooksSQL = "SELECT title, author, year, genre FROM books;";
+    char* errMsg = nullptr;
+    sqlite3_stmt* stmt;
+
+    int rc = sqlite3_prepare_v2(db, selectAllBooksSQL.c_str(), -1, &stmt, nullptr);
+
+    if (rc != SQLITE_OK) {
+        std::cerr << "Ошибка подготовки SQL-запроса: " << sqlite3_errmsg(db) << std::endl;
+        return;
+    }
+
+    bool resultsFound = false;
+    int bookNumber = 1;
+    // Сброс настроек ширины колонок
+    std::cout.width(0);
+    rc = sqlite3_step(stmt);
+
+    while (rc == SQLITE_ROW) {
+        if (bookNumber == 1) {
+            std::cout << std::setw(20) << std::left << "Номер"
+                << std::setw(23) << std::left << "Название"
+                << std::setw(23) << std::left << "Автор"
+                << std::setw(23) << std::left << "Год"
+                << std::setw(23) << std::left << "Жанр"
+                << std::endl;
+            std::cout << "------------------------------------------------------------------------------------------------------\n";
+        }
+
+        std::cout << std::setw(20) << std::left << bookNumber
+            << std::setw(23) << std::left << sqlite3_column_text(stmt, 0)
+            << std::setw(23) << std::left << sqlite3_column_text(stmt, 1)
+            << std::setw(23) << std::left << sqlite3_column_text(stmt, 2)
+            << std::setw(23) << std::left << sqlite3_column_text(stmt, 3)
+            << std::endl;
+
+        rc = sqlite3_step(stmt);
+        bookNumber++;
+        resultsFound = true;
+    }
+
+    if (!resultsFound) {
+        std::cout << "Книг в базе данных нет." << std::endl;
+    }
+
+    if (rc != SQLITE_DONE) {
+        std::cerr << "Ошибка выполнения SQL-запроса: " << sqlite3_errmsg(db) << std::endl;
+    }
+
+    sqlite3_finalize(stmt);
+}
+
+void clearDatabase() {
+    const char* clearTableSQL = "DELETE FROM books;";
+    char* errMsg = nullptr;
+    int rc = executeSQL(clearTableSQL, 0, 0, &errMsg);
+
+    if (rc != SQLITE_OK) {
+        std::cerr << "Ошибка очистки базы данных: " << errMsg << std::endl;
+        sqlite3_free(errMsg);
+    }
+    else {
+        std::cout << "База данных успешно очищена." << std::endl;
+    }
+}
+
+int main() {
+    system("chcp 1251 > nul");
+    // Открытие базы данных
+    int rc = sqlite3_open("library.db", &db);
+    int choice = 0;
+    if (rc) {
+        std::cerr << "Ошибка открытия/создания базы данных: " << sqlite3_errmsg(db) << std::endl;
+        return rc;
+    }
+
+    // Создание таблицы books, если она не существует
+    const char* createTableSQL = "CREATE TABLE IF NOT EXISTS books ("
+        "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+        "title TEXT NOT NULL,"
+        "author TEXT NOT NULL,"
+        "year TEXT NOT NULL,"
+        "genre TEXT NOT NULL);";
+    char* errMsg = nullptr;
+    rc = executeSQL(createTableSQL, 0, 0, &errMsg);
+
+    if (rc != SQLITE_OK) {
+        std::cerr << "Ошибка создания таблицы: " << errMsg << std::endl;
+        sqlite3_free(errMsg);
+        return rc;
+    }
+
+    do {
+        std::cout << "Выберите операцию:\n"
+            << "1. Поиск книги по названию\n"
+            << "2. Поиск книги по автору\n"
+            << "3. Поиск книги по жанру\n"
+            << "4. Добавить книгу\n"
+            << "5. Редактировать книгу\n"
+            << "6. Удалить книгу\n"
+            << "7. Вывести все книги из базы данных\n"
+            << "8. Очистить базу данных\n" 
+            << "0. Выйти\n"
+            << "Введите число: ";
+        std::cin >> choice;
+        while (std::cin.fail())
+        {
+            std::cin.clear();
+            std::cin.ignore(10000, '\n');
+            std::cout << "\n";
+            std::cout << "Такого числа в пункте меню нет.\n";
+            std::cout << "Выберите повторно: ";
+            std::cin >> choice;
+        }
+
+        switch (choice) {
+        case 1:
+            std::cout << "\n";
+            searchBooksByTitle();
+            break;
+        case 2:
+            std::cout << "\n";
+            searchBooksByAuthor();
+            break;
+        case 3:
+            std::cout << "\n";
+            searchBooksByGenre();
+            break;
+        case 4:
+            std::cout << "\n";
+            addBook();
+            break;
+        case 5:
+            std::cout << "\n";
+            editBook();
+            break;
+        case 6:
+            std::cout << "\n";
+            deleteBook();
+            break;
+        case 7:
+            std::cout << "\n";
+            printAllBooks();
+            break;
+        case 0:
+            std::cout << "\n";
+            std::cout << "Программа завершена.\n";
+            break;
+        case 8:
+            std::cout << "\n";
+            clearDatabase();
+            break;
+        default:
+            std::cout << "\n";
+            std::cout << "Такого числа в пункте меню нет.\n";
+            break;
+        }
+    } while (choice != 0);
+
+    sqlite3_close(db); // Закрываем базу данных при завершении программы
+    return 0;
+}

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пример работы с классами</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .output {
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Пример работы с классами в JavaScript</h1>
+
+    <h2>Результаты работы с фигурами:</h2>
+    <div class="output" id="figureOutput"></div>
+
+    <h2>Результаты работы со студентом:</h2>
+    <div class="output" id="studentOutput"></div>
+
+    <h2>Результаты работы с калькулятором:</h2>
+    <div class="output" id="calculatorOutput"></div>
+
+    <script>
+        // Класс "Фигура"
+        class Figure {
+            constructor() {
+                if (this.constructor === Figure) {
+                    throw new Error("Нельзя создать экземпляр абстрактного класса Figure.");
+                }
+            }
+        
+            // Метод для вычисления площади
+            getArea() {
+                throw new Error("Метод getArea должен быть реализован в подклассе.");
+            }
+        
+            // Метод для вычисления периметра
+            getPerimeter() {
+                throw new Error("Метод getPerimeter должен быть реализован в подклассе.");
+            }
+        }
+        
+        // Класс "Прямоугольник" (наследует от "Фигура")
+        class Rectangle extends Figure {
+            constructor(width, height) {
+                super();
+                this.width = width;
+                this.height = height;
+            }
+        
+            // Реализация метода для вычисления площади
+            getArea() {
+                return this.width * this.height;
+            }
+        
+            // Реализация метода для вычисления периметра
+            getPerimeter() {
+                return 2 * (this.width + this.height);
+            }
+        }
+        
+        // Класс "Круг" (наследует от "Фигура")
+        class Circle extends Figure {
+            constructor(radius) {
+                super();
+                this.radius = radius;
+            }
+        
+            // Реализация метода для вычисления площади
+            getArea() {
+                return Math.PI * Math.pow(this.radius, 2);
+            }
+        
+            // Реализация метода для вычисления периметра
+            getPerimeter() {
+                return 2 * Math.PI * this.radius;
+            }
+        }
+        
+        // Класс "Студент"
+        class Student {
+            constructor(name, age, grade) {
+                this._name = name;
+                this._age = age;
+                this._grade = grade;
+            }
+        
+            // Метод для получения имени
+            getName() {
+                return this._name;
+            }
+        
+            // Метод для получения возраста
+            getAge() {
+                return this._age;
+            }
+        
+            // Метод для получения среднего балла
+            getGrade() {
+                return this._grade;
+            }
+        
+            // Метод для изменения имени
+            setName(name) {
+                this._name = name;
+            }
+        
+            // Метод для изменения возраста
+            setAge(age) {
+                this._age = age;
+            }
+        
+            // Метод для изменения среднего балла
+            setGrade(grade) {
+                this._grade = grade;
+            }
+        }
+        
+        // Класс "Калькулятор"
+        class Calculator {
+            // Метод для сложения
+            add(a, b) {
+                return a + b;
+            }
+        
+            // Метод для вычитания
+            subtract(a, b) {
+                return a - b;
+            }
+        
+            // Метод для умножения
+            multiply(a, b) {
+                return a * b;
+            }
+        
+            // Метод для деления
+            divide(a, b) {
+                if (b === 0) {
+                    throw new Error("На ноль делить нельзя!");
+                }
+                return a / b;
+            }
+        }
+        
+        // Пример использования:
+        const rectangle = new Rectangle(10, 5);
+        const circle = new Circle(7);
+        const student = new Student("Иван", 20, 4.5);
+        student.setName("Даниил");
+        student.setAge(22);
+        student.setGrade(4.7);
+        const calc = new Calculator();
+        
+        // Отображаем результаты
+        document.getElementById("figureOutput").innerHTML = `
+            <strong>Прямоугольник:</strong><br>
+            Площадь: ${rectangle.getArea()}<br>
+            Периметр: ${rectangle.getPerimeter()}<br><br>
+            <strong>Круг:</strong><br>
+            Площадь: ${circle.getArea()}<br>
+            Периметр: ${circle.getPerimeter()}
+        `;
+        
+        document.getElementById("studentOutput").innerHTML = `
+            Студент: ${student.getName()}<br>
+            Возраст: ${student.getAge()}<br>
+            Средний балл: ${student.getGrade()}
+        `;
+        
+        document.getElementById("calculatorOutput").innerHTML = `
+            Сложение: ${calc.add(5, 3)}<br>
+            Вычитание: ${calc.subtract(5, 3)}<br>
+            Умножение: ${calc.multiply(5, 3)}<br>
+            Деление: ${calc.divide(5, 3)}
+        `;
+    </script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+#include "stm32f3xx.h"  // Заголовочный файл для STM32F3xx
+
+void SystemClock_Config(void);
+void GPIO_Config(void);
+
+int main(void) {
+    SystemClock_Config();  // Настройка системной частоты
+    GPIO_Config();         // Настройка GPIO
+
+    // Параметры для 2250 Гц (период ≈444 мкс, полупериод ≈222 мкс)
+    const uint32_t half_period_2250 = 163;  // Примерное значение для 8 МГц
+
+    // Параметры для 750 Гц (период ≈1333 мкс, полупериод ≈667 мкс)
+    const uint32_t half_period_750 = 485;   // Примерное значение для 8 МГц
+
+    uint32_t counter_2250 = 0;  // Счётчик для PA5 (2250 Гц)
+    uint32_t counter_750  = 0;  // Счётчик для PA4 (750 Гц)
+    uint8_t state_2250 = 0;     // Состояние PA5
+    uint8_t state_750  = 0;     // Состояние PA4
+
+    while (1) {
+        // Обработка PA5 (2250 Гц) через адреса регистров
+        if (counter_2250 >= half_period_2250) {
+            if (state_2250) {
+                *(volatile uint32_t*)(0x48000018) = (1 << (16 + 5));  // Сброс на низкий уровень PA5 (BR5)
+                state_2250 = 0;
+            } else {
+                *(volatile uint32_t*)(0x48000018) = (1 << 5);  // Установка высокого уровня PA5 (BS5)
+                state_2250 = 1;
+            }
+            counter_2250 = 0;
+        }
+
+        // Обработка PA4 (750 Гц) через CMSIS
+        if (counter_750 >= half_period_750) {
+            if (state_750) {
+                GPIOA->BSRR = GPIO_BSRR_BR_4;  // Сброс на низкий уровень PA4
+                state_750 = 0;
+            } else {
+                GPIOA->BSRR = GPIO_BSRR_BS_4;  // Установка высокого уровня PA4
+                state_750 = 1;
+            }
+            counter_750 = 0;
+        }
+
+        // Увеличение счётчиков
+        counter_2250++;
+        counter_750++;
+    }
+}
+
+void GPIO_Config(void) {
+    // Включаем тактирование порта A
+    *(volatile uint32_t*)(0x40021014) |= (1 << 17);  // RCC->AHBENR |= RCC_AHBENR_GPIOAEN;
+
+    // Настраиваем PA5 как выход (для 2250 Гц) через адреса регистров
+    *(volatile uint32_t*)(0x48000000) &= ~(0x3 << (5 * 2));  // Очистка битов MODER5
+    *(volatile uint32_t*)(0x48000000) |= (0x1 << (5 * 2));   // Установка режима OUTPUT (01)
+    *(volatile uint32_t*)(0x48000004) &= ~(1 << 5);         // Режим Push-Pull (0)
+    *(volatile uint32_t*)(0x48000008) |= (0x3 << (5 * 2));  // Высокая скорость (11)
+
+    // Настраиваем PA4 как выход (для 750 Гц) через CMSIS
+    GPIOA->MODER &= ~GPIO_MODER_MODER4;
+    GPIOA->MODER |= GPIO_MODER_MODER4_0;
+    GPIOA->OTYPER &= ~GPIO_OTYPER_OT_4;
+    GPIOA->OSPEEDR |= GPIO_OSPEEDER_OSPEEDR4_0;
+}
+
+void SystemClock_Config(void) {
+    // Базовая настройка на HSI 8 МГц
+    RCC->CR |= RCC_CR_HSION;
+    while (!(RCC->CR & RCC_CR_HSIRDY));
+
+    RCC->CFGR &= ~RCC_CFGR_SW;
+    RCC->CFGR |= RCC_CFGR_SW_HSI;
+
+    while ((RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_HSI);
+}

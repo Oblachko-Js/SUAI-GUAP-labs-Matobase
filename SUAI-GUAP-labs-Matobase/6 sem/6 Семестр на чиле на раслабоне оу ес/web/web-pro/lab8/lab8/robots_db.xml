@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RobotsCatalog>
+  <!-- Робот 1: RoboPet -->
+  <robot id="1" release_year="2023">
+    <name>RoboPet</name>
+    <manufacturer>RoboTech</manufacturer>
+    <price currency="USD">199.99</price>
+    <description>Интерактивный робот-питомец</description>
+    <features>
+      <feature id="1">
+        <feature_name>Датчики</feature_name>
+        <feature_value>Камера, микрофон</feature_value>
+        <created_at>2025-04-03T13:45:02</created_at>
+      </feature>
+      <feature id="2">
+        <feature_name>Управление</feature_name>
+        <feature_value>Голосовое</feature_value>
+        <created_at>2025-04-03T13:45:02</created_at>
+      </feature>
+      <feature id="3">
+        <feature_name>Батарея</feature_name>
+        <feature_value>Литий-ионная (8 часов работы)</feature_value>
+        <created_at>2025-04-03T13:45:02</created_at>
+      </feature>
+    </features>
+  </robot>
+
+  <!-- Робот 2: CodeBot -->
+  <robot id="2" release_year="2022">
+    <name>CodeBot</name>
+    <manufacturer>EduToys</manufacturer>
+    <price currency="USD">149.50</price>
+    <description>Робот для обучения программированию</description>
+    <features>
+      <feature id="4">
+        <feature_name>Языки программирования</feature_name>
+        <feature_value>Python, JavaScript</feature_value>
+        <created_at>2025-04-03T13:45:02</created_at>
+      </feature>
+      <feature id="5">
+        <feature_name>Связь</feature_name>
+        <feature_value>Bluetooth, Wi-Fi</feature_value>
+        <created_at>2025-04-03T13:45:02</created_at>
+      </feature>
+      <feature id="6">
+        <feature_name>Возрастная группа</feature_name>
+        <feature_value>8+ лет</feature_value>
+        <created_at>2025-04-03T13:45:02</created_at>
+      </feature>
+    </features>
+  </robot>
+
+  <!-- Робот 3: DinoBot -->
+  <robot id="3" release_year="2024">
+    <name>DinoBot</name>
+    <manufacturer>FutureToys</manufacturer>
+    <price currency="USD">249.00</price>
+    <description>Робот-динозавр с ИИ</description>
+    <features>
+      <feature id="7">
+        <feature_name>Режимы игры</feature_name>
+        <feature_value>Охота, защита, обучение</feature_value>
+        <created_at>2025-04-03T13:45:02</created_at>
+      </feature>
+      <feature id="8">
+        <feature_name>Материал</feature_name>
+        <feature_value>Ударопрочный пластик</feature_value>
+        <created_at>2025-04-03T13:45:02</created_at>
+      </feature>
+      <feature id="9">
+        <feature_name>Дополнительно</feature_name>
+        <feature_value>Совместимость с мобильным приложением</feature_value>
+        <created_at>2025-04-03T13:45:02</created_at>
+      </feature>
+    </features>
+  </robot>
+</RobotsCatalog>

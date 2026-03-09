@@ -1,0 +1,72 @@
+#include<iostream>
+#include<locale>
+using namespace std;
+
+void remove_char(char* text, char ch, bool &flag_begin,bool &flag_end, int &flag_len) {
+    int len = 0;
+    for(int i = 0; text[i]; i++){
+        len++;
+    }
+    bool find_from_begin = false;
+    bool find_from_end = false;
+    for (int i = 0; i <= len; i++) {
+        if (text[i] == ch ) {
+            for (int j = i; j <= (len - 1); j++) {
+                text[j] = text[j + 1];
+            }
+            len--;
+            find_from_begin = true;
+            break;
+        }
+    }
+    if (find_from_begin == true) {
+        for (int i = len; i >= 0; i--) {
+            if (text[i] == ch ) {
+                for (int j = i; j <= (len - 1); j++) {
+                    text[j] = text[j + 1];
+                }
+                len--;
+                find_from_end = true;
+                break;
+            }
+        }
+    }
+	flag_begin = find_from_begin;
+	flag_end = find_from_end;
+	flag_len = len;
+}
+
+int main() {
+    setlocale(LC_ALL, "Russian");
+    char text[100];
+    cout << "Введите исходную строку: ";
+    cin.getline(text, 100);
+    cout << "Введите символ или пробел, который нужно удалить: ";
+    char ch;
+    cin.get(ch);
+	bool flag_begin,flag_end;
+	flag_begin = 0;
+	flag_end = 0;
+	int flag_len = 0;
+    remove_char(text, ch,flag_begin, flag_end, flag_len);
+if (flag_begin == true) {
+        if (flag_end == false) {
+            cout << "Введенный символ в исходной строке встречается только 1 раз!" << endl;
+            cout << endl;
+            cout << "Измененный текст:";
+            for (int i = 0; i <= flag_len; i++) {
+            }
+            cout << endl;
+        } else {
+            cout << "Измененный текст:";
+            cout << text;
+            cout << endl;
+        }
+    } else {
+        cout << "Введенный символ в исходной строке отсутствует!" << endl;
+    }    system("pause");
+    return 0;
+}
+
+
+

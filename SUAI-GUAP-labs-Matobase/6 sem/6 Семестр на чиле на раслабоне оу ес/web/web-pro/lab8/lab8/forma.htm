@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+    <TITLE>Роботы-игрушки</TITLE>
+    <link rel="stylesheet" type="text/css" href="styles_form.css">
+    <meta charset="utf-8">
+    <SCRIPT>
+        function validateForm() {
+            const surname = document.querySelector('input[name="surname"]').value;
+            const name = document.querySelector('input[name="name"]').value;
+            const patronymic = document.querySelector('input[name="patronymic"]').value;
+    
+            if (!surname || !name) {
+                alert("Поля 'Фамилия' и 'Имя' обязательны для заполнения!");
+                return false;
+            }
+    
+            const lettersRegex = /^[A-Za-zА-Яа-я]+$/;
+            if (!lettersRegex.test(surname) || !lettersRegex.test(name) || (patronymic && !lettersRegex.test(patronymic))) {
+                alert("Фамилия, имя и отчество должны содержать только буквы!");
+                return false;
+            }
+    
+            const email = document.querySelector('input[name="email"]').value;
+            if (!email.includes('@')) {
+                alert("Электронная почта должна содержать символ '@'!");
+                return false;
+            }
+    
+            return true;
+        }
+        </SCRIPT>
+</HEAD>
+<BODY>
+    <H1>Анкета пользователя</H1>
+    <HR>
+    <FORM method="POST" action="/cgi-bin/tutor5.py" enctype="multipart/form-data" onsubmit="return validateForm()">
+        <H3>Заполните форму и нажмите кнопку</H3>
+        <TABLE>
+            <TR>
+                <TH align=right>Фамилия:</TH>
+                <TD><input type="text" name="surname" required></TD>
+            </TR>
+            <TR>
+                <TH align=right>Имя:</TH>
+                <TD><input type="text" name="name" required></TD>
+            </TR>
+            <TR>
+                <TH align=right>Отчество:</TH>
+                <TD><input type="text" name="patronymic"></TD>
+            </TR>
+            <TR>
+                <TH align=right>Тип робота:</TH>
+                <TD>
+                    <select name="robot_type" required>
+                        <option value="Домашний помощник">Домашний помощник</option>
+                        <option value="Образовательный">Образовательный</option>
+                        <option value="Игрушка">Игрушка</option>
+                        <option value="Другой">Другой</option>
+                    </select>
+                </TD>
+            </TR>
+            <TR>
+                <TH align=right>Функции робота:</TH>
+                <TD>
+                    <input type="checkbox" name="functions" value="Голосовое управление"> Голосовое управление<br>
+                    <input type="checkbox" name="functions" value="Программирование"> Программирование<br>
+                    <input type="checkbox" name="functions" value="Игры"> Игры<br>
+                    <input type="checkbox" name="functions" value="Обучение"> Обучение<br>
+                </TD>
+            </TR>
+            <TR>
+                <TH align=right>Возрастная категория:</TH>
+                <TD>
+                    <input type="radio" name="age_group" value="Дети" required> Дети<br>
+                    <input type="radio" name="age_group" value="Подростки"> Подростки<br>
+                    <input type="radio" name="age_group" value="Взрослые"> Взрослые<br>
+                </TD>
+            </TR>
+            <TR>
+                <TH align=right>Электронная почта:</TH>
+                <TD><input type="email" name="email" required></TD>
+            </TR>
+            <TR>
+                <TH align=right>Загрузить файл:</TH>
+                <TD><input type="file" name="file"></TD>
+            </TR>
+            <TR>
+                <TD colspan=2 align=center>
+                    <input type="submit" value="ОТПРАВИТЬ">
+                </TD>
+            </TR>
+        </TABLE>
+    </FORM>
+    <HR>
+</BODY>
+</HTML>

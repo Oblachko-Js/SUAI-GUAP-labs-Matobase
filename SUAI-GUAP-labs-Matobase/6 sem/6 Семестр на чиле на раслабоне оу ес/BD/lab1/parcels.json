@@ -1,0 +1,255 @@
+[
+  {
+    "_id": "652f4d1e2f4b3c1a9c1e4b6a",
+    "tracking_id": "ABC123",
+    "recipient": {
+      "_id": "652f4d1e2f4b3c1a9c1e4c1a",
+      "type": "individual",
+      "name": "Иван Иванов",
+      "contact_person": null,
+      "addresses": [
+        {
+          "_id": "652f4d1e2f4b3c1a9c1e4c1b",
+          "address": "ул. Садовая, д. 5, кв. 10"
+        }
+      ]
+    },
+    "sender": {
+      "_id": "652f4d1e2f4b3c1a9c1e4c1c",
+      "company": "ООО Ромашка",
+      "contact_person": "Петр Петров"
+    },
+    "delivery": {
+      "_id": "652f4d1e2f4b3c1a9c1e4c1d",
+      "address": "ул. Ленина, д. 7",
+      "contact_person": "Сергей Сергеев",
+      "desired_time_range": "10:00-14:00",
+      "actual_delivery_time": "12:30",
+      "delivered": true
+    },
+    "parcel_info": {
+      "_id": "652f4d1e2f4b3c1a9c1e4c1e",
+      "weight": 5.2,
+      "cost": 1200
+    },
+    "shipment_date": "2024-02-15T00:00:00Z"
+  },
+  {
+    "_id": "652f4d1e2f4b3c1a9c1e4b6b",
+    "tracking_id": "XYZ789",
+    "recipient": {
+      "_id": "652f4d1e2f4b3c1a9c1e4c2a",
+      "type": "business",
+      "name": "ООО Альфа",
+      "contact_person": "Алексей Смирнов",
+      "addresses": [
+        {
+          "_id": "652f4d1e2f4b3c1a9c1e4c2b",
+          "address": "ул. Большая Морская, д. 8"
+        },
+        {
+          "_id": "652f4d1e2f4b3c1a9c1e4c2c",
+          "address": "ул. Новая, д. 12"
+        }
+      ]
+    },
+    "sender": {
+      "_id": "652f4d1e2f4b3c1a9c1e4c2d",
+      "company": "ООО Бета",
+      "contact_person": "Ольга Васильева"
+    },
+    "delivery": {
+      "_id": "652f4d1e2f4b3c1a9c1e4c2e",
+      "address": "ул. Новая, д. 12",
+      "contact_person": "Анна Ковалева",
+      "desired_time_range": "14:00-18:00",
+      "actual_delivery_time": "15:45",
+      "delivered": true
+    },
+    "parcel_info": {
+      "_id": "652f4d1e2f4b3c1a9c1e4c2f",
+      "weight": 8.7,
+      "cost": 2000
+    },
+    "shipment_date": "2024-03-02T00:00:00Z"
+  },
+  {
+    "_id": "652f4d1e2f4b3c1a9c1e4b6c",
+    "tracking_id": "LMN456",
+    "recipient": {
+      "_id": "652f4d1e2f4b3c1a9c1e4c3a",
+      "type": "business",
+      "name": "ООО Гамма",
+      "contact_person": "Дмитрий Орлов",
+      "addresses": [
+        {
+          "_id": "652f4d1e2f4b3c1a9c1e4c3b",
+          "address": "ул. Садовая, д. 22"
+        },
+        {
+          "_id": "652f4d1e2f4b3c1a9c1e4c3c",
+          "address": "ул. Центральная, д. 10"
+        }
+      ]
+    },
+    "sender": {
+      "_id": "652f4d1e2f4b3c1a9c1e4c3d",
+      "company": "ООО Альфа",
+      "contact_person": "Алексей Смирнов"
+    },
+    "delivery": {
+      "_id": "652f4d1e2f4b3c1a9c1e4c3e",
+      "address": "ул. Центральная, д. 10",
+      "contact_person": "Виктория Лебедева",
+      "desired_time_range": "16:00-20:00",
+      "actual_delivery_time": "18:10",
+      "delivered": true
+    },
+    "parcel_info": {
+      "_id": "652f4d1e2f4b3c1a9c1e4c3f",
+      "weight": 3.1,
+      "cost": 900
+    },
+    "shipment_date": "2024-04-05T00:00:00Z"
+  },
+  {
+    "_id": "652f4d1e2f4b3c1a9c1e4b6d",
+    "tracking_id": "PQR789",
+    "recipient": {
+      "_id": "652f4d1e2f4b3c1a9c1e4c4a",
+      "type": "individual",
+      "name": "Мария Кузнецова",
+      "contact_person": null,
+      "addresses": [
+        {
+          "_id": "652f4d1e2f4b3c1a9c1e4c4b",
+          "address": "ул. Южная, д. 3"
+        }
+      ]
+    },
+    "sender": {
+      "_id": "652f4d1e2f4b3c1a9c1e4c4c",
+      "company": "ООО Бета",
+      "contact_person": "Ольга Васильева"
+    },
+    "delivery": {
+      "_id": "652f4d1e2f4b3c1a9c1e4c4d",
+      "address": "ул. Южная, д. 3",
+      "contact_person": "Мария Кузнецова",
+      "desired_time_range": "09:00-12:00",
+      "actual_delivery_time": "10:45",
+      "delivered": true
+    },
+    "parcel_info": {
+      "_id": "652f4d1e2f4b3c1a9c1e4c4e",
+      "weight": 6.4,
+      "cost": 1500
+    },
+    "shipment_date": "2024-03-12T00:00:00Z"
+  },
+  {
+    "_id": "652f4d1e2f4b3c1a9c1e4b6e",
+    "tracking_id": "DEF567",
+    "recipient": {
+      "_id": "652f4d1e2f4b3c1a9c1e4c5a",
+      "type": "business",
+      "name": "ООО Дельта",
+      "contact_person": "Екатерина Морозова",
+      "addresses": [
+        {
+          "_id": "652f4d1e2f4b3c1a9c1e4c5b",
+          "address": "ул. Садовая, д. 15"
+        }
+      ]
+    },
+    "sender": {
+      "_id": "652f4d1e2f4b3c1a9c1e4c5c",
+      "company": "ООО Гамма",
+      "contact_person": "Дмитрий Орлов"
+    },
+    "delivery": {
+      "_id": "652f4d1e2f4b3c1a9c1e4c5d",
+      "address": "ул. Ленина, д. 22",
+      "contact_person": "Андрей Сидоров",
+      "desired_time_range": "13:00-17:00",
+      "actual_delivery_time": "14:20",
+      "delivered": false
+    },
+    "parcel_info": {
+      "_id": "652f4d1e2f4b3c1a9c1e4c5e",
+      "weight": 4.5,
+      "cost": 1100
+    },
+    "shipment_date": "2024-01-25T00:00:00Z"
+  },
+  {
+    "_id": "652f4d1e2f4b3c1a9c1e4b6f",
+    "tracking_id": "GHI111",
+    "recipient": {
+      "_id": "652f4d1e2f4b3c1a9c1e4c6a",
+      "type": "business",
+      "name": "ООО Альфа",
+      "contact_person": "Алексей Смирнов",
+      "addresses": [
+        {
+          "_id": "652f4d1e2f4b3c1a9c1e4c6b",
+          "address": "ул. Пушкина, д. 20"
+        }
+      ]
+    },
+    "sender": {
+      "_id": "652f4d1e2f4b3c1a9c1e4c6c",
+      "company": "ООО Гамма",
+      "contact_person": "Дмитрий Орлов"
+    },
+    "delivery": {
+      "_id": "652f4d1e2f4b3c1a9c1e4c6d",
+      "address": "ул. Пушкина, д. 20",
+      "contact_person": "Алексей Смирнов",
+      "desired_time_range": "12:00-16:00",
+      "actual_delivery_time": "14:45",
+      "delivered": true
+    },
+    "parcel_info": {
+      "_id": "652f4d1e2f4b3c1a9c1e4c6e",
+      "weight": 7.0,
+      "cost": 1300
+    },
+    "shipment_date": "2024-02-25T00:00:00Z"
+  },
+  {
+    "_id": "652f4d1e2f4b3c1a9c1e4b70",
+    "tracking_id": "JKL222",
+    "recipient": {
+      "_id": "652f4d1e2f4b3c1a9c1e4c7a",
+      "type": "business",
+      "name": "ООО Гамма",
+      "contact_person": "Дмитрий Орлов",
+      "addresses": [
+        {
+          "_id": "652f4d1e2f4b3c1a9c1e4c7b",
+          "address": "ул. Первомайская, д. 5"
+        }
+      ]
+    },
+    "sender": {
+      "_id": "652f4d1e2f4b3c1a9c1e4c7c",
+      "company": "ООО Альфа",
+      "contact_person": "Алексей Смирнов"
+    },
+    "delivery": {
+      "_id": "652f4d1e2f4b3c1a9c1e4c7d",
+      "address": "ул. Первомайская, д. 5",
+      "contact_person": "Дмитрий Орлов",
+      "desired_time_range": "11:00-15:00",
+      "actual_delivery_time": "12:55",
+      "delivered": true
+    },
+    "parcel_info": {
+      "_id": "652f4d1e2f4b3c1a9c1e4c7e",
+      "weight": 9.2,
+      "cost": 1700
+    },
+    "shipment_date": "2024-04-12T00:00:00Z"
+  }
+]

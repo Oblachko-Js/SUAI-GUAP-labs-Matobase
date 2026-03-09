@@ -1,0 +1,67 @@
+
+@startuml
+class MainWindow {
+  +MainWindow(QWidget *parent = nullptr)
+  +~MainWindow()
+  +void addParking()
+  +void deleteParking()
+  +void updateTable()
+  +void loadParkingsToTable()
+  +void addVisitors()
+  +void deleteVisitors()
+  +void addTicket()
+  +void deleteTicket()
+  +void addVehicle()
+  +void deleteVehicle()
+  +void addPersonnel()
+  +void deletePersonnel()
+}
+
+class ParkingFactory {
+  -QStringList parkingData
+  +ParkingFactory(QObject *parent = nullptr)
+  +~ParkingFactory()
+  +void addParking(QString id, QString gps, QString size, QString type, QString cost)
+  +void loadParkingsToTable(QTableWidget *table)
+}
+
+class Visitors {
+  -QList<QStringList> visitorData
+  +Visitors(QObject *parent = nullptr)
+  +void addVisitor(QString number, QString name, QString address, QString phone)
+  +void saveVisitorsToFile()
+  +void loadVisitorsFromFile(QTableWidget *table)
+}
+
+class TicketManager {
+  -int currentTicketId
+  +TicketManager(QObject *parent = nullptr)
+  +QString generateTicketId()
+  +void addTicket(QString parkingId, QString visitorNumber, QString date, QTableWidget *table)
+}
+
+class Vehicle {
+  -QString vehicleId
+  -QString brand
+  -QString model
+  +Vehicle()
+}
+
+class Personnel {
+  -QString personnelId
+  -QString name
+  -QString position
+  +Personnel()
+}
+
+MainWindow --> ParkingFactory : uses
+MainWindow --> Visitors : uses
+MainWindow --> TicketManager : uses
+MainWindow --> Vehicle : interacts with
+MainWindow --> Personnel : interacts with
+
+ParkingFactory --> TicketManager : interacts with
+Visitors --> TicketManager : interacts with
+TicketManager --> Vehicle : interacts with
+TicketManager --> Personnel : interacts with
+@enduml

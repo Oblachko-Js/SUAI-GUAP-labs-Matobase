@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сохранить имя и отслеживание посещений</title>
+</head>
+<body>
+
+<h2>Приветствую вас на сайте!</h2>
+<p id="greeting"></p>
+<input type="text" id="name" placeholder="Введите ваше имя">
+<button onclick="saveName()">Сохранить</button>
+
+<h3>Количество ваших посещений: <span id="visitCount">0</span></h3>
+
+<script>
+    // Функция для сохранения имени в cookies
+    function saveName() {
+        const name = document.getElementById('name').value;
+        document.cookie = `name=${name};path=/`;
+        displayGreeting();
+    }
+
+    // Функция для отображения приветствия с именем пользователя
+    function displayGreeting() {
+        const cookies = document.cookie.split(';');
+        const nameCookie = cookies.find(cookie => cookie.trim().startsWith('name='));
+        if (nameCookie) {
+            const name = nameCookie.split('=')[1];
+            document.getElementById('greeting').innerText = `Привет, ${name}!`;
+        }
+    }
+
+    // Отслеживание количества посещений с использованием localStorage
+    if (!localStorage.getItem('visitCount')) {
+        localStorage.setItem('visitCount', 0);
+    }
+    
+    let visitCount = parseInt(localStorage.getItem('visitCount')) + 1;
+    localStorage.setItem('visitCount', visitCount);
+    document.getElementById('visitCount').innerText = visitCount;
+
+    // Проверка cookies при загрузке страницы
+    displayGreeting();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,330 @@
+[{
+  "_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4b6a"
+  },
+  "tracking_id": "ABC123",
+  "recipient_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c1a"
+  },
+  "sender_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c1c"
+  },
+  "parcel_info": {
+    "weight": 5.2,
+    "cost": 1200
+  },
+  "delivery": {
+    "address_id": {
+      "$oid": "652f4d1e2f4b3c1a9c1e4c1b"
+    },
+    "contact_person": {
+      "first_name": "Сергей",
+      "last_name": "Сергеев"
+    },
+    "desired_time_range": "10:00-14:00",
+    "actual_delivery_date": {
+      "$date": "2024-02-15T12:30:00.000Z"
+    },
+    "delivered": true
+  },
+  "shipment_date": {
+    "$date": "2024-02-15T00:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4b6b"
+  },
+  "tracking_id": "XYZ789",
+  "recipient_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c2a"
+  },
+  "sender_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c2d"
+  },
+  "parcel_info": {
+    "weight": 8.7,
+    "cost": 2000
+  },
+  "delivery": {
+    "address_id": {
+      "$oid": "652f4d1e2f4b3c1a9c1e4c2b"
+    },
+    "contact_person": {
+      "first_name": "Анна",
+      "last_name": "Ковалева"
+    },
+    "desired_time_range": "14:00-18:00",
+    "actual_delivery_date": {
+      "$date": "2022-03-02T15:45:00.000Z"
+    },
+    "delivered": true
+  },
+  "shipment_date": {
+    "$date": "2022-03-02T00:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4b6c"
+  },
+  "tracking_id": "LMN456",
+  "recipient_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c3a"
+  },
+  "sender_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c3d"
+  },
+  "parcel_info": {
+    "weight": 3.1,
+    "cost": 900
+  },
+  "delivery": {
+    "address_id": {
+      "$oid": "652f4d1e2f4b3c1a9c1e4c2c"
+    },
+    "contact_person": {
+      "first_name": "Виктория",
+      "last_name": "Лебедева"
+    },
+    "desired_time_range": "16:00-20:00",
+    "actual_delivery_date": {
+      "$date": "2024-04-05T18:10:00.000Z"
+    },
+    "delivered": true
+  },
+  "shipment_date": {
+    "$date": "2024-04-05T00:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4b6d"
+  },
+  "tracking_id": "PQR789",
+  "recipient_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c4a"
+  },
+  "sender_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c4c"
+  },
+  "parcel_info": {
+    "weight": 6.4,
+    "cost": 1500
+  },
+  "delivery": {
+    "address_id": {
+      "$oid": "652f4d1e2f4b3c1a9c1e4c3b"
+    },
+    "contact_person": {
+      "first_name": "Мария",
+      "last_name": "Кузнецова"
+    },
+    "desired_time_range": "09:00-12:00",
+    "actual_delivery_date": {
+      "$date": "2022-03-12T10:45:00.000Z"
+    },
+    "delivered": true
+  },
+  "shipment_date": {
+    "$date": "2022-03-12T00:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4b6e"
+  },
+  "tracking_id": "DEF567",
+  "recipient_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c5a"
+  },
+  "sender_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c5c"
+  },
+  "parcel_info": {
+    "weight": 4.5,
+    "cost": 1100
+  },
+  "delivery": {
+    "address_id": {
+      "$oid": "652f4d1e2f4b3c1a9c1e4c4b"
+    },
+    "contact_person": {
+      "first_name": "Андрей",
+      "last_name": "Сидоров"
+    },
+    "desired_time_range": "13:00-17:00",
+    "actual_delivery_date": {
+      "$date": "2024-01-25T14:20:00.000Z"
+    },
+    "delivered": false
+  },
+  "shipment_date": {
+    "$date": "2024-01-25T00:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4b6f"
+  },
+  "tracking_id": "FEE789",
+  "recipient_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c6a"
+  },
+  "sender_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c2d"
+  },
+  "parcel_info": {
+    "weight": 7,
+    "cost": 1300
+  },
+  "delivery": {
+    "address_id": {
+      "$oid": "652f4d1e2f4b3c1a9c1e4c2b"
+    },
+    "contact_person": {
+      "first_name": "Сергей",
+      "last_name": "Валерьев"
+    },
+    "desired_time_range": "12:00-16:00",
+    "actual_delivery_date": {
+      "$date": "2024-02-25T14:45:00.000Z"
+    },
+    "delivered": true
+  },
+  "shipment_date": {
+    "$date": "2024-02-25T00:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4b70"
+  },
+  "tracking_id": "LMM455",
+  "recipient_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c6a"
+  },
+  "sender_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c3d"
+  },
+  "parcel_info": {
+    "weight": 9.2,
+    "cost": 1700
+  },
+  "delivery": {
+    "address_id": {
+      "$oid": "652f4d1e2f4b3c1a9c1e4c2c"
+    },
+    "contact_person": {
+      "first_name": "Сергей",
+      "last_name": "Валерьев"
+    },
+    "desired_time_range": "11:00-15:00",
+    "actual_delivery_date": {
+      "$date": "2024-04-12T12:55:00.000Z"
+    },
+    "delivered": true
+  },
+  "shipment_date": {
+    "$date": "2024-04-12T00:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4b71"
+  },
+  "tracking_id": "ADD001",
+  "recipient_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c2a"
+  },
+  "sender_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c3d"
+  },
+  "parcel_info": {
+    "weight": 2.5,
+    "cost": 800
+  },
+  "delivery": {
+    "address_id": {
+      "$oid": "652f4d1e2f4b3c1a9c1e4c2b"
+    },
+    "contact_person": {
+      "first_name": "Алексей",
+      "last_name": "Смирнов"
+    },
+    "desired_time_range": "09:00-12:00",
+    "actual_delivery_date": {
+      "$date": "2024-03-10T11:30:00.000Z"
+    },
+    "delivered": true
+  },
+  "shipment_date": {
+    "$date": "2024-03-10T00:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4b72"
+  },
+  "tracking_id": "ADD002",
+  "recipient_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c6a"
+  },
+  "sender_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c3d"
+  },
+  "parcel_info": {
+    "weight": 3.8,
+    "cost": 950
+  },
+  "delivery": {
+    "address_id": {
+      "$oid": "652f4d1e2f4b3c1a9c1e4c2c"
+    },
+    "contact_person": {
+      "first_name": "Сергей",
+      "last_name": "Валерьев"
+    },
+    "desired_time_range": "14:00-18:00",
+    "actual_delivery_date": {
+      "$date": "2024-03-15T16:20:00.000Z"
+    },
+    "delivered": true
+  },
+  "shipment_date": {
+    "$date": "2024-03-15T00:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4b73"
+  },
+  "tracking_id": "ADD003",
+  "recipient_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c5a"
+  },
+  "sender_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c3d"
+  },
+  "parcel_info": {
+    "weight": 5,
+    "cost": 1200
+  },
+  "delivery": {
+    "address_id": {
+      "$oid": "652f4d1e2f4b3c1a9c1e4c5b"
+    },
+    "contact_person": {
+      "first_name": "Дмитрий",
+      "last_name": "Орлов"
+    },
+    "desired_time_range": "10:00-14:00",
+    "actual_delivery_date": {
+      "$date": "2024-03-20T12:45:00.000Z"
+    },
+    "delivered": true
+  },
+  "shipment_date": {
+    "$date": "2024-03-20T00:00:00.000Z"
+  }
+}]

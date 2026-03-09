@@ -1,0 +1,157 @@
+[{
+  "_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c1a"
+  },
+  "type": "recipient",
+  "name": {
+    "first_name": "Иван",
+    "last_name": "Иванов"
+  },
+  "contact_person": null,
+  "address_ids": [
+    {
+      "$oid": "652f4d1e2f4b3c1a9c1e4c1b"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c2a"
+  },
+  "type": "recipient",
+  "name": "ООО Альфа",
+  "contact_person": {
+    "first_name": "Алексей",
+    "last_name": "Смирнов"
+  },
+  "address_ids": [
+    {
+      "$oid": "652f4d1e2f4b3c1a9c1e4c2b"
+    },
+    {
+      "$oid": "652f4d1e2f4b3c1a9c1e4c2c"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c3a"
+  },
+  "type": "recipient",
+  "name": "ООО Бета",
+  "contact_person": {
+    "first_name": "Ольга",
+    "last_name": "Васильева"
+  },
+  "address_ids": [
+    {
+      "$oid": "652f4d1e2f4b3c1a9c1e4c3b"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c4a"
+  },
+  "type": "recipient",
+  "name": {
+    "first_name": "Мария",
+    "last_name": "Кузнецова"
+  },
+  "contact_person": null,
+  "address_ids": [
+    {
+      "$oid": "652f4d1e2f4b3c1a9c1e4c4b"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c5a"
+  },
+  "type": "recipient",
+  "name": "ООО Гамма",
+  "contact_person": {
+    "first_name": "Дмитрий",
+    "last_name": "Орлов"
+  },
+  "address_ids": [
+    {
+      "$oid": "652f4d1e2f4b3c1a9c1e4c5b"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c6a"
+  },
+  "type": "recipient",
+  "name": "ООО Сбербанк",
+  "contact_person": {
+    "first_name": "Сергей",
+    "last_name": "Валерьев"
+  },
+  "address_ids": [
+    {
+      "$oid": "652f4d1e2f4b3c1a9c1e4c2b"
+    },
+    {
+      "$oid": "652f4d1e2f4b3c1a9c1e4c2c"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c1c"
+  },
+  "type": "sender",
+  "company": "ООО Ромашка",
+  "contact_person": {
+    "first_name": "Петр",
+    "last_name": "Петров"
+  }
+},
+{
+  "_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c2d"
+  },
+  "type": "sender",
+  "company": "ООО Бета",
+  "contact_person": {
+    "first_name": "Ольга",
+    "last_name": "Васильева"
+  }
+},
+{
+  "_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c3d"
+  },
+  "type": "sender",
+  "company": "ООО Альфа",
+  "contact_person": {
+    "first_name": "Алексей",
+    "last_name": "Смирнов"
+  }
+},
+{
+  "_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c4c"
+  },
+  "type": "sender",
+  "name": {
+    "first_name": "Мария",
+    "last_name": "Кузнецова"
+  },
+  "contact_person": null
+},
+{
+  "_id": {
+    "$oid": "652f4d1e2f4b3c1a9c1e4c5c"
+  },
+  "type": "sender",
+  "name": {
+    "first_name": "Андрей",
+    "last_name": "Сидоров"
+  },
+  "contact_person": null
+}]

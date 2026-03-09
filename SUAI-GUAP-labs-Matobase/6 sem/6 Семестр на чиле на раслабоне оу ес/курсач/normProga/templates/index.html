@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Трекер привычек</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .auth-forms {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        input, button {
+            margin: 5px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <h1>Трекер привычек в формате RPG</h1>
+
+    <!-- Формы регистрации и авторизации -->
+    <div class="auth-forms">
+        <h2>Регистрация</h2>
+        <input type="text" id="reg-username" placeholder="Имя пользователя">
+        <input type="email" id="reg-email" placeholder="Email">
+        <input type="password" id="reg-password" placeholder="Пароль">
+        <input type="text" id="reg-character-name" placeholder="Имя персонажа">
+        <button onclick="register()">Зарегистрироваться</button>
+
+        <h2>Авторизация</h2>
+        <input type="text" id="login-username" placeholder="Имя пользователя">
+        <input type="password" id="login-password" placeholder="Пароль">
+        <button onclick="login()">Войти</button>
+    </div>
+
+    <script>
+        // Регистрация
+        async function register() {
+            const username = document.getElementById('reg-username').value;
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+            const characterName = document.getElementById('reg-character-name').value;
+
+            // Регистрируем пользователя
+            const registerResponse = await fetch('/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, email, password }),
+            });
+            const registerResult = await registerResponse.json();
+            if (!registerResponse.ok) {
+                alert(registerResult.message);
+                return;
+            }
+
+            // Авторизуем пользователя
+            const loginResponse = await fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            });
+            const loginResult = await loginResponse.json();
+            if (!loginResponse.ok) {
+                alert(loginResult.message);
+                return;
+            }
+
+            // Создаем персонажа
+            const characterResponse = await fetch('/create_character', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name: characterName }),
+            });
+            const characterResult = await characterResponse.json();
+            alert(characterResult.message);
+
+            if (characterResponse.ok) {
+                window.location.href = loginResult.redirect;  // Перенаправляем в личный кабинет
+            }
+        }
+
+        // Авторизация
+        async function login() {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            });
+            const result = await response.json();
+            alert(result.message);
+            if (response.ok) {
+                window.location.href = result.redirect;  // Перенаправляем в личный кабинет
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-451a01a20de4eba4d801.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "lab9sheka",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "all_qmllint::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-all_qmllint-Debug-3268413025c1e23aa6dd.json",
+					"name" : "all_qmllint",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "all_qmllint_json::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-all_qmllint_json-Debug-bb1986e8399e648f5368.json",
+					"name" : "all_qmllint_json",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "all_qmllint_module::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-all_qmllint_module-Debug-e354215f79b90d09c4bd.json",
+					"name" : "all_qmllint_module",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "all_qmltyperegistrations::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-all_qmltyperegistrations-Debug-47cec1a605087f701209.json",
+					"name" : "all_qmltyperegistrations",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "applab9sheka::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-applab9sheka-Debug-813cfaede7eadce17c3a.json",
+					"name" : "applab9sheka",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "applab9sheka_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-applab9sheka_autogen-Debug-377de21efd617e900237.json",
+					"name" : "applab9sheka_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "applab9sheka_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-applab9sheka_autogen_timestamp_deps-Debug-1e34b7e26bfd457c10d5.json",
+					"name" : "applab9sheka_autogen_timestamp_deps",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "applab9sheka_qmlimportscan::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-applab9sheka_qmlimportscan-Debug-30c32f25a50cbc9c1bb2.json",
+					"name" : "applab9sheka_qmlimportscan",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "applab9sheka_qmllint::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-applab9sheka_qmllint-Debug-aaf6c0018901b360214c.json",
+					"name" : "applab9sheka_qmllint",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "applab9sheka_qmllint_json::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-applab9sheka_qmllint_json-Debug-7b9e92662e9787960af5.json",
+					"name" : "applab9sheka_qmllint_json",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "applab9sheka_qmllint_module::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-applab9sheka_qmllint_module-Debug-1762c4c54cb2a25a61a5.json",
+					"name" : "applab9sheka_qmllint_module",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "applab9sheka_qmltyperegistration::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-applab9sheka_qmltyperegistration-Debug-0475cbcf85dfe63316ff.json",
+					"name" : "applab9sheka_qmltyperegistration",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "applab9sheka_tooling::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-applab9sheka_tooling-Debug-a27702f3b3adfcda4aab.json",
+					"name" : "applab9sheka_tooling",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/andrejpancenko/Documents/7 \u0441\u0435\u043c \u0443\u0445 E\u0308/blender/lab9/lab9sheka/build/Qt_6_7_2_for_macOS-Debug",
+		"source" : "/Users/andrejpancenko/Documents/7 \u0441\u0435\u043c \u0443\u0445 E\u0308/blender/lab9/lab9sheka"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

@@ -1,0 +1,16 @@
+ru/example/lab1/domain/Electricity.class
+ru/example/lab1/servlets/waters/CreateWaterServlet.class
+ru/example/lab1/servlets/waters/DeleteWaterServlet.class
+ru/example/lab1/servlets/electricitys/ElectricitysServlet.class
+ru/example/lab1/domain/Paymant.class
+ru/example/lab1/servlets/paymants/CreatePaymantServlet.class
+ru/example/lab1/dao/WatersDao.class
+ru/example/lab1/dao/PaymantsDao.class
+ru/example/lab1/servlets/paymants/DeletePaymantServlet.class
+ru/example/lab1/util/IdParser.class
+ru/example/lab1/servlets/paymants/PaymantsServlet.class
+ru/example/lab1/domain/Water.class
+ru/example/lab1/dao/ElectricitysDao.class
+ru/example/lab1/servlets/electricitys/DeleteElectricityServlet.class
+ru/example/lab1/servlets/waters/WatersServlet.class
+ru/example/lab1/servlets/electricitys/CreateElectricityServlet.class

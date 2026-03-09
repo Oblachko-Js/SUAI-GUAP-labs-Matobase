@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="supercomputers.xsd">
+  <supercomputer id="s001" category="research">
+    <name>Titan X</name>
+    <manufacturer>Cray Inc.</manufacturer>
+    <price currency="USD">12900000</price>
+    <cores>560000</cores>
+    <power_consumption kw="8200">Жидкостное охлаждение</power_consumption>
+    <weight kg="4500">4.5 тонны</weight>
+    <image>src/titan_x.jpg</image>
+    <rating>4.7</rating>
+    <features>
+      <feature>17.59 петафлопс</feature>
+      <feature>Оперативная память 710 TB</feature>
+      <feature>NVIDIA Tesla K20X</feature>
+    </features>
+  </supercomputer>
+  
+  <supercomputer id="s002" category="government">
+    <name>Summit</name>
+    <manufacturer>IBM</manufacturer>
+    <price currency="USD">325000000</price>
+    <cores>2414592</cores>
+    <power_consumption kw="13000">Воздушное охлаждение</power_consumption>
+    <weight kg="8000">8 тонн</weight>
+    <image>src/summit.jpg</image>
+    <rating>4.9</rating>
+    <features>
+      <feature>200 петафлопс</feature>
+      <feature>Оперативная память 10 PB</feature>
+      <feature>IBM POWER9 + NVIDIA Volta</feature>
+    </features>
+  </supercomputer>
+  
+  <supercomputer id="s003" category="academic">
+    <name>Frontera</name>
+    <manufacturer>Dell</manufacturer>
+    <price currency="USD">60000000</price>
+    <cores>448448</cores>
+    <power_consumption kw="5000">Жидкостное охлаждение</power_consumption>
+    <weight kg="3500">3.5 тонны</weight>
+    <image>src/frontera.jpg</image>
+    <rating>4.6</rating>
+    <features>
+      <feature>23.5 петафлопс</feature>
+      <feature>Intel Xeon Platinum 8280</feature>
+      <feature>NVIDIA Quadro RTX 5000</feature>
+    </features>
+  </supercomputer>
+  
+  <supercomputer id="s004" category="commercial">
+    <name>ABC</name>
+    <manufacturer>HPE</manufacturer>
+    <price currency="EUR">89000000</price>
+    <cores>320000</cores>
+    <power_consumption kw="4500">Гибридное охлаждение</power_consumption>
+    <weight kg="4000">4 тонны</weight>
+    <image>src/abc.jpg</image>
+    <rating>4.5</rating>
+    <features>
+      <feature>12.3 петафлопс</feature>
+      <feature>AMD EPYC процессоры</feature>
+      <feature>HPE Slingshot интерконнект</feature>
+    </features>
+  </supercomputer>
+  
+  <supercomputer id="s005" category="military">
+    <name>Thor</name>
+    <manufacturer>Lockheed Martin</manufacturer>
+    <price currency="USD">250000000</price>
+    <cores>1500000</cores>
+    <power_consumption kw="10000">Модульное охлаждение</power_consumption>
+    <weight kg="6000">6 тонн</weight>
+    <image>src/thor.jpg</image>
+    <rating>4.8</rating>
+    <features>
+      <feature>Квантовый сопроцессор</feature>
+      <feature>Защищенная архитектура</feature>
+      <feature>Криптографические ускорители</feature>
+    </features>
+  </supercomputer>
+</catalog>

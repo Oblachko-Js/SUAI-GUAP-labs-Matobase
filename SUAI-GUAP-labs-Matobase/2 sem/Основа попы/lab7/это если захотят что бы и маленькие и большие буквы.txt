@@ -1,0 +1,25 @@
+for (i=0; i<=len; i++)
+  if (toupper(text[i]) == toupper(text_f[0]))
+  {
+      for (j=i; j<=(len-1); j++)
+      text[j] = text [j+1];
+    len--;
+    find_from_begin = true;
+    break;
+  }
+  if (find_from_begin == true)
+   {
+   for (i=len; i>=0; i--)
+      if (toupper(text[i]) == toupper(text_f[0]))
+      {
+      for (j=i; j<=(len-1); j++)
+        text[j] = text [j+1];
+        len--;
+        find_from_end = true;
+        break;
+      }
+   }
+
+
+вся разница в двух строках, где идет сравнение символов:  if (toupper(text[i]) == toupper(text_f[0]))
+функция toupper() переводит буквы в заглавные (неважно какая была до этого, после выполнения этой функции она будет заглавная)

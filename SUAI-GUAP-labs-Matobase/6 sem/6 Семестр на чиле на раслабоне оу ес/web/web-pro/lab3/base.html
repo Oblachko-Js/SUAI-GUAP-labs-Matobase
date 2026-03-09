@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактор JavaScript</title>
+    <style>
+        table { border-collapse: collapse; margin-top: 20px; }
+        td, th { border: 1px solid black; padding: 5px; text-align: center; }
+        textarea { width: 100%; }
+    </style>
+</head>
+<body>
+    <h2>Редактор JavaScript</h2>
+    Введите скрипт:<br/>
+    <textarea id="mycode" rows="10" cols="40"></textarea>
+    <br/>Результат:<br/>
+    <textarea id="myrezult" rows="3" cols="40"></textarea> <br/>
+    
+    <button onclick="executeCode()">Выполнить</button>    
+    <button onclick="clearContent()">Очистить результат и матрицу</button>
+    <button onclick="clearAll()">Очистить</button>
+
+    <h3>Сгенерированная матрица:</h3>
+    <div id="matrixOutput"></div>
+
+    <script>
+        document.getElementById("mycode").value = `
+function generateMatrix(n, m) {
+    let matrix = Array.from({ length: n }, () =>
+        Array.from({ length: m }, () => Math.floor(Math.random() * 100))
+    );
+    return matrix;
+}
+
+function calculateAverage(matrix) {
+    let totalSum = matrix.flat().reduce((sum, val) => sum + val, 0);
+    return totalSum / (matrix.length * matrix[0].length);
+}
+
+function countAboveAverage(matrix, avg) {
+    return matrix.map(row => row.filter(num => num > avg).length);
+}
+
+function displayMatrix(matrix) {
+    let tableHTML = "<table>";
+    matrix.forEach(row => {
+        tableHTML += "<tr>";
+        row.forEach(num => {
+            tableHTML += "<td>" + num + "</td>";
+        });
+        tableHTML += "</tr>";
+    });
+    tableHTML += "</table>";
+    document.getElementById("matrixOutput").innerHTML = tableHTML;
+}
+
+function main() {
+    let n = parseInt(prompt("Введите количество строк матрицы:", 5));
+    let m = parseInt(prompt("Введите количество столбцов матрицы:", 5));
+
+    let matrix = generateMatrix(n, m);
+    let average = calculateAverage(matrix);
+    let aboveAvgArray = countAboveAverage(matrix, average);
+
+    displayMatrix(matrix);
+
+    let resultText = 
+        "Среднее арифметическое: " + average.toFixed(2) + "\\n" +
+        "Элементов выше среднего, по строкам: " + aboveAvgArray.join(', ');
+
+    document.getElementById("myrezult").value = resultText; // Запись результата
+}
+        `;
+
+        function executeCode() {
+            const userCode = document.getElementById("mycode").value;
+            try {
+                eval(userCode);
+                main(); // Вызов main() после выполнения кода
+            } catch (e) {
+                document.getElementById("myrezult").value = "Ошибка выполнения кода: " + e.message;
+            }
+        }
+
+        function clearContent() {
+            document.getElementById('myrezult').value = ''; // Очистка результата
+            document.getElementById('matrixOutput').innerHTML = ''; // Очистка матрицы
+        }
+
+        function clearAll() {
+            document.getElementById('mycode').value = '';   // Очистка кода
+            clearContent();  // Очистка результата и матрицы
+        }
+    </script>
+</body>
+</html>

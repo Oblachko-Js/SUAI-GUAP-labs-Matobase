@@ -1,0 +1,48 @@
+# ninja log v6
+3	13	1757519715074032012	lab9sheka/Main.qml	9a34707eb75e75eb
+3	13	1757519715074032012	/Users/andrejpancenko/Documents/7 сем ух Ë/blender/lab9/lab9sheka/build/Qt_6_7_2_for_macOS-Debug/lab9sheka/Main.qml	9a34707eb75e75eb
+3	101	1757519715161764390	.qt/qml_imports/applab9sheka_build.cmake	28034c27a40b7be1
+3	101	1757519715161764390	/Users/andrejpancenko/Documents/7 сем ух Ë/blender/lab9/lab9sheka/build/Qt_6_7_2_for_macOS-Debug/.qt/qml_imports/applab9sheka_build.cmake	28034c27a40b7be1
+101	134	1757519715189321076	applab9sheka_autogen/timestamp	8da5c3d7d5aba020
+101	134	1757519715189321076	applab9sheka_autogen/mocs_compilation.cpp	8da5c3d7d5aba020
+101	134	1757519715189321076	/Users/andrejpancenko/Documents/7 сем ух Ë/blender/lab9/lab9sheka/build/Qt_6_7_2_for_macOS-Debug/applab9sheka_autogen/timestamp	8da5c3d7d5aba020
+101	134	1757519715189321076	/Users/andrejpancenko/Documents/7 сем ух Ë/blender/lab9/lab9sheka/build/Qt_6_7_2_for_macOS-Debug/applab9sheka_autogen/mocs_compilation.cpp	8da5c3d7d5aba020
+136	146	1757519715207230295	.qt/rcc/qrc_qmake_lab9sheka.cpp	132e9f7c2f1ec3c0
+136	146	1757519715207230295	/Users/andrejpancenko/Documents/7 сем ух Ë/blender/lab9/lab9sheka/build/Qt_6_7_2_for_macOS-Debug/.qt/rcc/qrc_qmake_lab9sheka.cpp	132e9f7c2f1ec3c0
+136	146	1757519715207315921	.qt/rcc/qrc_applab9sheka_raw_qml_0.cpp	87ad231ddeaaa033
+136	146	1757519715207315921	/Users/andrejpancenko/Documents/7 сем ух Ë/blender/lab9/lab9sheka/build/Qt_6_7_2_for_macOS-Debug/.qt/rcc/qrc_applab9sheka_raw_qml_0.cpp	87ad231ddeaaa033
+135	147	1757519715207711631	meta_types/applab9sheka_json_file_list.txt	65aed403867aa9e8
+135	147	1757519715207711631	meta_types/applab9sheka_json_file_list.txt.timestamp	65aed403867aa9e8
+135	147	1757519715207711631	/Users/andrejpancenko/Documents/7 сем ух Ë/blender/lab9/lab9sheka/build/Qt_6_7_2_for_macOS-Debug/meta_types/applab9sheka_json_file_list.txt	65aed403867aa9e8
+135	147	1757519715207711631	/Users/andrejpancenko/Documents/7 сем ух Ë/blender/lab9/lab9sheka/build/Qt_6_7_2_for_macOS-Debug/meta_types/applab9sheka_json_file_list.txt.timestamp	65aed403867aa9e8
+136	149	1757519715209418057	.rcc/qmlcache/applab9sheka_qmlcache_loader.cpp	cc378adc0e05b527
+136	149	1757519715209418057	/Users/andrejpancenko/Documents/7 сем ух Ë/blender/lab9/lab9sheka/build/Qt_6_7_2_for_macOS-Debug/.rcc/qmlcache/applab9sheka_qmlcache_loader.cpp	cc378adc0e05b527
+147	163	1757519715224057509	meta_types/qt6applab9sheka_debug_metatypes.json.gen	8835d3a94ff168db
+147	163	1757519715224057509	meta_types/qt6applab9sheka_debug_metatypes.json	8835d3a94ff168db
+147	163	1757519715224057509	/Users/andrejpancenko/Documents/7 сем ух Ë/blender/lab9/lab9sheka/build/Qt_6_7_2_for_macOS-Debug/meta_types/qt6applab9sheka_debug_metatypes.json.gen	8835d3a94ff168db
+147	163	1757519715224057509	/Users/andrejpancenko/Documents/7 сем ух Ë/blender/lab9/lab9sheka/build/Qt_6_7_2_for_macOS-Debug/meta_types/qt6applab9sheka_debug_metatypes.json	8835d3a94ff168db
+163	192	1757519715243668695	applab9sheka_qmltyperegistrations.cpp	c9828141af622161
+163	192	1757519715243668695	lab9sheka/applab9sheka.qmltypes	c9828141af622161
+163	192	1757519715243668695	/Users/andrejpancenko/Documents/7 сем ух Ë/blender/lab9/lab9sheka/build/Qt_6_7_2_for_macOS-Debug/applab9sheka_qmltyperegistrations.cpp	c9828141af622161
+163	192	1757519715243668695	/Users/andrejpancenko/Documents/7 сем ух Ë/blender/lab9/lab9sheka/build/Qt_6_7_2_for_macOS-Debug/lab9sheka/applab9sheka.qmltypes	c9828141af622161
+192	233	1757519715293088371	.rcc/qmlcache/applab9sheka_Main_qml.cpp	34411ec5d05e6895
+192	233	1757519715293088371	/Users/andrejpancenko/Documents/7 сем ух Ë/blender/lab9/lab9sheka/build/Qt_6_7_2_for_macOS-Debug/.rcc/qmlcache/applab9sheka_Main_qml.cpp	34411ec5d05e6895
+233	252	1757519715294856881	CMakeFiles/applab9sheka.dir/applab9sheka_autogen/mocs_compilation.cpp.o	722a31dc082806d5
+234	253	1757519715295201299	CMakeFiles/applab9sheka.dir/build/Qt_6_7_2_for_macOS-Debug/.qt/rcc/qrc_qmake_lab9sheka.cpp.o	501b55eafbd12e00
+234	255	1757519715295664218	CMakeFiles/applab9sheka.dir/build/Qt_6_7_2_for_macOS-Debug/.qt/rcc/qrc_applab9sheka_raw_qml_0.cpp.o	90a2daf8917c9b77
+234	733	1757519715295116965	CMakeFiles/applab9sheka.dir/applab9sheka_qmltyperegistrations.cpp.o	28c006d4a04a45c3
+233	784	1757519715295027423	CMakeFiles/applab9sheka.dir/main.cpp.o	69c4259353de48f6
+234	806	1757519715295375508	CMakeFiles/applab9sheka.dir/build/Qt_6_7_2_for_macOS-Debug/.rcc/qmlcache/applab9sheka_Main_qml.cpp.o	be7dda5309310954
+234	833	1757519715295283716	CMakeFiles/applab9sheka.dir/build/Qt_6_7_2_for_macOS-Debug/.rcc/qmlcache/applab9sheka_qmlcache_loader.cpp.o	e26bd3a60bdcac2e
+833	918	1757519715894792823	applab9sheka.app/Contents/MacOS/applab9sheka	d234622d9774a8c7
+15	27	1757519892477423421	lab9sheka/Main.qml	9a34707eb75e75eb
+15	27	1757519892477423421	/Users/andrejpancenko/Documents/7 сем ух Ë/blender/lab9/lab9sheka/build/Qt_6_7_2_for_macOS-Debug/lab9sheka/Main.qml	9a34707eb75e75eb
+16	107	1757519892557676684	.qt/qml_imports/applab9sheka_build.cmake	28034c27a40b7be1
+16	107	1757519892557676684	/Users/andrejpancenko/Documents/7 сем ух Ë/blender/lab9/lab9sheka/build/Qt_6_7_2_for_macOS-Debug/.qt/qml_imports/applab9sheka_build.cmake	28034c27a40b7be1
+107	118	1757519892568876593	.qt/rcc/qrc_applab9sheka_raw_qml_0.cpp	87ad231ddeaaa033
+107	118	1757519892568876593	/Users/andrejpancenko/Documents/7 сем ух Ë/blender/lab9/lab9sheka/build/Qt_6_7_2_for_macOS-Debug/.qt/rcc/qrc_applab9sheka_raw_qml_0.cpp	87ad231ddeaaa033
+107	149	1757519892598854102	.rcc/qmlcache/applab9sheka_Main_qml.cpp	34411ec5d05e6895
+107	149	1757519892598854102	/Users/andrejpancenko/Documents/7 сем ух Ë/blender/lab9/lab9sheka/build/Qt_6_7_2_for_macOS-Debug/.rcc/qmlcache/applab9sheka_Main_qml.cpp	34411ec5d05e6895
+150	170	1757519892600876964	CMakeFiles/applab9sheka.dir/build/Qt_6_7_2_for_macOS-Debug/.qt/rcc/qrc_applab9sheka_raw_qml_0.cpp.o	90a2daf8917c9b77
+149	752	1757519892600687169	CMakeFiles/applab9sheka.dir/build/Qt_6_7_2_for_macOS-Debug/.rcc/qmlcache/applab9sheka_Main_qml.cpp.o	be7dda5309310954
+752	893	1757519893203134008	applab9sheka.app/Contents/MacOS/applab9sheka	d234622d9774a8c7

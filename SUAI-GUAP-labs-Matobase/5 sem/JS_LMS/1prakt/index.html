@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О себе</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e0f7fa; /* Цвет фона страницы */
+        }
+        .poet-list ul {
+            list-style-type: disc; /* Вид маркеров */
+        }
+        .poet-list ol {
+            list-style-type: decimal; /* Вид нумерации */
+        }
+        .poet-list ol ol {
+            list-style-type: circle; /* Вид вложенной нумерации */
+        }
+        .about-me {
+            border: 3px solid #007bff; /* Толщина и цвет рамки */
+            border-radius: 15px; /* Скругление углов */
+            padding: 15px; /* Отступы внутри блока */
+            background-color: #f0f8ff; /* Цвет фона параграфа */
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>О себе</h1>
+    <div class="about-me">
+        <p>Я имею опыт работы с web-технологиями и продолжаю развивать свои навыки в этой области. 
+        В частности, я освоил создание веб-страниц с использованием HTML и CSS, а также знаком с современными инструментами разработки.</p>
+    </div>
+    <hr>
+    <br><br>
+    <h2>Мои любимые поэты и их произведения</h2>
+    <div class="poet-list">
+        <ol>
+            <li>Александр Пушкин
+                <ul>
+                    <li><a href="poems.html#ruslan">Руслан и Людмила</a></li>
+                    <li><a href="poems.html#onegin">Евгений Онегин</a></li>
+                </ul>
+            </li>
+            <li>Михаил Лермонтов
+                <ul>
+                    <li><a href="poems.html#mtsiri">Мцыри</a></li>
+                    <li><a href="poems.html#demon">Демон</a></li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+    <p><a href="poems.docx" download>Скачать текстовый документ</a></p>
+</body>
+</html>

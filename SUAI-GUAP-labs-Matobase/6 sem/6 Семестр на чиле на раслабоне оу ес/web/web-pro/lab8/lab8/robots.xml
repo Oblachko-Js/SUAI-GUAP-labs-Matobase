@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="robots.xsd">
+  <robot id="r001" category="educational">
+    <name>RoboLearn Pro</name>
+    <manufacturer>TechToys Inc.</manufacturer>
+    <price currency="USD">129.99</price>
+    <age_range>8-14</age_range>
+    <battery_life hours="6">Литий-ионный</battery_life>
+    <weight kg="0.45">450 г</weight>
+    <image>src/robo_learn.jpg</image>
+    <rating>4.7</rating>
+    <features>
+      <feature>Программируемый</feature>
+      <feature>Сенсоры движения</feature>
+      <feature>Поддержка Bluetooth</feature>
+    </features>
+  </robot>
+  
+  <robot id="r002" category="entertainment">
+    <name>DanceBot X200</name>
+    <manufacturer>FunRobotics</manufacturer>
+    <price currency="USD">79.95</price>
+    <age_range>5+</age_range>
+    <battery_life hours="4">AA батарейки</battery_life>
+    <weight kg="0.3">300 г</weight>
+    <image>src/dance_bot.jpg</image>
+    <rating>4.3</rating>
+    <features>
+      <feature>30 танцевальных движений</feature>
+      <feature>Световые эффекты</feature>
+      <feature>Голосовое управление</feature>
+    </features>
+  </robot>
+  
+  <robot id="r003" category="educational">
+    <name>Coding Robot Buddy</name>
+    <manufacturer>LearnTech</manufacturer>
+    <price currency="USD">149.00</price>
+    <age_range>10-16</age_range>
+    <battery_life hours="8">Литий-полимерный</battery_life>
+    <weight kg="0.6">600 г</weight>
+    <image>src/coding_buddy.jpg</image>
+    <rating>4.9</rating>
+    <features>
+      <feature>Обучение Python</feature>
+      <feature>Экран LCD</feature>
+      <feature>Wi-Fi подключение</feature>
+    </features>
+  </robot>
+  
+  <robot id="r004" category="interactive">
+    <name>PetBot Companion</name>
+    <manufacturer>RoboFriends</manufacturer>
+    <price currency="EUR">89.99</price>
+    <age_range>3+</age_range>
+    <battery_life hours="5">NiMH аккумулятор</battery_life>
+    <weight kg="0.4">400 г</weight>
+    <image>src/pet_bot.jpg</image>
+    <rating>4.5</rating>
+    <features>
+      <feature>Реагирует на прикосновения</feature>
+      <feature>Издает звуки животных</feature>
+      <feature>Автономное движение</feature>
+    </features>
+  </robot>
+  
+  <robot id="r005" category="entertainment">
+    <name>BattleBot Warrior</name>
+    <manufacturer>ExtremeRobots</manufacturer>
+    <price currency="USD">59.99</price>
+    <age_range>7+</age_range>
+    <battery_life hours="3">AAA батарейки</battery_life>
+    <weight kg="0.35">350 г</weight>
+    <image>src/battle_bot.jpg</image>
+    <rating>4.2</rating>
+    <features>
+      <feature>Режим битвы</feature>
+      <feature>Прочный корпус</feature>
+      <feature>Инфракрасные датчики</feature>
+    </features>
+  </robot>
+  
+  <robot id="r006" category="educational">
+    <name>MathWiz Robot</name>
+    <manufacturer>EduToys</manufacturer>
+    <price currency="USD">109.50</price>
+    <age_range>6-12</age_range>
+    <battery_life hours="7">Литий-ионный</battery_life>
+    <weight kg="0.5">500 г</weight>
+    <image>src/math_wiz.jpg</image>
+    <rating>4.6</rating>
+    <features>
+      <feature>Обучение математике</feature>
+      <feature>Интерактивные игры</feature>
+      <feature>Голосовая обратная связь</feature>
+    </features>
+  </robot>
+  
+  <robot id="r007" category="interactive">
+    <name>StoryBot Tales</name>
+    <manufacturer>KidTech</manufacturer>
+    <price currency="GBP">69.99</price>
+    <age_range>4-10</age_range>
+    <battery_life hours="5">AA батарейки</battery_life>
+    <weight kg="0.55">550 г</weight>
+    <image>src/story_bot.jpg</image>
+    <rating>4.4</rating>
+    <features>
+      <feature>100+ историй</feature>
+      <feature>Изменяемый голос</feature>
+      <feature>Анимированные глаза</feature>
+    </features>
+  </robot>
+  
+  <robot id="r008" category="entertainment">
+    <name>RC Transformer</name>
+    <manufacturer>AutoRobots</manufacturer>
+    <price currency="USD">99.00</price>
+    <age_range>8+</age_range>
+    <battery_life hours="2">NiCd аккумулятор</battery_life>
+    <weight kg="0.7">700 г</weight>
+    <image>src/rc_transformer.jpg</image>
+    <rating>4.1</rating>
+    <features>
+      <feature>2 режима: машина/робот</feature>
+      <feature>Пульт ДУ</feature>
+      <feature>Световые и звуковые эффекты</feature>
+    </features>
+  </robot>
+  
+  <robot id="r009" category="educational">
+    <name>Science Explorer</name>
+    <manufacturer>YoungGenius</manufacturer>
+    <price currency="USD">119.95</price>
+    <age_range>9-14</age_range>
+    <battery_life hours="6">Литий-ионный</battery_life>
+    <weight kg="0.65">650 г</weight>
+    <image>src/science_exp.jpg</image>
+    <rating>4.8</rating>
+    <features>
+      <feature>15 научных экспериментов</feature>
+      <feature>Датчики температуры</feature>
+      <feature>Мобильное приложение</feature>
+    </features>
+  </robot>
+  
+  <robot id="r010" category="interactive">
+    <name>Mini Chef Robot</name>
+    <manufacturer>HomeRobotics</manufacturer>
+    <price currency="USD">139.99</price>
+    <age_range>5+</age_range>
+    <battery_life hours="4">Литий-полимерный</battery_life>
+    <weight kg="1.2">1.2 кг</weight>
+    <image>src/mini_chef.jpg</image>
+    <rating>4.0</rating>
+    <features>
+      <feature>Простые рецепты</feature>
+      <feature>Безопасные инструменты</feature>
+      <feature>Обучение питанию</feature>
+    </features>
+  </robot>
+</catalog>

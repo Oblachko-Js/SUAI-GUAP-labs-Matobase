@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный Кабинет</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="user-page">
+   <!-- Левый баннер -->
+   <div class="banner left-banner">
+        <div class="banner-content">
+            <img src="images/banner3.jpg" alt="Баннер 3">
+            <img src="images/banner4.jpg" alt="Баннер 4">
+            <img src="images/banner1.jpg" alt="Баннер 1">
+            <img src="images/banner2.jpg" alt="Баннер 2">
+            <img src="images/banner5.jpg" alt="Баннер 5">
+        </div>
+    </div>
+
+    <div class="main-container">
+        <!-- Блок пользователя -->
+        <div class="container">
+            <h1>Личный Кабинет</h1>
+            <p>Добро пожаловать, обычный пользователь!</p>
+            <br>
+            <a href="/">Выйти</a>
+
+            <!-- Блок персонажа -->
+            <div id="characterSection">
+                <h2>Ваш персонаж</h2>
+                <a href="bosses.html" class="bosses-btn">Сражения с боссами</a>
+                <div id="characterImageContainer">
+                    <!-- Основное изображение персонажа -->
+                    <img id="characterImage" src="images/character.png" alt="Изображение персонажа">
+                    
+                    <!-- Контейнер для надетых предметов -->
+                    <div id="equippedItemsOverlay">
+                        <!-- Здесь будут отображаться надетые предметы -->
+                    </div>
+                </div>
+                <div id="characterInfo"></div>
+                <button id="createCharacterBtn">Создать/Обновить персонажа</button>
+            </div>
+
+            <!-- Форма персонажа -->
+            <div id="characterForm" style="display: none;">
+                <h2>Создание персонажа</h2>
+                <form id="characterFormFields">
+                    <label for="characterName">Имя персонажа:</label>
+                    <input type="text" id="characterName" required>
+
+                    <label for="characterLevel">Уровень:</label>
+                    <input type="number" id="characterLevel" value="1" required>
+
+                    <label for="characterHealth">Здоровье:</label>
+                    <input type="number" id="characterHealth" value="100" required>
+
+                    <label for="characterMana">Мана:</label>
+                    <input type="number" id="characterMana" value="100" required>
+
+                    <label for="characterExperience">Опыт:</label>
+                    <input type="number" id="characterExperience" value="0" required>
+
+                    <label for="characterGold">Золото:</label>
+                    <input type="number" id="characterGold" value="0" required>
+
+                    <button type="submit">Сохранить</button>
+                    <button type="button" id="cancelCharacterBtn">Отмена</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Блок задач -->
+        <div id="tasksSection">
+            <h2>Ваши задачи</h2>
+            <label for="taskSelect">Выберите задачу:</label>
+            <select id="taskSelect">
+                <option value="">-- Выберите задачу --</option>
+            </select>
+            <button id="createTaskBtn">Создать задачу</button>
+            <div id="tasksList"></div>
+
+            <!-- Форма создания задачи -->
+            <div id="taskForm" style="display: none;">
+                <h2>Создание задачи</h2>
+                <form id="taskFormFields">
+                    <label for="taskName">Название задачи:</label>
+                    <input type="text" id="taskName" required>
+
+                    <label for="taskDescription">Описание:</label>
+                    <textarea id="taskDescription"></textarea>
+
+                    <label for="taskDifficulty">Сложность:</label>
+                    <select id="taskDifficulty">
+                        <option value="Легкая">Легкая</option>
+                        <option value="Средняя">Средняя</option>
+                        <option value="Сложная">Сложная</option>
+                    </select>
+
+                    <label for="taskDueDate">Срок выполнения:</label>
+                    <input type="date" id="taskDueDate">
+
+                    <button type="submit">Сохранить</button>
+                    <button type="button" id="cancelTaskBtn">Отмена</button>
+                </form>
+            </div>
+
+            <!-- Форма для добавления привычки -->
+            <div id="habitForm" style="display: none;">
+                <h2>Добавить привычку</h2>
+                <form id="habitFormFields">
+                    <label for="habitName">Название привычки:</label>
+                    <input type="text" id="habitName" required>
+
+                    <button type="submit">Добавить</button>
+                    <button type="button" id="cancelHabitBtn">Отмена</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Блок магазина -->
+            <div id="shopSection">
+                <div class="shop-header">
+                    <h2>Магазин</h2>
+                    <button id="toggleShopButton">▼</button> <!-- Кнопка для сворачивания/разворачивания -->
+                </div>
+                <div id="shopItems"></div>
+            </div>
+
+        <!-- Блок инвентаря -->
+            <div id="inventorySection">
+                <div class="inventory-header">
+                    <h2>Инвентарь</h2>
+                    <button id="toggleInventoryButton">▼</button> <!-- Кнопка для сворачивания/разворачивания -->
+                </div>
+                <div id="inventoryItems"></div>
+            </div>
+    </div>
+
+    <!-- Правый баннер -->
+    <div class="banner right-banner">
+        <div class="banner-content">
+            <img src="images/banner8.jpg" alt="Баннер 8">
+            <img src="images/banner9.jpg" alt="Баннер 9">
+            <img src="images/banner6.jpg" alt="Баннер 6">
+            <img src="images/banner7.jpg" alt="Баннер 7">
+            <img src="images/banner10.jpg" alt="Баннер 10">
+        </div>
+    </div>
+
+    <script src="user.js"></script>
+    <script src="bannerScroll.js"></script>
+</body>
+</html>

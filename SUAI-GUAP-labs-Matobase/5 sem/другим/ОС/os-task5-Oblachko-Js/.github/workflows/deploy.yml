@@ -1,0 +1,60 @@
+name: Build and Deploy Server
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build_and_deploy:
+    runs-on: self-hosted  # Использование self-hosted runner
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up C++ environment
+        run: |
+          sudo apt update
+          sudo apt install -y g++
+
+      - name: Build the server
+        run: |
+          g++ -std=c++11 -o server server.cpp
+
+      - name: Set up SSH key
+        run: |
+          echo "Creating SSH directory and adding private key..."
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          echo "Adding remote host to known_hosts..."
+          ssh-keyscan -H 89.169.164.24 >> ~/.ssh/known_hosts
+          cat ~/.ssh/known_hosts  # Вывод списка известных хостов
+
+      - name: Verify SSH Key Setup
+        run: |
+          echo "Checking SSH key setup..."
+          ls -l ~/.ssh/id_ed25519
+          cat ~/.ssh/id_ed25519
+
+      - name: Check SSH Connection
+        run: |
+          echo "Checking SSH connection..."
+          ssh -v -i ~/.ssh/id_ed25519 andrey@89.169.164.24 'echo "SSH connection successful!"'
+        continue-on-error: true  # Не завершать процесс, если тест соединения не удался
+
+      - name: Create Directory on Remote Server
+        run: |
+          echo "Creating directory on remote server..."
+          ssh -v -i ~/.ssh/id_ed25519 andrey@89.169.164.24 'mkdir -p /home/andrey/my_server'
+        continue-on-error: true
+
+      - name: Deploy server binary
+        run: |
+          echo "Deploying server binary to remote server..."
+          scp -v -i ~/.ssh/id_ed25519 server andrey@89.169.164.24:/home/andrey/my_server/
+
+      - name: Start server on remote machine
+        run: |
+          echo "Starting server on remote machine..."
+          ssh -v -i ~/.ssh/id_ed25519 andrey@89.169.164.24 'nohup /home/andrey/my_server/server 10 &'
+      

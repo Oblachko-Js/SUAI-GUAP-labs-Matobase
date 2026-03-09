@@ -1,0 +1,78 @@
+15-Sep-2024 13:27:12.346 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Имя версии сервера:    Apache Tomcat/9.0.93
+15-Sep-2024 13:27:12.349 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Сервер собран:         Aug 2 2024 21:24:59 UTC
+15-Sep-2024 13:27:12.349 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Номер версии сервера:  9.0.93.0
+15-Sep-2024 13:27:12.349 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Mac OS X
+15-Sep-2024 13:27:12.349 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Версия ОС:             14.5
+15-Sep-2024 13:27:12.349 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Архитектура:           aarch64
+15-Sep-2024 13:27:12.349 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             /opt/homebrew/Cellar/openjdk/22.0.2/libexec/openjdk.jdk/Contents/Home
+15-Sep-2024 13:27:12.349 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Версия JVM:            22.0.2
+15-Sep-2024 13:27:12.350 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Производитель JVM:     Homebrew
+15-Sep-2024 13:27:12.350 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         /Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/bin
+15-Sep-2024 13:27:12.350 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         /Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93
+15-Sep-2024 13:27:12.359 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+15-Sep-2024 13:27:12.359 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+15-Sep-2024 13:27:12.359 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util=ALL-UNNAMED
+15-Sep-2024 13:27:12.359 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+15-Sep-2024 13:27:12.359 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+15-Sep-2024 13:27:12.359 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93
+15-Sep-2024 13:27:12.359 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/bin
+15-Sep-2024 13:27:12.360 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/bin/temp
+15-Sep-2024 13:27:12.360 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/bin/conf/logging.properties
+15-Sep-2024 13:27:12.360 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+15-Sep-2024 13:27:12.360 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -javaagent:/Applications/IntelliJ IDEA CE.app/Contents/lib/idea_rt.jar=51647:/Applications/IntelliJ IDEA CE.app/Contents/bin
+15-Sep-2024 13:27:12.360 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dfile.encoding=UTF-8
+15-Sep-2024 13:27:12.360 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dsun.stdout.encoding=UTF-8
+15-Sep-2024 13:27:12.360 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dsun.stderr.encoding=UTF-8
+15-Sep-2024 13:27:12.372 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent The Apache Tomcat Native library which allows using OpenSSL was not found on the java.library.path: [/Users/andrejpancenko/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.]
+15-Sep-2024 13:27:12.741 INFO [main] org.apache.coyote.AbstractProtocol.init Инициализация ProtocolHandler ["http-nio-8080"]
+15-Sep-2024 13:27:12.759 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [596] milliseconds
+15-Sep-2024 13:27:12.789 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+15-Sep-2024 13:27:12.789 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.93]
+15-Sep-2024 13:27:12.794 INFO [main] org.apache.catalina.startup.HostConfig.deployDescriptor Deploying deployment descriptor [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/bin/conf/Catalina/localhost/ROOT.xml]
+15-Sep-2024 13:27:13.918 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+15-Sep-2024 13:27:13.990 INFO [main] org.apache.catalina.startup.HostConfig.deployDescriptor Deployment of deployment descriptor [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/bin/conf/Catalina/localhost/ROOT.xml] has finished in [1 195] ms
+15-Sep-2024 13:27:13.991 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+15-Sep-2024 13:27:13.999 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [1238] milliseconds
+15-Sep-2024 13:28:01.707 INFO [Thread-1] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8080"]
+15-Sep-2024 13:28:01.709 INFO [Thread-1] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+15-Sep-2024 13:28:01.723 INFO [Thread-1] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8080"]
+15-Sep-2024 13:28:01.733 INFO [Thread-1] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8080"]
+15-Sep-2024 13:29:51.173 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Имя версии сервера:    Apache Tomcat/9.0.93
+15-Sep-2024 13:29:51.175 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Сервер собран:         Aug 2 2024 21:24:59 UTC
+15-Sep-2024 13:29:51.176 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Номер версии сервера:  9.0.93.0
+15-Sep-2024 13:29:51.176 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Mac OS X
+15-Sep-2024 13:29:51.176 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Версия ОС:             14.5
+15-Sep-2024 13:29:51.176 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Архитектура:           aarch64
+15-Sep-2024 13:29:51.176 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             /opt/homebrew/Cellar/openjdk/22.0.2/libexec/openjdk.jdk/Contents/Home
+15-Sep-2024 13:29:51.176 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Версия JVM:            22.0.2
+15-Sep-2024 13:29:51.176 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Производитель JVM:     Homebrew
+15-Sep-2024 13:29:51.176 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         /Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/bin
+15-Sep-2024 13:29:51.176 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         /Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93
+15-Sep-2024 13:29:51.182 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+15-Sep-2024 13:29:51.182 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+15-Sep-2024 13:29:51.182 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util=ALL-UNNAMED
+15-Sep-2024 13:29:51.182 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+15-Sep-2024 13:29:51.182 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+15-Sep-2024 13:29:51.182 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93
+15-Sep-2024 13:29:51.183 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/bin
+15-Sep-2024 13:29:51.183 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/bin/temp
+15-Sep-2024 13:29:51.183 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/bin/conf/logging.properties
+15-Sep-2024 13:29:51.183 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+15-Sep-2024 13:29:51.183 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -javaagent:/Applications/IntelliJ IDEA CE.app/Contents/lib/idea_rt.jar=51714:/Applications/IntelliJ IDEA CE.app/Contents/bin
+15-Sep-2024 13:29:51.183 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dfile.encoding=UTF-8
+15-Sep-2024 13:29:51.183 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dsun.stdout.encoding=UTF-8
+15-Sep-2024 13:29:51.183 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dsun.stderr.encoding=UTF-8
+15-Sep-2024 13:29:51.189 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent The Apache Tomcat Native library which allows using OpenSSL was not found on the java.library.path: [/Users/andrejpancenko/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.]
+15-Sep-2024 13:29:51.525 INFO [main] org.apache.coyote.AbstractProtocol.init Инициализация ProtocolHandler ["http-nio-8080"]
+15-Sep-2024 13:29:51.543 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [544] milliseconds
+15-Sep-2024 13:29:51.570 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+15-Sep-2024 13:29:51.570 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.93]
+15-Sep-2024 13:29:51.574 INFO [main] org.apache.catalina.startup.HostConfig.deployDescriptor Deploying deployment descriptor [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/bin/conf/Catalina/localhost/ROOT.xml]
+15-Sep-2024 13:29:52.694 INFO [main] org.apache.jasper.servlet.TldScanner.scanJars At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+15-Sep-2024 13:29:52.766 INFO [main] org.apache.catalina.startup.HostConfig.deployDescriptor Deployment of deployment descriptor [/Users/andrejpancenko/Documents/5 Семестр у нас будет Java Script/ТРСИС/apache-tomcat-9.0.93/bin/conf/Catalina/localhost/ROOT.xml] has finished in [1 192] ms
+15-Sep-2024 13:29:52.768 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+15-Sep-2024 13:29:52.774 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [1230] milliseconds
+15-Sep-2024 13:31:07.523 INFO [Thread-1] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8080"]
+15-Sep-2024 13:31:07.525 INFO [Thread-1] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+15-Sep-2024 13:31:07.541 INFO [Thread-1] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8080"]
+15-Sep-2024 13:31:07.551 INFO [Thread-1] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8080"]

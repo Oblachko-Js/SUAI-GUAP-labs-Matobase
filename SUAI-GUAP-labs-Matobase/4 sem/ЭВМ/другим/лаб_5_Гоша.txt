@@ -1,0 +1,76 @@
+КОД А)
+.MODEL SMALL
+.STACK 256
+.DATA
+MYTEXT DB 'OCR cAbIBETowc', 13, 10, '$'  
+COR PROC NEAR
+NOP
+    AND AH, 0DFh
+MOV [BX], AH
+RET
+COR ENDP
+
+Start:
+        MOV AX, @DATA
+        MOV DS, AX
+        XOR AX, AX
+        LEA BX, MYTEXT
+        MOV CX, 15
+        
+MT1: MOV AH, [BX]
+        CMP AH, 'b'
+        JNE NOT_B
+        CALL COR  
+        JMP MT2
+NOT_B:
+        CMP AH, 'c'
+        JNE MT2
+        CALL COR  
+MT2: INC BX
+
+
+LOOP MT1
+        LEA DX, MYTEXT
+        MOV AH, 09h
+        INT 21h
+        NOP
+        MOV AX, 4C00h
+        INT 21h
+END Start  
+
+
+КОД Б)
+.MODEL SMALL
+.STACK 256
+.DATA
+MYTEXT DB 'OUR NATIVETown', 13, 10, '$'  
+COR PROC NEAR
+    NOP           
+    OR  AH, 20h   
+    MOV [BX], AH  
+    RET
+COR ENDP
+
+Start:
+        MOV AX, @DATA
+        MOV DS, AX
+        XOR AX, AX
+        LEA BX, MYTEXT
+        MOV CX, 15
+        
+MT1: MOV AH, [BX]
+        CMP AH, 'A'
+        JB MT2
+        CMP AH, 'Z'
+        JA MT2
+        CALL COR  
+MT2: INC BX
+
+LOOP MT1
+        LEA DX, MYTEXT
+        MOV AH, 09h
+        INT 21h
+        NOP
+        MOV AX, 4C00h
+        INT 21h
+END Start

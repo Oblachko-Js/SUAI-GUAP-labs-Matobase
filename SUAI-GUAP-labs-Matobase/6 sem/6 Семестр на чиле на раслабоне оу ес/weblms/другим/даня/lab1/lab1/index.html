@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Слайд-шоу</title>
+    <style>
+        #slider {
+            width: 600px;
+            height: 400px;
+            overflow: hidden;
+            position: relative;
+        }
+        #images {
+            display: flex;
+            transition: transform 1s ease;
+        }
+        #images img {
+            width: 600px;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="slider">
+    <div id="images">
+        <a href="image1.jpg" target="_blank"><img src="image1.jpg" alt="Image 1"></a>
+        <a href="image2.jpg" target="_blank"><img src="image2.jpg" alt="Image 2"></a>
+        <a href="image3.jpg" target="_blank"><img src="image3.jpg" alt="Image 3"></a>
+    </div>
+</div>
+
+<script>
+    let currentIndex = 0;
+    const images = document.getElementById("images");
+    const imageCount = document.querySelectorAll("#images img").length;
+
+    setInterval(() => {
+        currentIndex = (currentIndex + 1) % imageCount;
+        images.style.transform = `translateX(-${600 * currentIndex}px)`;
+    }, 1000);
+</script>
+
+</body>
+</html>

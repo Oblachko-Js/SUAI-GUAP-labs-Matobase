@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SupercomputersCatalog>
+  <!-- Суперкомпьютер 1: Aurora -->
+  <supercomputer id="1" release_year="2023">
+    <name>Aurora</name>
+    <manufacturer>Intel</manufacturer>
+    <price currency="USD">500000000</price>
+    <description>Эксафлопсный суперкомпьютер для научных исследований</description>
+    <features>
+      <feature id="1">
+        <feature_name>Производительность</feature_name>
+        <feature_value>2 эксафлопс</feature_value>
+        <created_at>2025-04-03T13:45:02</created_at>
+      </feature>
+      <feature id="2">
+        <feature_name>Архитектура</feature_name>
+        <feature_value>Intel Xeon CPU + Ponte Vecchio GPU</feature_value>
+        <created_at>2025-04-03T13:45:02</created_at>
+      </feature>
+      <feature id="3">
+        <feature_name>Потребление энергии</feature_name>
+        <feature_value>60 МВт</feature_value>
+        <created_at>2025-04-03T13:45:02</created_at>
+      </feature>
+    </features>
+  </supercomputer>
+
+  <!-- Суперкомпьютер 2: Fugaku -->
+  <supercomputer id="2" release_year="2020">
+    <name>Fugaku</name>
+    <manufacturer>Fujitsu</manufacturer>
+    <price currency="USD">1000000000</price>
+    <description>Самый быстрый суперкомпьютер в 2020-2021 годах</description>
+    <features>
+      <feature id="4">
+        <feature_name>Производительность</feature_name>
+        <feature_value>442 петафлопс</feature_value>
+        <created_at>2025-04-03T13:45:02</created_at>
+      </feature>
+      <feature id="5">
+        <feature_name>Архитектура</feature_name>
+        <feature_value>ARM A64FX</feature_value>
+        <created_at>2025-04-03T13:45:02</created_at>
+      </feature>
+      <feature id="6">
+        <feature_name>Применение</feature_name>
+        <feature_value>Исследования COVID-19</feature_value>
+        <created_at>2025-04-03T13:45:02</created_at>
+      </feature>
+    </features>
+  </supercomputer>
+
+  <!-- Суперкомпьютер 3: Sierra -->
+  <supercomputer id="3" release_year="2018">
+    <name>Sierra</name>
+    <manufacturer>IBM</manufacturer>
+    <price currency="USD">250000000</price>
+    <description>Суперкомпьютер для ядерного моделирования</description>
+    <features>
+      <feature id="7">
+        <feature_name>Производительность</feature_name>
+        <feature_value>125 петафлопс</feature_value>
+        <created_at>2025-04-03T13:45:02</created_at>
+      </feature>
+      <feature id="8">
+        <feature_name>Архитектура</feature_name>
+        <feature_value>IBM POWER9 + NVIDIA Volta</feature_value>
+        <created_at>2025-04-03T13:45:02</created_at>
+      </feature>
+      <feature id="9">
+        <feature_name>Местонахождение</feature_name>
+        <feature_value>Ливерморская национальная лаборатория</feature_value>
+        <created_at>2025-04-03T13:45:02</created_at>
+      </feature>
+    </features>
+  </supercomputer>
+</SupercomputersCatalog>

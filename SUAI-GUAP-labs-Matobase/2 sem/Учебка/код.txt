@@ -1,0 +1,138 @@
+clear;
+clc;
+fprintf("Программа для решения уравнения методом Ньютона\n");
+fprintf("Автор: Панченко Андрей\n");
+while true
+    f_str = input('Введите функцию: ','s');
+    f_str = strcat('@(x)', f_str);
+    if isempty(f_str)
+        disp("Функция не может быть пустой.");
+        continue
+    end
+    % Проверка введенной функции на корректность
+    if contains(f_str, ';') || contains(f_str, 'eval') || contains(f_str, 'feval') || contains(f_str, 'for') || contains(f_str, 'while')
+        disp("Запрещенные символы или функции в строке функции.");
+        continue
+    end
+    if contains(f_str, '^') && ~contains(f_str, '.^')
+        disp("Используйте оператор '.^' для возведения в степень с плавающей точкой.");
+        continue
+    end
+    if contains(f_str, '*') && ~contains(f_str, '.*')
+        disp("Используйте оператор '.*' для умножения.");
+        continue
+    end
+    if contains(f_str, '/') && ~contains(f_str, './')
+        disp("Используйте оператор './' для деления.");
+        continue
+    end
+    try
+        % Проверка, что функция начинается с '@(x)'
+        if ~startsWith(f_str, '@(x)')
+            error('Функция должна начинаться с "@(x)".');
+        end
+        % Выполнение функции для проверки, что она корректно определена
+        f = str2func(f_str);
+        x_test = f(0);
+        break % прерываем цикл, если функция корректно определена
+    catch ME
+        disp(ME.message);
+        continue % повторяем цикл, если функция некорректно определена
+    end
+end
+while true
+    x_min_str = input('Введите левое значение оси x: ', 's');
+    x_min_str = strrep(x_min_str, ',', '.');
+    x_min_str = str2double(x_min_str);
+    if isnan(x_min_str)
+        disp("Левая граница должна быть числом, в числе должен быть один разделитель.");
+        continue
+    end
+    x_max_str = input('Введите правое значение оси x: ','s');
+    x_max_str = strrep(x_max_str, ',', '.');
+    x_max_str = str2double(x_max_str);
+    if isnan(x_max_str)
+        disp("Правая граница должна быть числом, в числе должен быть один разделитель.");
+        continue
+    end
+    if (x_min_str > x_max_str || x_max_str < x_min_str || x_min_str == x_max_str)
+        fprintf("Левая граница не может быть больше правого и наоборот, а также не должны быть равны.\n");
+        continue
+    end
+    break
+end
+    x_vals = x_min_str : 0.1 : x_max_str;
+    y_vals = f(x_vals);
+    plot(x_vals, y_vals, 'b', 'LineWidth', 2);
+    hold on;
+    line([x_min_str, x_max_str], [0, 0], 'Color', 'k', 'LineWidth', 1.5); % ось x
+    line([0, 0], [min(y_vals), max(y_vals)], 'Color', 'k', 'LineWidth', 1.5); % ось y
+    xlim([x_min_str, x_max_str]);
+    ylim([min(y_vals), max(y_vals)]);
+    axis('tight');
+    xlabel('Ось X');
+    ylabel('Ось Y');
+    grid on;
+drawnow;
+x0_str = input("Введите начальное приближенное значение x0, используя точку для разделения дробной части: ", 's');
+while true
+    x0_str = strrep(x0_str, ',', '.');
+    x0 = str2double(x0_str);
+    if isnan(x0)
+        disp("x0 должно быть числом, в числе должен быть один разделитель.");
+        x0_str = input("Введите значение x0: ", 's');
+        continue
+    end
+    
+    break
+end
+while true
+    e_str = input("Введите точность вычисления корня e, используя точку для разделения дробной части: ", 's');
+    e_str = strrep(e_str, ',', '.');
+    e = str2double(e_str);
+    if isnan(e)
+        disp("e должно быть числом, в числе должен быть один разделитель.");
+        continue
+    end
+    if e <= 0
+        fprintf('Точность должна быть больше нуля, использующая точку в качестве разделителя дробной части\n');
+        continue
+    end
+    break
+end
+max_iter = 100;
+    for i = 1:max_iter
+        fx = f(x0);
+        dfx = (f(x0+e) - f(x0-e)) / (2*e); % вычисляем производную через определение
+        x = x0 - fx/dfx;
+        % Вычисление уравнения касательной к корню
+    y_tan = fx + dfx*(x_vals-x0);
+    % Построение графика функции и уравнения касательной
+    plot(x_vals, y_vals, 'b', 'LineWidth', 2);
+    hold on;
+    plot(x_vals, y_tan, 'y', 'LineWidth', 1.5);
+    % Добавление графика оси x
+    plot([max(x_vals(1),-10), min(x_vals(end),10)], [0, 0], 'k', 'LineWidth', 1);
+    % Добавление графика оси y
+    plot([0, 0], [min(min(y_vals)-2,-10), max(max(y_vals)+2,10)], 'k', 'LineWidth', 1);
+    % Добавление маркера для корня уравнения
+    plot(x0, f(x0), 'o', 'MarkerSize', 10, 'LineWidth', 1.5);
+    % Установка меток на осях
+    xlabel('x');
+    ylabel('y');
+    title('График функции и уравнения касательной');
+    grid on;
+    legend('Функция', 'Касательная', 'Ось x', 'Ось y', 'Корень уравнения');
+    hold on;
+        % Проверка критерия окончания итерационного процесса
+        if abs(x - x0) < e
+            fprintf('Уравнение решено за %d итераций\n', i);
+            fprintf('Корень уравнения: %.6f\n', x0);
+            break;
+        elseif i == max_iter
+            close all
+            fprintf('Уравнение не решено за %d итераций\n', max_iter);
+            break;
+        end
+        x0 = x;
+    end

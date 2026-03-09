@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns:form="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Conternt-Type" content="text/html;charset=utf-8">
+    </head>
+    <body>
+    <h2 th:text="#{schedule.schedule}">Расписание занятий студентов</h2>
+    <div>
+            <table id="lessonsTable">
+                <thead>
+                    <tr>
+                        <th th:text="#{lesson.number}">Number</th>
+                        <th th:text="#{lesson.name}">Subject</th>
+                        <th th:text="#{lesson.audience}">Audience</th>
+                        <th th:text="#{lesson.teacher}">Teacher</th>
+                        <th th:text="#{lesson.group}">Group</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="lesson : ${lessons}">
+                        <td th:text="${lesson.number}">lesson.number</td>
+                        <td th:text="${lesson.name}">lesson.name</td>
+                        <td th:text="${lesson.audience}">lesson.audience</td>
+                        <td th:text="${lesson.teacher}">lesson.teacher</td>
+                        <td th:text="${lesson.group}">lesson.group</td>
+                        <td><a href="#" th:href="@{'delete/'+${lesson.id}}" th:text="#{delete.delete}">Delete</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div><br>
+    <div>
+        <form method="POST" th:action="@{'/save'}" th:object="${lesson}" >
+            <label th:text="#{lesson.number}"></label><input id="number"  th:field="*{number}" type="text"><br>
+            <label th:text="#{lesson.name}"></label><input id="name" th:field="*{name}" type="text"><br>
+            <label th:text="#{lesson.audience}"></label><input id="audience" th:field="*{audience}" type="text"><br>
+            <label th:text="#{lesson.teacher}"></label><input id="teacher" th:field="*{teacher}" type="text"><br>
+            <label th:text="#{lesson.group}"></label><input id="num_group" th:field="*{group}" type="text"><br>
+            <input type="submit">
+        </form>
+    </div>
+    </body>
+</html>

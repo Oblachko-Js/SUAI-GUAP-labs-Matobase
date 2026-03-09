@@ -1,0 +1,25 @@
+[Processor settings]
+Memory size=2048
+Max commands before interruption=1048576
+Generate messages=1
+[Windows]
+MemoryEditor.Opened=1
+MemoryEditor.Left=0
+MemoryEditor.Top=88
+MemoryEditor.Width=600
+MemoryEditor.Height=476
+RegsEditor.Opened=1
+RegsEditor.Left=600
+RegsEditor.Top=88
+RegsEditor.Width=263
+RegsEditor.Height=308
+MsgsEditor.Opened=1
+MsgsForm.Left=0
+MsgsForm.Top=564
+MsgsForm.Width=600
+MsgsForm.Height=300
+VarsEditor.Opened=1
+VarsWin.Left=600
+VarsWin.Top=396
+VarsWin.Width=300
+VarsWin.Height=300

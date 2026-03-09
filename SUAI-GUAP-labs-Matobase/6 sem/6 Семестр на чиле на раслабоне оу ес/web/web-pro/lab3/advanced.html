@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактор JavaScript</title>
+    <style>
+        canvas { border: 1px dashed black; }
+        table { width: 100%; }
+        textarea { width: 100%; }
+    </style>
+    <script>
+        function clear_holst() {
+            var canvas = document.getElementById("drawingCanvas");
+            var context = canvas.getContext("2d");
+            context.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    </script>
+</head>
+<body>
+    <h2>Редактор JavaScript</h2>
+    <table border="0">
+        <tr>
+            <td>Введите текст программы на JavaScript:</td>
+            <td>Отображение рисунка:</td>
+        </tr>
+        <tr>
+            <td><textarea id="mycode" rows="15"></textarea></td>
+            <td>
+                <canvas id="drawingCanvas" width="400" height="300">
+                    Ваш браузер не поддерживает canvas.
+                </canvas>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <button onclick="document.getElementById('myrezult').value = eval(document.getElementById('mycode').value)">
+        Выполнить
+    </button>
+    <button onclick="clear_holst()">Очистить холст</button>
+    <button onclick="document.getElementById('mycode').value=''">
+        Очистить код
+    </button>
+    <br><br>
+
+    <script>
+        // Расширенное задание - рисование заданной фигуры
+        document.getElementById("mycode").value = ` 
+function drawPattern() {
+    let canvas = document.getElementById("drawingCanvas");
+    let ctx = canvas.getContext("2d");
+    
+    // Запрос значений у пользователя
+    let rows = parseInt(prompt("Введите количество рядов:", 6));
+    let cols = parseInt(prompt("Введите количество колонок:", 6));
+    
+    let size = 30; // Размер одного квадрата
+    let gap = 10; // Промежуток между квадратами
+
+    // Устанавливаем размеры холста
+    canvas.width = cols * (size + gap);
+    canvas.height = rows * (size + gap);
+
+    // Рисуем фигуру
+    for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < cols; x++) {
+            if (x % 2 === 0) {
+                ctx.fillStyle = "blue"; // Синие квадраты
+            } else {
+                ctx.fillStyle = "red"; // Красные квадраты
+            }
+            ctx.fillRect(x * (size + gap), y * (size + gap), size, size);
+        }
+    }
+}
+
+drawPattern();
+        `;
+    </script>
+</body>
+</html>

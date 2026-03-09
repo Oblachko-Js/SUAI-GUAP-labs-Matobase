@@ -1,0 +1,26 @@
+
+@startuml
+actor User
+
+User -> MainWindow : addParking()
+MainWindow -> ParkingFactory : addParking(id, gps, size, type, cost)
+ParkingFactory --> MainWindow : success
+
+User -> MainWindow : addVisitors()
+MainWindow -> Visitors : addVisitor(number, name, address, phone)
+Visitors --> MainWindow : success
+
+User -> MainWindow : addTicket()
+MainWindow -> TicketManager : addTicket(parkingId, visitorNumber, date)
+TicketManager -> TicketManager : generateTicketId()
+TicketManager --> MainWindow : success
+
+User -> MainWindow : addVehicle()
+MainWindow -> Vehicle : addVehicle(id, brand, model)
+Vehicle --> MainWindow : success
+
+User -> MainWindow : addPersonnel()
+MainWindow -> Personnel : addPersonnel(id, name, position)
+Personnel --> MainWindow : success
+
+@enduml

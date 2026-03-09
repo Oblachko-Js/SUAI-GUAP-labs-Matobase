@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/general.html :: head"></head>
+<body>
+<header th:insert="fragments/general.html :: header"></header>
+<h2 class="title">Add new purchase</h2>
+<h4>Cars:</h4>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Brand</th>
+        <th scope="col">Year</th>
+        <th scope="col">Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="car : ${cars}">
+        <td th:text="${car.id}" class="text-left"></td>
+        <td th:text="${car.brand}" class="text-left"></td>
+        <td th:text="${car.year}" class="text-left"></td>
+        <td th:text="${car.price}" class="text-left"></td>
+    </tr>
+    </tbody>
+</table>
+<h4>Customers:</h4>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">BirthDate</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="customer : ${customers}">
+        <td th:text="${customer.id}"></td>
+        <td th:text="${customer.name}"></td>
+        <td th:text="${customer.birthDate}"></td>
+    </tr>
+    </tbody>
+</table>
+<div class="col-md-8">
+    <form action="#" th:action="@{/purchases/new}" method="post" th:object="${purchase}">
+        <div class="form-group">
+            <label for="carId">Car's id</label>
+            <input type="text" class="form-control" id="carId" th:field="*{car.id}" th:errorClass="errorInput">
+            <small th:if="${#fields.hasErrors('car.id')}" th:errors="*{car.id}" th:errorClass="text-danger"></small>
+        </div>
+        <div class="form-group">
+            <label for="customerId">Customer's id</label>
+            <input type="text" class="form-control" id="customerId" th:field="*{customer.id}" th:errorClass="errorInput">
+            <small th:if="${#fields.hasErrors('customer.id')}" th:errors="*{customer.id}" th:errorClass="text-danger"></small>
+        </div>
+        <div class="form-group">
+            <label for="date">Date</label>
+            <input type="text" class="form-control" id="date" name="date">
+            <small th:if="${#fields.hasErrors('date')}" th:errors="*{date}" th:errorClass="text-danger"></small>
+        </div>
+        <br>
+        <input type="submit" class="btn btn-primary" value="Add">
+    </form>
+</div>
+
+<script src="/webjars/bootstrap/4.6.0/js/bootstrap.min.js"></script>
+</body>
+</html>

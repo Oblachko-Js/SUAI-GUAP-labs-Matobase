@@ -1,0 +1,31 @@
+name: CI for Project
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: macos-latest  # Указываем, что рабочий процесс будет выполняться на macOS
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up C++ environment
+        run: |
+          brew update
+          brew install gcc  # Установка компилятора GCC через Homebrew
+
+      - name: Build the server
+        run: |
+          g++ -std=c++11 -o server server.cpp  # Компиляция серверной части с указанием стандарта
+
+      - name: Run tests
+        run: |
+          g++ -std=c++11 -o run_tests test.cpp  # Компиляция тестов с указанием стандарта
+          ./run_tests  # Запуск тестов

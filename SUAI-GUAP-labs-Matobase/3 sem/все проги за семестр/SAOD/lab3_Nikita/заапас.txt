@@ -1,0 +1,263 @@
+#include <iostream>
+#include <chrono>
+#include <string>
+#include <vector>
+#include <mutex>
+#include <thread>
+#include <condition_variable>
+#include <random>
+
+using namespace std;
+
+struct Task {
+    int priority;
+    string name;
+    chrono::time_point<chrono::steady_clock> arrivalTime;
+
+    Task(int p, const string& n, chrono::time_point<chrono::steady_clock> time)
+        : priority(p), name(n), arrivalTime(time) {}
+};
+
+mutex mtx;
+condition_variable cv;
+
+void displayState(
+    const vector<Task>& F,
+    const vector<Task>& S,
+    const vector<Task>& P0Tasks,
+    const vector<Task>& P1Tasks,
+    const vector<Task>& P2Tasks,
+    chrono::time_point<chrono::steady_clock> startTime
+) {
+    chrono::time_point<chrono::steady_clock> currentTime = chrono::steady_clock::now();
+    chrono::duration<double> elapsedTime = currentTime - startTime;
+
+    cout << "Очередь F: ";
+    for (const Task& task : F) {
+        chrono::duration<double> taskArrivalTime = task.arrivalTime - startTime;
+        cout << task.name << "(" << taskArrivalTime.count() << "s) ";
+    }
+    cout << "\n";
+
+    cout << "Стек S: ";
+    for (const Task& task : S) {
+        chrono::duration<double> taskArrivalTime = task.arrivalTime - startTime;
+        cout << task.name << "(" << taskArrivalTime.count() << "s) ";
+    }
+    cout << "\n";
+
+    cout << "Процессор P0: ";
+    if (P0Tasks.empty()) {
+        cout << "Процессор свободен\n";
+    }
+    else {
+        const Task& task = P0Tasks.front();
+        cout << "Выполняется задача " << task.name << " (T" << task.priority << ")\n";
+    }
+
+    cout << "Процессор P1: ";
+    if (P1Tasks.empty()) {
+        cout << "Процессор свободен\n";
+    }
+    else {
+        const Task& task = P1Tasks.front();
+        cout << "Выполняется задача " << task.name << " (T" << task.priority << ")\n";
+    }
+
+    cout << "Процессор P2: ";
+    if (P2Tasks.empty()) {
+        cout << "Процессор свободен\n";
+    }
+    else {
+        const Task& task = P2Tasks.front();
+        cout << "Выполняется задача " << task.name << " (T" << task.priority << ")\n";
+    }
+
+    cout << "----------------------------------------\n";
+}
+
+void monitorProcessors(
+    vector<Task>& P0Tasks,
+    vector<Task>& P1Tasks,
+    vector<Task>& P2Tasks
+) {
+    while (true) {
+        this_thread::sleep_for(chrono::seconds(15));
+        chrono::time_point<chrono::steady_clock> currentTime = chrono::steady_clock::now();
+
+        // Удаляем задачи из P0, P1 и P2 после 15 секунд
+        for (auto it = P0Tasks.begin(); it != P0Tasks.end(); ) {
+            if (chrono::duration_cast<chrono::seconds>(currentTime - it->arrivalTime).count() >= 15) {
+                it = P0Tasks.erase(it);
+            }
+            else {
+                ++it;
+            }
+        }
+
+        for (auto it = P1Tasks.begin(); it != P1Tasks.end(); ) {
+            if (chrono::duration_cast<chrono::seconds>(currentTime - it->arrivalTime).count() >= 15) {
+                it = P1Tasks.erase(it);
+            }
+            else {
+                ++it;
+            }
+        }
+
+        for (auto it = P2Tasks.begin(); it != P2Tasks.end(); ) {
+            if (chrono::duration_cast<chrono::seconds>(currentTime - it->arrivalTime).count() >= 15) {
+                it = P2Tasks.erase(it);
+            }
+            else {
+                ++it;
+            }
+        }
+    }
+}
+
+void executeTask(
+    vector<Task>& F,
+    vector<Task>& S,
+    vector<Task>& P0Tasks,
+    vector<Task>& P1Tasks,
+    vector<Task>& P2Tasks,
+    chrono::time_point<chrono::steady_clock> startTime
+) {
+    while (true) {
+        unique_lock<mutex> lock(mtx);
+        cv.wait(lock, [&] {
+            return !F.empty() || (!S.empty() && (!P0Tasks.empty() || !P1Tasks.empty() || !P2Tasks.empty()));
+            });
+
+        if (!F.empty()) {
+            Task currentTask = F.front();
+            F.erase(F.begin());
+
+            if (currentTask.priority == 0) {
+                S.push_back(currentTask);
+            }
+            else if (currentTask.priority == 1) {
+                S.push_back(currentTask);
+            }
+            else if (currentTask.priority == 2) {
+                S.push_back(currentTask);
+            }
+        }
+
+        if (!S.empty() && (P0Tasks.empty() || P1Tasks.empty() || P2Tasks.empty())) {
+            Task stackTask = S.back();
+            S.pop_back();
+
+            if (stackTask.priority == 0) {
+                if (P0Tasks.empty()) {
+                    P0Tasks.push_back(stackTask);
+                }
+                else {
+                    F.push_back(stackTask);
+                }
+            }
+            else if (stackTask.priority == 1) {
+                if (P1Tasks.empty()) {
+                    P1Tasks.push_back(stackTask);
+                }
+                else {
+                    F.push_back(stackTask);
+                }
+            }
+            else if (stackTask.priority == 2) {
+                if (P2Tasks.empty()) {
+                    P2Tasks.push_back(stackTask);
+                }
+                else {
+                    F.push_back(stackTask);
+                }
+            }
+        }
+        else 
+
+        // Добавьте код для перемещения задач из стека в процессоры при освобождении
+        if (!P0Tasks.empty() && P0Tasks.front().arrivalTime <= startTime) {
+            P0Tasks.erase(P0Tasks.begin());
+        }
+
+        if (!P1Tasks.empty() && P1Tasks.front().arrivalTime <= startTime) {
+            P1Tasks.erase(P1Tasks.begin());
+        }
+
+        if (!P2Tasks.empty() && P2Tasks.front().arrivalTime <= startTime) {
+            P2Tasks.erase(P2Tasks.begin());
+        }
+
+        displayState(F, S, P0Tasks, P1Tasks, P2Tasks, startTime);
+    }
+}
+
+int main() {
+    setlocale(LC_ALL, "Russian");
+    vector<Task> F;
+    vector<Task> S;
+    vector<Task> P0Tasks;
+    vector<Task> P1Tasks;
+    vector<Task> P2Tasks;
+
+    chrono::time_point<chrono::steady_clock> startTime = chrono::steady_clock::now();
+    thread stackThread(executeTask, ref(F), ref(S), ref(P0Tasks), ref(P1Tasks), ref(P2Tasks), ref(startTime));
+    thread monitorThread(monitorProcessors, ref(P0Tasks), ref(P1Tasks), ref(P2Tasks));
+
+    stackThread.detach();
+    monitorThread.detach();
+
+    while (true) {
+        cout << "Выберите действие (0 - добавить задачу T0, 1 - добавить задачу T1, 2 - добавить задачу T2, 3 - создать случайную задачу, 9 - завершить): \n";
+        int choice;
+        cin >> choice;
+
+        if (choice >= 0 && choice <= 2) {
+            string taskName;
+            if (choice == 0) {
+                taskName = "T0";
+            }
+            else if (choice == 1) {
+                taskName = "T1";
+            }
+            else if (choice == 2) {
+                taskName = "T2";
+            }
+
+            chrono::time_point<chrono::steady_clock> currentTime = chrono::steady_clock::now();
+            F.push_back(Task(choice, taskName, currentTime));
+            cv.notify_all();  // Уведомляем поток о появлении новой задачи
+        }
+        else if (choice == 3) {
+            string taskName;
+            random_device rd;
+            mt19937 gen(rd());
+            uniform_int_distribution<int> taskDist(0, 2);
+            int randomTask = taskDist(gen);
+            if (randomTask == 0) {
+                taskName = "T0";
+            }
+            else if (randomTask == 1) {
+                taskName = "T1";
+            }
+            else {
+                taskName = "T2";
+            }
+
+            chrono::time_point<chrono::steady_clock> currentTime = chrono::steady_clock::now();
+            F.push_back(Task(randomTask, taskName, currentTime));
+            cv.notify_all();  // Уведомляем поток о появлении новой задачи
+        }
+        else if (choice == 9) {
+            cout << "Программа завершена\n";
+            break;
+        }
+        else {
+            cout << "Недопустимый выбор. Пожалуйста, выберите 0, 1, 2, 3 или 9 (завершить).\n";
+        }
+
+        displayState(F, S, P0Tasks, P1Tasks, P2Tasks, startTime);
+    }
+
+    return 0;
+}

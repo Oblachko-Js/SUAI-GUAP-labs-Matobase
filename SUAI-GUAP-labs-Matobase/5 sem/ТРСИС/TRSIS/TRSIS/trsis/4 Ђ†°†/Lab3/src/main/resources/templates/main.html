@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <meta http-equiv="Conternt-Type" content="text/html;charset=utf-8">
+        <title>Lessons</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-route.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-resource.min.js"></script>
+
+        <script src="main.js"></script>
+    </head>
+    <body ng-app="les" ng-controller="lessonController">
+    <div >
+        <h2>User name : <span th:text="${user.username}"></span></h2>
+        <h1><a href="/logout">Logout</a> </h1>
+    </div>
+        <h1>Schedule</h1>
+        <div ng-controller="getLessons" ng-show="lessonsList.length > 0">
+            <table id="lessonsTable">
+                <thead>
+                    <tr>
+                        <th>Number</th>
+                        <th>Subject</th>
+                        <th>Audience</th>
+                        <th>Teacher</th>
+                        <th>Group</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="lesson in lessonsList track by $index" id="{{lesson.id}}">
+                        <td>{{lesson.number}}</td>
+                        <td>{{lesson.name}}</td>
+                        <td>{{lesson.audience}}</td>
+                        <td>{{lesson.teacher}}</td>
+                        <td>{{lesson.group}}</td>
+                        <td><input type="button" ng-click="deleteLesson(lesson.id)" value="Delete"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div><br>
+    <div>
+        <form role="form" ng-submit="addLesson()">
+            <label>Group:<input type="text" name="group" ng-model="group"></label><br>
+            <label>Audience:<input type="text" name="audience" ng-model="audience"></label><br>
+            <label>Teacher:<input type="text" name="teacher" ng-model="teacher"></label><br>
+            <label>Name:<input type="text" name="name" ng-model="name"></label><br>
+            <label>Number:<input type="text" name="number" ng-model="number"></label><br>
+            <input type="submit">
+        </form>
+    </div>
+    </body>
+</html>

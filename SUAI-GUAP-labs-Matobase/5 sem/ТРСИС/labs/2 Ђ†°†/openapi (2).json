@@ -1,0 +1,152 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Расписание занятий студентов",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8887/Lab1",
+      "description": "Dev server"
+    }
+  ],
+  "paths": {
+    "/Lesson": {
+      "get": {
+        "summary": "Метод получения расписания",
+        "tags": [
+          "Lessons"
+        ],
+        "operationId": "getAllLessons",
+        "responses": {
+          "200": {
+            "description": "Успешный ответ со списком занятий",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Lessons"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Страница не найдена",
+            "content": {}
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Lessons"
+        ],
+        "summary": "Добавить новое занятие",
+        "operationId": "addLesson",
+        "requestBody": {
+          "required": true,
+          "description": "Добавление нового занятие",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Lesson"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Успешная операция",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Lesson"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Неверный формат ввода",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/Lesson/{num_group}": {
+      "delete": {
+        "summary": "Метод удаления занятия",
+        "tags": [
+          "Lessons"
+        ],
+        "operationId": "deleteLesson",
+        "parameters": [
+          {
+            "name": "num_group",
+            "in": "path",
+            "required": true,
+            "description": "Номер группы",
+            "schema": {
+              "type": "string"
+            },
+            "example": 4132
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешное удаления",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Lesson": {
+        "type": "object",
+        "required": [
+          "num_group",
+          "audience",
+          "teacher",
+          "name",
+          "number"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 0
+          },
+          "num_group": {
+            "type": "string",
+            "example": 4132
+          },
+          "audience": {
+            "type": "string",
+            "example": "23-09"
+          },
+          "teacher": {
+            "type": "string",
+            "example": "Ivanov"
+          },
+          "name": {
+            "type": "string",
+            "example": "Physics"
+          },
+          "number": {
+            "type": "integer",
+            "example": 5
+          }
+        }
+      },
+      "Lessons": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Lesson"
+        }
+      }
+    }
+  }
+}

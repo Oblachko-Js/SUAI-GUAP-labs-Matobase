@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Личный кабинет</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .character-info, .task-list, .habit-list, .bonus-list {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <h1>Личный кабинет</h1>
+
+    <!-- Информация о персонаже -->
+    <div class="character-info">
+        <h2>Ваш персонаж</h2>
+        <p>Имя: <span id="character-name"></span></p>
+        <p>Уровень: <span id="character-level"></span></p>
+        <p>Здоровье: <span id="character-health"></span></p>
+        <p>Мана: <span id="character-mana"></span></p>
+    </div>
+
+    <!-- Список задач -->
+    <div class="task-list">
+        <h2>Ваши задачи</h2>
+        <ul id="tasks"></ul>
+        <button onclick="window.location.href='/create_task'">Создать задачу</button>
+    </div>
+
+    <!-- Список привычек -->
+    <div class="habit-list">
+        <h2>Ваши привычки</h2>
+        <ul id="habits"></ul>
+        <button onclick="window.location.href='/create_habit'">Создать привычку</button>
+    </div>
+
+    <!-- Список бонусов -->
+    <div class="bonus-list">
+        <h2>Ваши бонусы</h2>
+        <ul id="bonuses"></ul>
+    </div>
+
+    <!-- Кнопка для перехода к сражениям с боссами -->
+    <button onclick="window.location.href='/boss_fight'">Сражения с боссами</button>
+
+    <script>
+        // Загрузка данных персонажа
+        async function loadCharacter() {
+            const user_id = sessionStorage.getItem('user_id');
+            if (!user_id) return;
+
+            const response = await fetch(`/character/${user_id}`);
+            const character = await response.json();
+            if (character.message) {
+                alert(character.message);
+            } else {
+                document.getElementById('character-name').textContent = character.name;
+                document.getElementById('character-level').textContent = character.level;
+                document.getElementById('character-health').textContent = character.health;
+                document.getElementById('character-mana').textContent = character.mana;
+            }
+        }
+
+        // Загрузка задач
+        async function loadTasks() {
+            const response = await fetch('/tasks');
+            const tasks = await response.json();
+            const taskList = document.getElementById('tasks');
+            taskList.innerHTML = tasks.map(task => `<li>${task.title} (${task.completed ? 'Выполнено' : 'Не выполнено'})</li>`).join('');
+        }
+
+        // Загрузка привычек
+        async function loadHabits() {
+            const response = await fetch('/habits');
+            const habits = await response.json();
+            const habitList = document.getElementById('habits');
+            habitList.innerHTML = habits.map(habit => `<li>${habit.name} (${habit.difficulty})</li>`).join('');
+        }
+
+        // Загрузка бонусов
+        async function loadBonuses() {
+            const response = await fetch('/bonuses');
+            const bonuses = await response.json();
+            const bonusList = document.getElementById('bonuses');
+            bonusList.innerHTML = bonuses.map(bonus => `<li>${bonus.name} (${bonus.points} очков)</li>`).join('');
+        }
+
+        // Инициализация
+        loadCharacter();
+        loadTasks();
+        loadHabits();
+        loadBonuses();
+    </script>
+</body>
+</html>
